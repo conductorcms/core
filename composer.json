@@ -1,0 +1,23 @@
+{
+    "name": "mattnmoore/conductor",
+    "description": "",
+    "authors": [
+        {
+            "name": "Matt Moore",
+            "email": "me@mattdoescode.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.4.0",
+        "illuminate/support": "5.0.*"
+    },
+    "autoload": {
+        "classmap": [
+            "src/migrations"
+        ],
+        "psr-0": {
+            "Mattnmoore\\Conductor\\": "src/"
+        }
+    },
+    "minimum-stability": "stable"
+}
