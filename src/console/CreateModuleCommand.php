@@ -1,37 +1,33 @@
 <?php namespace Mattnmoore\Conductor\Console;
 
 use Illuminate\Console\Application;
-use Illuminate\Foundation\Application as App;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
-use Mattnmoore\Conductor\Conductor;
 
-class ScanModulesCommand extends Command {
+class CreateModuleCommand extends Command {
 
 	/**
 	 * The console command name.
 	 *
 	 * @var string
 	 */
-	protected $name = 'module:scan';
+	protected $name = 'module:make';
 
 	/**
 	 * The console command description.
 	 *
 	 * @var string
 	 */
-	protected $description = 'Scan for new modules.';
+	protected $description = 'Create a new module.';
 
 	/**
 	 * Create a new Console Instance
 	 *
-	 * @param App $app
+	 *
 	 */
-	public function __construct(App $app)
+	public function __construct()
 	{
-		$this->app = $app;
-
 		parent::__construct();
 	}
 
@@ -42,9 +38,9 @@ class ScanModulesCommand extends Command {
 	 */
 	public function fire()
 	{
-		$conductor = $this->app->make('Mattnmoore\Conductor\Conductor');
+		$name = $this->ask("Please enter the full module name (Ex. illuminate/events):");
 
-		return $this->info($conductor->scanModules());
+		$this->call('workbench', ['package' => $name, '--resources' => true]);
 	}
 
 	/**

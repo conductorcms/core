@@ -47,7 +47,11 @@ class ConductorServiceProvider extends ServiceProvider {
 	 */
 	public function registerCommands()
 	{
-		$this->commands('Mattnmoore\Conductor\Console\ScanModulesCommand');
+		$namespace = 'Mattnmoore\Conductor\Console\\';
+
+		$this->commands($namespace . 'ScanModulesCommand');
+		$this->commands($namespace . 'CreateModuleCommand');
+
 	}
 
 	/**
