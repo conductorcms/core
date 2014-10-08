@@ -1,6 +1,7 @@
 <?php namespace Mattnmoore\Conductor;
 
 use Illuminate\Support\ServiceProvider;
+use Mattnmoore\Conductor\Console\ScanModulesCommand;
 
 class ConductorServiceProvider extends ServiceProvider {
 
@@ -19,6 +20,14 @@ class ConductorServiceProvider extends ServiceProvider {
 	public function boot()
 	{
 		$this->package('mattnmoore/conductor');
+
+		$this->app->bind('Mattnmoore\Conductor\Module\ModuleRepository', 'Mattnmoore\Conductor\Module\EloquentModuleRepository');
+
+		$conductor = $this->app->make('Mattnmoore\Conductor\Conductor');
+
+		$conductor->boot();
+
+		include __DIR__.'/../../routes.php';
 	}
 
 	/**
@@ -28,7 +37,17 @@ class ConductorServiceProvider extends ServiceProvider {
 	 */
 	public function register()
 	{
-		//
+		$this->registerCommands();
+	}
+
+	/**
+	 * Register commands
+	 *
+	 * @return void
+	 */
+	public function registerCommands()
+	{
+		$this->commands('Mattnmoore\Conductor\Console\ScanModulesCommand');
 	}
 
 	/**

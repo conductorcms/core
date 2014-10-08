@@ -1,30 +1,9 @@
 <?php namespace Mattnmoore\Conductor\Module;
 
-use Illuminate\Support\ServiceProvider;
-use ReflectionClass;
+use Illuminate\Database\Eloquent\Model;
 
-class Module extends ServiceProvider {
+class Module extends Model {
 
-	public function register()
-	{
-
-	}
-
-	public function registerModule()
-	{
-		$reflection = new ReflectionClass($this);
-
-		$namespace = $reflection->getNamespaceName();
-		$name = ucfirst($this->name);
-
-		$name = $namespace . '\\' . $name;
-
-		$this->app->bind($this->name, function() use ($name)
-		{
-			return new $name();
-		});
-
-		$this->app->tag($this->name, 'conductorModule');
-	}
+	public $fillable = ['name', 'display_name', 'description', 'version', 'author'];
 
 }

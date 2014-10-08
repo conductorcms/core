@@ -13,7 +13,9 @@
     },
     "autoload": {
         "classmap": [
-            "src/migrations"
+            "src/migrations",
+            "src/controllers",
+            "src/console"
         ],
         "psr-0": {
             "Mattnmoore\\Conductor\\": "src/"
