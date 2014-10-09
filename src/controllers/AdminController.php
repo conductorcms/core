@@ -14,7 +14,16 @@ class AdminController {
 
 	public function index()
 	{
-		return View::make('conductor::admin.index');
+        $modules = ['pages'];
+
+        foreach($modules as &$module)
+        {
+            $module = 'admin.' . $module;
+        }
+
+        $data['modules'] = $modules;
+
+        return View::make('conductor::admin.index', $data);
 	}
 
 	public function modules()

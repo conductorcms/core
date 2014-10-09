@@ -19,6 +19,8 @@
           <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->
 
+        @include('conductor::admin.partials.registerModules');
+
 		<!-- temporary -->
 		<!-- ui-bootstrap style -->
 		<style>
@@ -126,6 +128,7 @@
          <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
          <!-- Bootstrap -->
          <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+
 
      </body>
  </html>
