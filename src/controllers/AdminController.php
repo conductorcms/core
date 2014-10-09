@@ -12,6 +12,11 @@ class AdminController {
 		$this->module = $module;
 	}
 
+	public function index()
+	{
+		return View::make('conductor::admin.index');
+	}
+
 	public function modules()
 	{
 		$data['modules'] = $this->module->getAll();

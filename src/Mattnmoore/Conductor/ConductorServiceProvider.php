@@ -2,6 +2,7 @@
 
 use Illuminate\Support\ServiceProvider;
 use Mattnmoore\Conductor\Console\ScanModulesCommand;
+use Blade;
 
 class ConductorServiceProvider extends ServiceProvider {
 

@@ -38,9 +38,12 @@ class CreateModuleCommand extends Command {
 	 */
 	public function fire()
 	{
-		$name = $this->ask("Please enter the full module name (Ex. illuminate/events):");
+		$package = $this->ask("What is the package name?");
+		$module  = $this->ask("What is the module name?");
+		$verison = $this->ask("What is the module version?");
+		$author  = $this->ask("What is the module author's name?");
 
-		$this->call('workbench', ['package' => $name, '--resources' => true]);
+		$this->call('workbench', ['package' => $package, '--resources' => true]);
 	}
 
 	/**

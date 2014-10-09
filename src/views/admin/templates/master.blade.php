@@ -19,9 +19,15 @@
           <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->
 
+		<!-- temporary -->
+		<!-- ui-bootstrap style -->
+		<style>
+			.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+		</style>
+
     </head>
 
-     <body class="skin-blue">
+     <body ng-app="admin" class="skin-blue">
 
          <!-- header logo: style can be found in header.less -->
 	     <header class="header">
@@ -61,45 +67,65 @@
 	             </div>
 	         </nav>
 	     </header>
-	     <div class="wrapper row-offcanvas row-offcanvas-left">
+	     <div ng-controller="NavCtrl as nav" class="wrapper row-offcanvas row-offcanvas-left">
 	         <!-- Left side column. contains the logo and sidebar -->
 	         <aside class="left-side sidebar-offcanvas">
 	             <!-- sidebar: style can be found in sidebar.less -->
 	             <section class="sidebar">
-	                 <!-- /.search form -->
-	                 <!-- sidebar menu: : style can be found in sidebar.less -->
-	                 <ul class="sidebar-menu">
-	                     <li class="treeview">
-	                         <a href="#">
-	                             <i class="fa fa-list-alt"></i>
-	                             <span>Programs</span>
-	                             <i class="fa fa-angle-left pull-right"></i>
-	                         </a>
-	                         <ul class="treeview-menu">
-	                             <li><a href="pages/charts/morris.html"><i class="fa fa-angle-double-right"></i> Videos</a></li>
-	                             <li><a href="pages/charts/flot.html"><i class="fa fa-angle-double-right"></i> Inventories</a></li>
-	                             <li><a href="pages/charts/inline.html"><i class="fa fa-angle-double-right"></i> Variables</a></li>
-	                         </ul>
-	                     </li>
-	                     <li>
-	                         <a href="pages/calendar.html">
-	                             <i class="fa fa-puzzle-piece"></i> <span>Modules</span>
-	                             <small class="badge pull-right bg-red">3</small>
-	                         </a>
-	                     </li>
-	                 </ul>
+
+	                <accordion close-others="false">
+                        <accordion-group ng-repeat="section in nav.menu" heading="<% section.title %>">
+                            <ul>
+                                <li ng-repeat="item in section.items"><a href="<% item.link %>"><% item.title %></a></li>
+                            </ul>
+                        </accordion-group>
+                    </accordion>
+
 	             </section>
 	             <!-- /.sidebar -->
 	         </aside>
 
+	           <!-- Right side column. Contains the navbar and content of the page -->
+             <aside class="right-side">
+                 <!-- Content Header (Page header) -->
+                 <section class="content-header">
+                     <h1>
+                         Home
+                         <small>Control panel</small>
+                     </h1>
+                     <ol class="breadcrumb">
+                         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+                         <li class="active">Modules</li>
+                     </ol>
+                 </section>
+
+
         @yield('content')
+
+
+         <!-- Angular, son! -->
+         <script src="/packages/mattnmoore/conductor/vendor/angular/angular.js"></script>
+		 <!-- ngRoute, homie! -->
+         <script src="/packages/mattnmoore/conductor/vendor/angular-route/angular-route.js"></script>
+         <!-- ui-bootstrap -->
+         <script src="/packages/mattnmoore/conductor/vendor/angular-bootstrap/ui-bootstrap.js"></script>
+         <script src="/packages/mattnmoore/conductor/vendor/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+
+         <!-- Mah app -->
+         <script src="/packages/mattnmoore/conductor/assets/js/angular/core/admin.core.js"></script>
+         <script src="/packages/mattnmoore/conductor/assets/js/angular/core/providers/NavigationProvider.js"></script>
+
+         <script src="/packages/mattnmoore/battletracker/assets/js/angular/main/battletracker.js"></script>
+
+
+         <script src="/packages/mattnmoore/conductor/assets/js/angular/main/admin.js"></script>
+         <script src="/packages/mattnmoore/conductor/assets/js/angular/main/controllers/HomeCtrl.js"></script>
+         <script src="/packages/mattnmoore/conductor/assets/js/angular/main/controllers/NavCtrl.js"></script>
 
          <!-- jQuery 2.0.2 -->
          <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
          <!-- Bootstrap -->
          <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-         <!-- AdminLTE App -->
-         <script src="/packages/mattnmoore/conductor/assets/js/AdminLTE/app.js" type="text/javascript"></script>
 
      </body>
  </html>
