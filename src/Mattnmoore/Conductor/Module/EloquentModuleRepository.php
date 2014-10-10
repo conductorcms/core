@@ -28,7 +28,7 @@ class EloquentModuleRepository implements ModuleRepository {
 	{
 		$module = $this->module->create((array) $provider->getInfo());
 
-		$module->save();
+		return $module->save();
 	}
 
 	public function deleteByName($name)
