@@ -1,0 +1,24 @@
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Author</th>
+        <th>Version</th>
+        <th>Installed?</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="module in modules">
+        <td><% module.display_name %></td>
+        <td><% module.description %></td>
+        <td><% module.author %></td>
+        <td><% module.version %></td>
+        <td><% module.installed %></td>
+        <td>
+            <button class="btn btn-primary">Install</button>
+        </td>
+    </tr>
+    </tbody>
+</table>

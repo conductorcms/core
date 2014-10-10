@@ -19,7 +19,7 @@
           <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->
 
-        @include('conductor::admin.partials.registerModules');
+        @include('conductor::admin.partials.registerModules')
 
 		<!-- temporary -->
 		<!-- ui-bootstrap style -->
@@ -114,15 +114,7 @@
          <script src="/packages/mattnmoore/conductor/vendor/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 
          <!-- Mah app -->
-         <script src="/packages/mattnmoore/conductor/assets/js/angular/core/admin.core.js"></script>
-         <script src="/packages/mattnmoore/conductor/assets/js/angular/core/providers/NavigationProvider.js"></script>
-
-         <script src="/packages/mattnmoore/battletracker/assets/js/angular/main/battletracker.js"></script>
-
-
-         <script src="/packages/mattnmoore/conductor/assets/js/angular/main/admin.js"></script>
-         <script src="/packages/mattnmoore/conductor/assets/js/angular/main/controllers/HomeCtrl.js"></script>
-         <script src="/packages/mattnmoore/conductor/assets/js/angular/main/controllers/NavCtrl.js"></script>
+         <script src="/packages/mattnmoore/conductor/assets/js/conductor.js"></script>
 
          <!-- jQuery 2.0.2 -->
          <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>

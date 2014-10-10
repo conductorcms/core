@@ -3,6 +3,7 @@
 interface ModuleRepository {
 
 	public function getAll();
+	public function findById($id);
 	public function findByName($name);
 	public function createFromModuleProvider($provider);
 	public function deleteByName($name);

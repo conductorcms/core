@@ -16,6 +16,11 @@ angular.module('admin', dependencies).config(function($routeProvider, $locationP
         controller: 'HomeCtrl'
     });
 
+    $routeProvider.when('/admin/modules', {
+        templateUrl: '/packages/mattnmoore/conductor/assets/views/modules.html',
+        controller: 'ModulesCtrl'
+    });
+
     $locationProvider.html5Mode(true);
 
     $interpolateProvider.startSymbol('<%');
@@ -25,8 +30,12 @@ angular.module('admin', dependencies).config(function($routeProvider, $locationP
         'title': 'Core',
         'items': [
             {
-                'title': 'Home',
+                'title': 'Homeee',
                 'link': '/admin'
+            },
+            {
+                'title': 'Modules',
+                'link': '/admin/modules'
             }
         ]
     });

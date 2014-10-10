@@ -4,7 +4,7 @@ class EloquentModuleRepository implements ModuleRepository {
 
 	private $module;
 
-	function __construct(Module $module)
+	function __construct(ModuleModel $module)
 	{
 		$this->module = $module;
 	}
@@ -14,6 +14,11 @@ class EloquentModuleRepository implements ModuleRepository {
 		return $this->module->all();
 	}
 
+	public function findById($id)
+	{
+		return $this->module->find($id);
+	}
+
 	public function findByName($name)
 	{
 		return $this->module->whereName($name)->first();
@@ -21,7 +26,7 @@ class EloquentModuleRepository implements ModuleRepository {
 
 	public function createFromModuleProvider($provider)
 	{
-		$module = $this->module->create($provider->info);
+		$module = $this->module->create((array) $provider->getInfo());
 
 		$module->save();
 	}

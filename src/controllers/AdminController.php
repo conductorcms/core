@@ -14,7 +14,7 @@ class AdminController {
 
 	public function index()
 	{
-        $modules = ['pages'];
+        $modules = ['battletracker'];
 
         foreach($modules as &$module)
         {

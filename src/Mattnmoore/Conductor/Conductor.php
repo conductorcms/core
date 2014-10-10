@@ -83,10 +83,12 @@ class Conductor {
 			$provider = new $provider($this->app->make('app'));
 
 			//store name
-			$moduleNames[] = $provider->info['name'];
+			$info = $provider->getInfo();
+
+			$moduleNames[] = $info->name;
 
 			//if it's not in the DB, add it
-			if(!$this->module->isInDb($provider->info['name'])) $this->module->createFromModuleProvider($provider);
+			if(!$this->module->isInDb($info->name)) $this->module->createFromModuleProvider($provider);
 		}
 
 		//Sync config module removals to DB

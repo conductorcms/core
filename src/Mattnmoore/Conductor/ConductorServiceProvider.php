@@ -53,7 +53,7 @@ class ConductorServiceProvider extends ServiceProvider {
 		$this->commands($namespace . 'ScanModulesCommand');
 		$this->commands($namespace . 'CreateModuleCommand');
         $this->commands($namespace . 'ListModulesCommand');
-
+		$this->commands($namespace . 'CompileModuleAssetsCommand');
 	}
 
 	/**

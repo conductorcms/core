@@ -1,9 +1,15 @@
 <?php namespace Mattnmoore\Conductor\Module;
 
-use Illuminate\Database\Eloquent\Model;
+class Module {
 
-class Module extends Model {
+	public function install()
+	{
+		dd('installing');
+	}
 
-	public $fillable = ['name', 'display_name', 'description', 'version', 'author'];
+	public function uninstall()
+	{
+
+	}
 
 }
