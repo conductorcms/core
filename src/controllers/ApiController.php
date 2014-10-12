@@ -31,10 +31,7 @@ class ApiController {
 		$module = $this->app->make($module->name);
 
 		//if installation is successful
-		if($module->install())
-		{
-			return Response::json(['mesasge' => 'Module successfully installed'], 200);
-		}
+		if($module->install()) return Response::json(['mesasge' => 'Module successfully installed'], 200);
 
 		return Response::json(['message' => 'This module could not be installed properly'], 500);
 	}

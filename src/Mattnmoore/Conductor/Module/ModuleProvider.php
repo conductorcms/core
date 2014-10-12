@@ -13,7 +13,8 @@ abstract class ModuleProvider extends ServiceProvider {
 
 		$namespace = $reflection->getNamespaceName();
 
-		$name = ucfirst($info->name);
+        $name = explode('\\', $namespace);
+        $name = $name[1];
 
 		$name = $namespace . '\\' . $name;
 
