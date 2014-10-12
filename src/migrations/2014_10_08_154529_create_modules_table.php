@@ -17,9 +17,10 @@ class CreateModulesTable extends Migration {
 			$table->increments('id');
 			$table->string('name');
 			$table->string('display_name');
-			$table->string('author');
 			$table->string('description');
 			$table->string('version');
+            $table->boolean('frontend');
+            $table->boolean('backend');
 			$table->boolean('installed');
 			$table->timestamps();
 		});

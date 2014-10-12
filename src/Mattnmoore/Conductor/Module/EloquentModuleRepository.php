@@ -4,15 +4,23 @@ class EloquentModuleRepository implements ModuleRepository {
 
 	private $module;
 
-	function __construct(ModuleModel $module)
+    private $author;
+
+	function __construct(ModuleModel $module, ModuleAuthor $author)
 	{
 		$this->module = $module;
+        $this->author = $author;
 	}
 
 	public function getAll()
 	{
 		return $this->module->all();
 	}
+
+    public function getAllWithAuthors()
+    {
+        return $this->module->with('authors')->get();
+    }
 
 	public function findById($id)
 	{
@@ -26,9 +34,22 @@ class EloquentModuleRepository implements ModuleRepository {
 
 	public function createFromModuleProvider($provider)
 	{
-		$module = $this->module->create((array) $provider->getInfo());
+        $info = $provider->getInfo();
 
-		return $module->save();
+		$module = $this->module->create((array) $info);
+
+        $authors = [];
+        foreach($info->authors as $author)
+        {
+            $author = $this->author->create((array) $author);
+            $authors[] = $author;
+        }
+
+        $module->save();
+
+        $module->authors()->saveMany($authors);
+
+        return true;
 	}
 
 	public function deleteByName($name)
@@ -37,6 +58,11 @@ class EloquentModuleRepository implements ModuleRepository {
 
 		return $module->delete();
 	}
+
+    public function deleteAll()
+    {
+        return $this->module->truncate();
+    }
 
 	public function isInDb($name)
 	{

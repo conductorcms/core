@@ -33,7 +33,6 @@
 							<tr>
 								<td>{{ $module->display_name }}</td>
 								<td>{{ $module->description }}</td>
-								<td>{{ $module->author }}</td>
 								<td>{{ $module->version }}</td>
 								<td>{{ $module->installed }}</td>
 								<td>

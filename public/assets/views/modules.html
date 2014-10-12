@@ -13,7 +13,7 @@
     <tr ng-repeat="module in modules">
         <td><% module.display_name %></td>
         <td><% module.description %></td>
-        <td><% module.author %></td>
+        <td><span ng-repeat="author in module.authors"><% author.name %> </span></td>
         <td><% module.version %></td>
         <td><% module.installed %></td>
         <td>

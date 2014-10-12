@@ -59,8 +59,10 @@ class Conductor {
 		}
 	}
 
-	public function scanModules()
+	public function scanModules($refresh = false)
 	{
+        if($refresh) $this->module->deleteAll();
+
 		//delete cache
 		$this->cache->forget('registeredModules');
 

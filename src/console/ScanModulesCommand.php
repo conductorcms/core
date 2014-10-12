@@ -44,7 +44,7 @@ class ScanModulesCommand extends Command {
 	{
 		$conductor = $this->app->make('Mattnmoore\Conductor\Conductor');
 
-		return $this->info($conductor->scanModules());
+		return $this->info($conductor->scanModules($this->option('refresh')));
 	}
 
 	/**
@@ -64,7 +64,9 @@ class ScanModulesCommand extends Command {
 	 */
 	protected function getOptions()
 	{
-		return [];
+		return [
+            ['refresh', null, InputOption::VALUE_NONE, 'Delete all module records and re-scan', null]
+        ];
 	}
 
 }

@@ -19,7 +19,7 @@ class ApiController {
 	//return a list of modules
 	public function modules()
 	{
-		$modules = $this->module->getAll();
+		$modules = $this->module->getAllWithAuthors();
 		return Response::json(['modules' => $modules], 200);
 	}
 
