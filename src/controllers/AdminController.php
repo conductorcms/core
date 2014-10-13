@@ -14,14 +14,17 @@ class AdminController {
 
 	public function index()
 	{
-        $modules = ['battletracker'];
+        $modules = $this->module->getInstalled();
+        $names = [];
 
-        foreach($modules as &$module)
+        foreach($modules as $module)
         {
-            $module = 'admin.' . $module;
+            $parts = explode('/', $module->name);
+
+            $names[] = 'admin.' . strtolower($parts[1]);
         }
 
-        $data['modules'] = $modules;
+        $data['modules'] = $names;
 
         return View::make('conductor::admin.index', $data);
 	}

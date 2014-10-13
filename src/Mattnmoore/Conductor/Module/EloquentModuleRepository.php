@@ -22,6 +22,11 @@ class EloquentModuleRepository implements ModuleRepository {
         return $this->module->with('authors')->get();
     }
 
+    public function getInstalled()
+    {
+        return $this->module->all();
+    }
+
 	public function findById($id)
 	{
 		return $this->module->find($id);

@@ -4,6 +4,7 @@ interface ModuleRepository {
 
 	public function getAll();
     public function getAllWithAuthors();
+    public function getInstalled();
 	public function findById($id);
 	public function findByName($name);
 	public function createFromModuleProvider($provider);

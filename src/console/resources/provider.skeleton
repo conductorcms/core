@@ -1,0 +1,52 @@
+<?php namespace ##module_namespace##\##module_class_name##;
+
+use Mattnmoore\Conductor\Module\ModuleProvider;
+
+class ##module_class_name##ModuleProvider extends ModuleProvider {
+
+	/**
+	 * Indicates if loading of the provider is deferred.
+	 *
+	 * @var bool
+	 */
+	protected $defer = false;
+
+	/**
+	 * Bootstrap the application events.
+	 *
+	 * @return void
+	 */
+	public function boot()
+	{
+		$this->package('##module_package##');
+	}
+
+	/**
+	 * Register the service provider.
+	 *
+	 * @return void
+	 */
+	public function register()
+	{
+
+	}
+
+	public function registerModule()
+	{
+		include __DIR__.'/../../routes.php';
+
+		parent::registerModule();
+	}
+
+
+	/**
+	 * Get the services provided by the provider.
+	 *
+	 * @return array
+	 */
+	public function provides()
+	{
+		return array();
+	}
+
+}

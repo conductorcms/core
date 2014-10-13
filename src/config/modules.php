@@ -11,4 +11,5 @@
 
 return [
 	'Mattnmoore\Battletracker\BattletrackerModuleProvider',
+    'Mattnmoore\Pages\PagesModuleProvider',
 ];

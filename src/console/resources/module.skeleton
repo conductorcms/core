@@ -1,0 +1,7 @@
+<?php namespace ##module_namespace##\##module_class_name##;
+
+use Mattnmoore\Conductor\Module\Module;
+
+class ##module_class_name## extends Module {
+
+}

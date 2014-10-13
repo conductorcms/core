@@ -53,7 +53,7 @@ class CreateModuleCommand extends Command {
 
 		$this->info('Generating module files');
 		//generate module.json
-		$this->files->put($basePath . 'modules.json', json_encode($module, JSON_PRETTY_PRINT));
+		$this->files->put($basePath . 'module.json', json_encode($module, JSON_PRETTY_PRINT));
 
 		$this->info('Generating angular module skeleton');
 
@@ -67,25 +67,47 @@ class CreateModuleCommand extends Command {
 		$data['name'] = $name;
 		$data['package_name'] = $module['name'];
 		$data['display_name'] = $module['display_name'];
+        $data['namespace']    = ucfirst($parts[0]);
+        $data['className']    = ucfirst($parts[1]);
 
-		$skeleton = $this->getSkeleton(__DIR__ . '/resources/app.skeleton.js', $data);
+        $skeleton = $this->getSkeleton(__DIR__ . '/resources/app.skeleton.js', $data);
 		$this->files->put($basePath . 'resources/js/' . $name . '.js', $skeleton);
 
 		//generate base angular controller
 		$skeleton = $this->getSkeleton(__DIR__ . '/resources/controller.skeleton.js', $data);
 		$this->files->put($basePath . 'resources/js/controllers/' . $data['display_name'] . 'Ctrl.js', $skeleton);
 
-		$this->files->copy(__DIR__ . '/resources/view.skeleton.html', $basePath . '/public/assets/views/index.html');
+		$this->files->copy(__DIR__ . '/resources/view.skeleton.html', $basePath . 'public/assets/views/index.html');
 
-		$this->info('Generating Module Provider');
+        $this->info('Generating Module Provider');
 
-		$namespace = ucfirst($parts[0]);
-		$classname = ucfirst($parts[1]);
+        $providerPath = $basePath . 'src/' . $data['namespace'] . '/' . $data['className'] . '/' . $data['className'];
 
-		$providerPath = $basePath . 'src/' . $namespace . '/' . $classname . '/' . $classname;
-		$this->files->move($providerPath . 'ServiceProvider.php', $providerPath . 'ModuleProvider.php');
+        $this->files->delete($providerPath . 'ServiceProvider.php');
 
-		$this->info('Adding to module provider config');
+        $skeleton = $this->getSkeleton(__DIR__ . '/resources/provider.skeleton', $data);
+        $this->files->put($providerPath . 'ModuleProvider.php', $skeleton);
+
+        $this->info('Generating Module');
+
+        $skeleton = $this->getSkeleton(__DIR__ . '/resources/module.skeleton', $data);
+        $this->files->put($providerPath . '.php', $skeleton);
+
+        $this->info('Adding to module provider config');
+
+        //Add new provider to the provider list
+        $file = base_path() . '/workbench/mattnmoore/conductor/src/config/modules.php';
+        $fh = fopen($file, 'r+');
+        $provider = "    '" . $data['namespace'] . "\\" . $data['className'] . "\\" . $data['className'] . "ModuleProvider'," . PHP_EOL . '];';
+        fseek($fh, -2, SEEK_END);
+        fwrite($fh, $provider);
+        fclose($fh);
+
+        //add empty routes file
+        $this->files->put($basePath . '/src/routes.php', '');
+
+        $this->call('dump-autoload');
+        $this->call('publish:assets', ['--bench' => $data['package_name']]);
 	}
 
 	private function getModuleInfo()
@@ -98,7 +120,7 @@ class CreateModuleCommand extends Command {
 		$backend = $this->ask("Will this module have a back-end component? (Y or N)");
 		$module['backend'] = ($backend == 'Y' || $backend == 'y' ? true : false);
 
-		$frontend = $this->ask("Will this module have a back-end component? (Y or N)");
+		$frontend = $this->ask("Will this module have a front-end component? (Y or N)");
 		$module['frontend'] = ($frontend == 'Y' || $frontend == 'y' ? true : false);
 
 		$module['authors'] = [];
@@ -156,12 +178,13 @@ class CreateModuleCommand extends Command {
 		{
 			if(is_array($directory))
 			{
-				$this->files->makeDirectory($basePath . $key);
-				$this->createDirectoriesFromArray($directory, $basePath . $key . '/');
-			}
+                if(!$this->files->exists($basePath . $key)) $this->files->makeDirectory($basePath . $key);
+
+                $this->createDirectoriesFromArray($directory, $basePath . $key . '/');
+            }
 			else
 			{
-				$this->files->makeDirectory($basePath . $directory);
+                if(!$this->files->exists($basePath . $directory)) $this->files->makeDirectory($basePath . $directory);
 			}
 		}
 	}
@@ -173,6 +196,8 @@ class CreateModuleCommand extends Command {
 		$skeleton = str_replace('##module_name##', $data['name'], $skeleton);
 		$skeleton = str_replace('##module_package##', $data['package_name'], $skeleton);
 		$skeleton = str_replace('##module_display_name##', $data['display_name'], $skeleton);
+        $skeleton = str_replace('##module_class_name##', $data['className'], $skeleton);
+        $skeleton = str_replace('##module_namespace##', $data['namespace'], $skeleton);
 
 		return $skeleton;
 	}
