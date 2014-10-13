@@ -56,44 +56,33 @@ class CreateModuleCommand extends Command {
 		$this->files->put($basePath . 'modules.json', json_encode($module, JSON_PRETTY_PRINT));
 
 		$this->info('Generating angular module skeleton');
-		//generate admin angular app skeleton
-		$this->files->makeDirectory($basePath . 'resources');
-		$this->files->makeDirectory($basePath . 'resources/views/');
-		$this->files->makeDirectory($basePath . 'resources/js/');
-		$this->files->makeDirectory($basePath . 'resources/js/controllers');
-		$this->files->makeDirectory($basePath . 'resources/js/services');
-		$this->files->makeDirectory($basePath . 'resources/js/filters');
-		$this->files->makeDirectory($basePath . 'resources/js/directives');
+
+		$directories = $this->getDirectories();
+		$this->createDirectoriesFromArray($directories, $basePath);
 
 		//generate base angular app
-		$appSkeleton = $this->files->get(__DIR__ . '/resources/app.skeleton.js');
-
 		$parts = explode('/', $module['name']);
 		$name = $parts[1];
-		$className = ucfirst($name);
-		$namespace = ucfirst($parts[0]);
 
-		$appSkeleton = str_replace('##module_name##', $name, $appSkeleton);
-		$appSkeleton = str_replace('##module_package##', $module['name'], $appSkeleton);
-		$appSkeleton = str_replace('##module_display_name##', $module['display_name'], $appSkeleton);
+		$data['name'] = $name;
+		$data['package_name'] = $module['name'];
+		$data['display_name'] = $module['display_name'];
 
-		$this->files->put($basePath . 'resources/js/' . $name . '.js', $appSkeleton);
+		$skeleton = $this->getSkeleton(__DIR__ . '/resources/app.skeleton.js', $data);
+		$this->files->put($basePath . 'resources/js/' . $name . '.js', $skeleton);
 
 		//generate base angular controller
-		$controllerSkeleton = $this->files->get(__DIR__ . '/resources/controller.skeleton.js');
+		$skeleton = $this->getSkeleton(__DIR__ . '/resources/controller.skeleton.js', $data);
+		$this->files->put($basePath . 'resources/js/controllers/' . $data['display_name'] . 'Ctrl.js', $skeleton);
 
-		$controllerSkeleton = str_replace('##module_name##', $name, $controllerSkeleton);
-		$controllerSkeleton = str_replace('##module_package##', $module['name'], $controllerSkeleton);
-		$controllerSkeleton = str_replace('##module_display_name##', $module['display_name'], $controllerSkeleton);
-
-		$this->files->put($basePath . 'resources/js/controllers/' . $module['display_name'] . 'Ctrl.js', $controllerSkeleton);
-
-		$this->files->makeDirectory($basePath . 'public/assets');
-		$this->files->makeDirectory($basePath . 'public/assets/views');
 		$this->files->copy(__DIR__ . '/resources/view.skeleton.html', $basePath . '/public/assets/views/index.html');
 
 		$this->info('Generating Module Provider');
-		$providerPath = $basePath . 'src/' . $namespace . '/' . $className . '/' . $className;
+
+		$namespace = ucfirst($parts[0]);
+		$classname = ucfirst($parts[1]);
+
+		$providerPath = $basePath . 'src/' . $namespace . '/' . $classname . '/' . $classname;
 		$this->files->move($providerPath . 'ServiceProvider.php', $providerPath . 'ModuleProvider.php');
 
 		$this->info('Adding to module provider config');
@@ -139,7 +128,53 @@ class CreateModuleCommand extends Command {
 			'resources/js/**/*.js'
 		];
 
-		return $module; 
+		return $module;
+	}
+
+	private function getDirectories()
+	{
+		return [
+			'resources' => [
+				'js' => [
+					'controllers',
+					'services',
+					'filters',
+					'directives'
+				]
+			],
+			'public' => [
+				'assets' => [
+					'views'
+				]
+			]
+		];
+	}
+
+	private function createDirectoriesFromArray($directories, $basePath)
+	{
+		foreach($directories as $key => $directory)
+		{
+			if(is_array($directory))
+			{
+				$this->files->makeDirectory($basePath . $key);
+				$this->createDirectoriesFromArray($directory, $basePath . $key . '/');
+			}
+			else
+			{
+				$this->files->makeDirectory($basePath . $directory);
+			}
+		}
+	}
+
+	private function getSkeleton($path, $data)
+	{
+		$skeleton = $this->files->get($path);
+
+		$skeleton = str_replace('##module_name##', $data['name'], $skeleton);
+		$skeleton = str_replace('##module_package##', $data['package_name'], $skeleton);
+		$skeleton = str_replace('##module_display_name##', $data['display_name'], $skeleton);
+
+		return $skeleton;
 	}
 	/**
 	 * Get the console command arguments.
