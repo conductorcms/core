@@ -29,6 +29,11 @@ class AdminController {
         return View::make('conductor::admin.index', $data);
 	}
 
+	public function login()
+	{
+		return View::make('conductor::admin.login');
+	}
+
 	public function modules()
 	{
 		$data['modules'] = $this->module->getAll();

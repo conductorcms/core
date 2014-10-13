@@ -1,5 +1,6 @@
 var dependencies = [
     'admin.core',
+    'admin.login',
     'ngRoute',
     'ui.bootstrap'
 ];

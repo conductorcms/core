@@ -15,7 +15,8 @@
         "classmap": [
             "src/migrations",
             "src/controllers",
-            "src/console"
+            "src/console",
+            "src/seeders"
         ],
         "psr-0": {
             "Mattnmoore\\Conductor\\": "src/"

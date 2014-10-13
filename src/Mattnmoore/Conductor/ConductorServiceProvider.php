@@ -54,6 +54,7 @@ class ConductorServiceProvider extends ServiceProvider {
 		$this->commands($namespace . 'CreateModuleCommand');
         $this->commands($namespace . 'ListModulesCommand');
 		$this->commands($namespace . 'CompileModuleAssetsCommand');
+		$this->commands($namespace . 'CreateAdminCommand');
 	}
 
 	/**

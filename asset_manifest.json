@@ -1,4 +1,3 @@
 [
-    "\/vagrant\/packages\/workbench\/mattnmoore\/battletracker\/public\/assets\/js\/**\/*.js",
-    "\/vagrant\/packages\/workbench\/mattnmoore\/pages\/resources\/js\/**\/*.js"
+    "\/vagrant\/fortify-ii\/workbench\/mattnmoore\/pages\/resources\/js\/**\/*.js"
 ]

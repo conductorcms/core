@@ -1,0 +1,1 @@
+angular.module('admin.login', ['admin.core']);

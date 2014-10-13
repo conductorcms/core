@@ -11,6 +11,8 @@
         <link href="//code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css" rel="stylesheet" type="text/css" />
         <!-- Theme style -->
         <link href="/packages/mattnmoore/conductor/assets/css/AdminLTE.css" rel="stylesheet" type="text/css" />
+        <link href="/packages/mattnmoore/conductor/assets/css/admin.css" rel="stylesheet" type="text/css" />
+
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -46,21 +48,19 @@
 	                 <span class="icon-bar"></span>
 	                 <span class="icon-bar"></span>
 	             </a>
-	             <div class="navbar-right">
+	             <div ng-controller="SessionCtrl" class="navbar-right">
 	                 <ul class="nav navbar-nav">
-
-
 	                     <!-- User Account: style can be found in dropdown.less -->
 	                     <li class="dropdown user user-menu">
 	                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">
 	                             <i class="glyphicon glyphicon-user"></i>
-	                             <span>Admin <i class="caret"></i></span>
+	                             <span><% session.user.email %> <i class="caret"></i></span>
 	                         </a>
 	                         <ul class="dropdown-menu">
 
 	                             <li class="user-footer">
 	                                 <div class="pull-right">
-	                                     <a href="#" class="btn btn-default btn-flat">Sign out</a>
+	                                     <a href="#" ng-click="logout()" class="btn btn-default btn-flat">Sign out</a>
 	                                 </div>
 	                             </li>
 	                         </ul>
