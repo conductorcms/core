@@ -27,10 +27,7 @@ class Conductor {
 	 */
 	private $module;
 
-	function __construct(Application $app,
-						 Cache $cache,
-						 Config $config,
-						 ModuleRepository $module)
+	function __construct(Application $app, Cache $cache, Config $config, ModuleRepository $module)
 	{
 		$this->app = $app;
 		$this->cache = $cache;
@@ -61,25 +58,38 @@ class Conductor {
 
 	public function scanModules($refresh = false)
 	{
+		//delete all registered modules if refresh flag is set
         if($refresh) $this->module->deleteAll();
 
 		//delete cache
 		$this->cache->forget('registeredModules');
 
-		//get modules registered in DB
-		$registeredModules = $this->cache->rememberForever('registeredModules', function()
-		{
-			return $this->module->getAll();
-		});
+		//retrieve all registered modules
+		$registeredModules = $this->getRegisteredModules();
 
 		//get module provider names from config
 		$moduleProviders = $this->config->get('conductor::modules');
 
+		//sync the providers in the config with the registered modules
+		$this->syncModules($moduleProviders, $registeredModules);
+	}
+
+	private function getRegisteredModules()
+	{
+		//get modules registered in DB
+		return $this->cache->rememberForever('registeredModules', function()
+		{
+			return $this->module->getAll();
+		});
+	}
+
+	private function syncModules($providers, $registered)
+	{
 		//module names for checking against DB
 		$moduleNames = [];
 
 		//add new modules from config to DB
-		foreach($moduleProviders as $provider)
+		foreach($providers as $provider)
 		{
 			//resolve provider
 			$provider = new $provider($this->app->make('app'));
@@ -94,10 +104,12 @@ class Conductor {
 		}
 
 		//Sync config module removals to DB
-		foreach($registeredModules as $module)
+		foreach($registered as $module)
 		{
 			if(!in_array($module->name, $moduleNames)) $this->module->deleteByName($module->name);
 		}
 	}
+
+
 
 }
