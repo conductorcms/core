@@ -2,6 +2,6 @@ angular.module('admin').filter('yesOrNo', function()
 {
 	return function(input)
 	{
-		return input ? 'Yes' : 'No';
+		return input == 1 ? 'Yes' : 'No';
 	}
 });
