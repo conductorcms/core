@@ -36,4 +36,17 @@ class ApiController {
 		return Response::json(['message' => 'This module could not be installed properly'], 500);
 	}
 
+	public function uninstallModule($id)
+	{
+		$module = $this->module->findById($id);
+
+		//get Module
+		$module = $this->app->make($module->name);
+
+		//if uninstallation is successful
+		if($module->uninstall()) return Response::json(['mesasge' => 'Module successfully uninstalled'], 200);
+
+		return Response::json(['message' => 'This module could not be uninstalled properly'], 500);
+	}
+
 }

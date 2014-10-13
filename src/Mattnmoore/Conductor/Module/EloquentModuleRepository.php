@@ -6,7 +6,7 @@ class EloquentModuleRepository implements ModuleRepository {
 
     private $author;
 
-	function __construct(ModuleModel $module, ModuleAuthor $author)
+	function __construct(Model $module, Author $author)
 	{
 		$this->module = $module;
         $this->author = $author;
@@ -67,6 +67,25 @@ class EloquentModuleRepository implements ModuleRepository {
 	public function isInDb($name)
 	{
 		return ($this->findByName($name) ? true : false);
+	}
+
+	public function setInstalledStatus($name, $status)
+	{
+		$module = $this->findByName($name);
+
+		$module->installed = $status;
+
+		return $module->save();
+	}
+
+	public function markAsInstalled($name)
+	{
+		return $this->setInstalledStatus($name, true);
+	}
+
+	public function markAsUninstalled($name)
+	{
+		return $this->setInstalledStatus($name, false);
 	}
 
 }

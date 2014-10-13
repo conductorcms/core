@@ -1,8 +1,8 @@
 <?php namespace Mattnmoore\Conductor\Module;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model as Eloquent;
 
-class ModuleModel extends Model {
+class Model extends Eloquent {
 
 	public $table = 'modules';
 
@@ -10,7 +10,7 @@ class ModuleModel extends Model {
 
     public function authors()
     {
-        return $this->hasMany('Mattnmoore\Conductor\Module\ModuleAuthor', 'module_id');
+        return $this->hasMany('Mattnmoore\Conductor\Module\Author', 'module_id');
     }
 
 }

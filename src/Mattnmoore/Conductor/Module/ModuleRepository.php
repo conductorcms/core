@@ -10,5 +10,6 @@ interface ModuleRepository {
 	public function deleteByName($name);
     public function deleteAll();
 	public function isInDb($name);
-
+	public function markAsInstalled($name);
+	public function markAsUninstalled($name);
 }

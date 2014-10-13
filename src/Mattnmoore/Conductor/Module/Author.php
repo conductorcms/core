@@ -2,7 +2,9 @@
 
 use Illuminate\Database\Eloquent\Model;
 
-class ModuleAuthor extends Model {
+class Author extends Model {
+
+	public $table = 'module_authors';
 
     public $fillable = ['name', 'email', 'module_id'];
 

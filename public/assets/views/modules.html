@@ -15,10 +15,11 @@
         <td><% module.description %></td>
         <td><span ng-repeat="author in module.authors"><% author.name %> </span></td>
         <td><% module.version %></td>
-        <td><% module.installed %></td>
+        <td><% module.installed | yesOrNo %></td>
         <td>
-            <button class="btn btn-primary">Install</button>
-        </td>
+            <button ng-hide="module.installed" class="btn btn-primary">Install</button>
+			<button ng-show="module.installed" class="btn btn-danger">Uninstall</button>
+		</td>
     </tr>
     </tbody>
 </table>

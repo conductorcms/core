@@ -8,3 +8,17 @@ Route::get('admin/{slug}', 'Mattnmoore\Conductor\Controllers\AdminController@mod
 
 Route::get('admin/api/v1/modules', 'Mattnmoore\Conductor\Controllers\ApiController@modules');
 Route::get('admin/api/v1/module/{id}/install', 'Mattnmoore\Conductor\Controllers\ApiController@installModule');
+Route::get('admin/api/v1/module/{id}/uninstall', 'Mattnmoore\Conductor\Controllers\ApiController@uninstallModule');
+
+
+
+use Mattnmoore\Conductor\Module\ModuleInfo;
+use Mattnmoore\Battletracker\Battletracker;
+
+Route::get('module/info', function()
+{
+	$info = new ModuleInfo;
+	$module = App::make('mattnmoore/battletracker');
+
+	return (array) $info->getInfo($module);
+});
