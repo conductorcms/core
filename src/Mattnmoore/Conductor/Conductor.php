@@ -3,6 +3,7 @@
 use Illuminate\Cache\Repository as Cache;
 use Illuminate\Config\Repository as Config;
 use Illuminate\Foundation\Application;
+use Mattnmoore\Conductor\Module\Info;
 use Mattnmoore\Conductor\Module\ModuleRepository;
 
 class Conductor {

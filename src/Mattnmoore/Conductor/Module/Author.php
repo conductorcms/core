@@ -1,8 +1,8 @@
 <?php namespace Mattnmoore\Conductor\Module;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model as Eloquent;
 
-class Author extends Model {
+class Author extends Eloquent {
 
 	public $table = 'module_authors';
 

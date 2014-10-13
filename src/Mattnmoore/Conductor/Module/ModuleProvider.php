@@ -7,8 +7,7 @@ abstract class ModuleProvider extends ServiceProvider {
 
 	public function registerModule()
 	{
-		$info = $this->app->make('Mattnmoore\Conductor\Module\Info');
-		$info = $info->getInfo($this);
+		$info = $this->getInfo();
 
 		$reflection = new ReflectionClass($this);
 		$namespace = $reflection->getNamespaceName();
@@ -26,6 +25,12 @@ abstract class ModuleProvider extends ServiceProvider {
 		$this->app->tag($info->name, 'conductor:module');
 
 		$this->app->register(get_class($this));
+	}
+
+	public function getInfo()
+	{
+		$info = $this->app->make('Mattnmoore\Conductor\Module\Info');
+		return $info->getInfo($this);
 	}
 
 }
