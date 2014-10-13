@@ -5,7 +5,7 @@ use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Illuminate\Filesystem\Filesystem;
-use App;
+use App, Config;
 
 class CreateModuleCommand extends Command {
 
@@ -107,7 +107,19 @@ class CreateModuleCommand extends Command {
         //add empty routes file
         $this->files->put($basePath . '/src/routes.php', '');
 
-        $this->call('dump-autoload');
+		//include new module files
+		require $providerPath . 'ModuleProvider.php';
+		require $providerPath . '.php';
+
+		$provider = $data['namespace'] . '\\' . $data['className'] . '\\' . $data['className'] . 'ModuleProvider';
+
+		$config = Config::get('conductor::modules');
+		$config[] = $provider;
+		Config::set('conductor::modules', $config);
+
+		$provider = new $provider(App::make('app'));
+		$provider->registerModule();
+
         $this->call('publish:assets', ['--bench' => $data['package_name']]);
 
 		$this->call('module:scan');
