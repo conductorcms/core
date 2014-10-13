@@ -15,10 +15,13 @@ Route::get('admin/api/v1/module/{id}/uninstall', 'Mattnmoore\Conductor\Controlle
 use Mattnmoore\Conductor\Module\ModuleInfo;
 use Mattnmoore\Battletracker\Battletracker;
 
-Route::get('module/info', function()
+Route::get('angular', function()
 {
-	$info = new ModuleInfo;
-	$module = App::make('mattnmoore/battletracker');
+	$angularSkeleton = File::get(base_path() . '/workbench/mattnmoore/conductor/src/console/resources/angular_skeleton.js');
 
-	return (array) $info->getInfo($module);
+	$angularSkeleton = str_replace('##module_name##', 'battletracker', $angularSkeleton);
+	$angularSkeleton = str_replace('##module_package##', 'mattnmoore/battletracker', $angularSkeleton);
+	$angularSkeleton = str_replace('##module_display_name##', 'Battletracker', $angularSkeleton);
+
+	dd($angularSkeleton);
 });
