@@ -5,6 +5,7 @@ use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Illuminate\Filesystem\Filesystem;
+use App;
 
 class CreateModuleCommand extends Command {
 
@@ -108,6 +109,9 @@ class CreateModuleCommand extends Command {
 
         $this->call('dump-autoload');
         $this->call('publish:assets', ['--bench' => $data['package_name']]);
+
+		$this->call('module:scan');
+		$this->call('module:compile-assets');
 	}
 
 	private function getModuleInfo()

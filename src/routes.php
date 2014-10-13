@@ -2,13 +2,10 @@
 
 //Route::get('admin', 'Mattnmoore\Conductor\Controllers\AdminController@index');
 
-Route::get('admin', ['middleware' => 'admin', 'uses' => 'Mattnmoore\Conductor\Controllers\AdminController@index']);
-
 Route::get('admin/login', 'Mattnmoore\Conductor\Controllers\AdminController@login');
 
-Route::get('admin/modules', 'Mattnmoore\Conductor\Controllers\AdminController@index');
-
-Route::get('admin/{slug}', 'Mattnmoore\Conductor\Controllers\AdminController@moduleAdmin');
+Route::get('admin', ['middleware' => 'admin', 'uses' => 'Mattnmoore\Conductor\Controllers\AdminController@index']);
+Route::get('admin/{slug}', ['middleware' => 'admin', 'uses' => 'Mattnmoore\Conductor\Controllers\AdminController@index']);
 
 Route::get('admin/api/v1/modules', 'Mattnmoore\Conductor\Controllers\ApiController@modules');
 Route::get('admin/api/v1/module/{id}/install', 'Mattnmoore\Conductor\Controllers\ApiController@installModule');
