@@ -3,8 +3,7 @@
 use Mattnmoore\Conductor\Module\ModuleRepository;
 use View;
 
-class AdminController
-{
+class AdminController {
 
     private $module;
 
@@ -18,7 +17,8 @@ class AdminController
         $modules = $this->module->getInstalled();
         $names = [];
 
-        foreach ($modules as $module) {
+        foreach ($modules as $module)
+        {
             $parts = explode('/', $module->name);
 
             $names[] = 'admin.' . strtolower($parts[1]);
@@ -38,7 +38,8 @@ class AdminController
     {
         $data['modules'] = $this->module->getAll();
 
-        foreach ($data['modules'] as $module) {
+        foreach ($data['modules'] as $module)
+        {
             $module->installed = ($module->installed ? 'Yes' : 'No');
         }
 

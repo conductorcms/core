@@ -2,8 +2,7 @@
 
 use ReflectionClass;
 
-class Info
-{
+class Info {
 
     private $provider;
 

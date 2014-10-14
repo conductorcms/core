@@ -4,8 +4,7 @@ use Illuminate\Support\ServiceProvider;
 use Mattnmoore\Conductor\Console\ScanModulesCommand;
 use Blade;
 
-class ConductorServiceProvider extends ServiceProvider
-{
+class ConductorServiceProvider extends ServiceProvider {
 
     /**
      * Indicates if loading of the provider is deferred.
@@ -64,7 +63,8 @@ class ConductorServiceProvider extends ServiceProvider
     {
         $namespace = 'Mattnmoore\\Conductor\\Console\\';
 
-        foreach ($commands as $command) {
+        foreach ($commands as $command)
+        {
             $this->commands($namespace . $command);
         }
     }

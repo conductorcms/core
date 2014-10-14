@@ -1,7 +1,6 @@
 <?php namespace Mattnmoore\Conductor\Module;
 
-interface ModuleRepository
-{
+interface ModuleRepository {
 
     public function getAll();
 

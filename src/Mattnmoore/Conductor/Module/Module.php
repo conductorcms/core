@@ -3,8 +3,7 @@
 use Illuminate\Foundation\Artisan;
 use Mattnmoore\Conductor\Module\Utilities\Info;
 
-class Module
-{
+class Module {
 
     private $artisan;
 

@@ -7,8 +7,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Illuminate\Filesystem\Filesystem;
 use App, Config;
 
-class CreateModuleCommand extends Command
-{
+class CreateModuleCommand extends Command {
 
     protected $files;
     /**
@@ -102,7 +101,8 @@ class CreateModuleCommand extends Command
     private function askQuestionsFromArray(array $questions)
     {
         $answers = [];
-        foreach ($questions as $key => $question) {
+        foreach ($questions as $key => $question)
+        {
             $answers[$key] = $this->ask($question);
         }
         return $answers;

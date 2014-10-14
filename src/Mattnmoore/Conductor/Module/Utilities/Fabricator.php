@@ -1,7 +1,6 @@
 <?php namespace Mattnmoore\Conductor\Module\Utilities;
 
-class Fabricator
-{
+class Fabricator {
 
     public function fabricate($module)
     {
@@ -87,13 +86,17 @@ class Fabricator
 
     private function createDirectoriesFromArray($directories, $basePath)
     {
-        foreach ($directories as $key => $directory) {
-            if (is_array($directory)) {
-                if (!$this->files->exists($basePath . $key)) $this->files->makeDirectory($basePath . $key);
+        foreach ($directories as $key => $directory)
+        {
+            if(is_array($directory))
+            {
+                if(!$this->files->exists($basePath . $key)) $this->files->makeDirectory($basePath . $key);
 
                 $this->createDirectoriesFromArray($directory, $basePath . $key . '/');
-            } else {
-                if (!$this->files->exists($basePath . $directory)) $this->files->makeDirectory($basePath . $directory);
+            }
+            else
+            {
+                if(!$this->files->exists($basePath . $directory)) $this->files->makeDirectory($basePath . $directory);
             }
         }
     }

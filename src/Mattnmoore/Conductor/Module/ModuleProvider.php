@@ -4,8 +4,7 @@ use Illuminate\Support\ServiceProvider;
 use Mattnmoore\Conductor\Module\Utilities\Info;
 use ReflectionClass;
 
-abstract class ModuleProvider extends ServiceProvider
-{
+abstract class ModuleProvider extends ServiceProvider {
 
     public function registerModule()
     {
@@ -19,7 +18,8 @@ abstract class ModuleProvider extends ServiceProvider
 
         $name = $namespace . '\\' . $name;
 
-        $this->app->singleton($info->name, function () use ($name) {
+        $this->app->singleton($info->name, function () use ($name)
+        {
             $module = $this->app->make($name);
             $module->setInfo((new Info($this))->getInfo());
 

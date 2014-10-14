@@ -6,8 +6,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Sentinel;
 
-class CreateAdminCommand extends Command
-{
+class CreateAdminCommand extends Command {
 
     protected $files;
     /**

@@ -4,8 +4,7 @@ use Mattnmoore\Conductor\Module\ModuleRepository;
 use Illuminate\Foundation\Application;
 use Response;
 
-class ApiController
-{
+class ApiController {
 
     private $app;
 
@@ -32,7 +31,7 @@ class ApiController
         $module = $this->app->make($module->name);
 
         //if installation is successful
-        if ($module->install()) return Response::json(['mesasge' => 'Module successfully installed'], 200);
+        if($module->install()) return Response::json(['mesasge' => 'Module successfully installed'], 200);
 
         return Response::json(['message' => 'This module could not be installed properly'], 500);
     }
@@ -45,7 +44,7 @@ class ApiController
         $module = $this->app->make($module->name);
 
         //if uninstallation is successful
-        if ($module->uninstall()) return Response::json(['mesasge' => 'Module successfully uninstalled'], 200);
+        if($module->uninstall()) return Response::json(['mesasge' => 'Module successfully uninstalled'], 200);
 
         return Response::json(['message' => 'This module could not be uninstalled properly'], 500);
     }

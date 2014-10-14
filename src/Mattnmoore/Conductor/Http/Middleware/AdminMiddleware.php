@@ -6,8 +6,7 @@ use Illuminate\Contracts\Auth\Guard;
 use Illuminate\Contracts\Routing\Middleware;
 use Illuminate\Contracts\Routing\ResponseFactory;
 
-class AdminMiddleware implements Middleware
-{
+class AdminMiddleware implements Middleware {
 
     /**
      * The Guard implementation.
@@ -42,15 +41,17 @@ class AdminMiddleware implements Middleware
      */
     public function handle($request, Closure $next)
     {
-        if (Sentinel::guest()) {
-            if ($request->ajax()) {
+        if(Sentinel::guest())
+        {
+            if($request->ajax())
+            {
                 return $this->response->make('Unauthorized', 401);
             }
 
             return $this->response->redirectGuest('/admin/login');
         }
 
-        if (!Sentinel::inRole('administrators')) return $this->response->redirectGuest('/admin/login');
+        if(!Sentinel::inRole('administrators')) return $this->response->redirectGuest('/admin/login');
 
         return $next($request);
     }

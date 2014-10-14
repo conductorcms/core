@@ -3,8 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateModuleAuthorTable extends Migration
-{
+class CreateModuleAuthorTable extends Migration {
 
     /**
      * Run the migrations.
@@ -13,7 +12,8 @@ class CreateModuleAuthorTable extends Migration
      */
     public function up()
     {
-        Schema::create('core_module_authors', function ($table) {
+        Schema::create('core_module_authors', function ($table)
+        {
             $table->increments('id');
             $table->integer('module_id');
             $table->string('name');

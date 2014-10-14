@@ -8,8 +8,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use ReflectionClass;
 use Mattnmoore\Conductor\Module\ModuleRepository;
 
-class CompileModuleAssetsCommand extends Command
-{
+class CompileModuleAssetsCommand extends Command {
 
     protected $app;
 
@@ -54,7 +53,8 @@ class CompileModuleAssetsCommand extends Command
 
         $assetManifest = [];
 
-        foreach ($modules as $module) {
+        foreach ($modules as $module)
+        {
             $this->info($module->name);
 
             $reflection = new ReflectionClass($this->app->make($module->name));
@@ -71,11 +71,13 @@ class CompileModuleAssetsCommand extends Command
 
             $json = json_decode(file_get_contents($assets));
 
-            foreach ($json->assets->js as $asset) {
+            foreach ($json->assets->js as $asset)
+            {
                 $assetManifest['js'][] = $moduleRoot . $asset;
             }
 
-            foreach ($json->assets->sass as $asset) {
+            foreach ($json->assets->sass as $asset)
+            {
                 $assetManifest['sass'][] = $moduleRoot . $asset;
             }
         }

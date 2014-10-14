@@ -3,8 +3,7 @@
 use Illuminate\Database\Seeder;
 use Sentinel;
 
-class UserSeeder extends Seeder
-{
+class UserSeeder extends Seeder {
 
     public function run()
     {

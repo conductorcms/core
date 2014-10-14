@@ -7,8 +7,7 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Mattnmoore\Conductor\Conductor;
 
-class ScanModulesCommand extends Command
-{
+class ScanModulesCommand extends Command {
 
     /**
      * The console command name.

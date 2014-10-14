@@ -5,8 +5,7 @@ use Illuminate\Config\Repository as Config;
 use Illuminate\Foundation\Application;
 use Mattnmoore\Conductor\Module\ModuleRepository;
 
-class Conductor
-{
+class Conductor {
 
     /**
      * @var Application
@@ -50,7 +49,8 @@ class Conductor
         $moduleProviders = $this->config->get('conductor::modules');
 
         //register modules in tagged container
-        foreach ($moduleProviders as $module) {
+        foreach ($moduleProviders as $module)
+        {
             $module = new $module($this->app->make('app'));
             $module->registerModule();
         }
@@ -59,7 +59,7 @@ class Conductor
     public function scanModules($refresh = false)
     {
         //delete all registered modules if refresh flag is set
-        if ($refresh) $this->module->deleteAll();
+        if($refresh) $this->module->deleteAll();
 
         //delete cache
         $this->cache->forget('registeredModules');
@@ -77,7 +77,8 @@ class Conductor
     private function getRegisteredModules()
     {
         //get modules registered in DB
-        return $this->cache->rememberForever('registeredModules', function () {
+        return $this->cache->rememberForever('registeredModules', function ()
+        {
             return $this->module->getAll();
         });
     }
@@ -88,7 +89,8 @@ class Conductor
         $moduleNames = [];
 
         //add new modules from config to DB
-        foreach ($providers as $provider) {
+        foreach ($providers as $provider)
+        {
             //resolve provider
             $provider = new $provider($this->app->make('app'));
 
@@ -98,12 +100,13 @@ class Conductor
             $moduleNames[] = $info->name;
 
             //if it's not in the DB, add it
-            if (!$this->module->isInDb($info->name)) $this->module->createFromModuleProvider($provider);
+            if(!$this->module->isInDb($info->name)) $this->module->createFromModuleProvider($provider);
         }
 
         //Sync config module removals to DB
-        foreach ($registered as $module) {
-            if (!in_array($module->name, $moduleNames)) $this->module->deleteByName($module->name);
+        foreach ($registered as $module)
+        {
+            if(!in_array($module->name, $moduleNames)) $this->module->deleteByName($module->name);
         }
     }
 

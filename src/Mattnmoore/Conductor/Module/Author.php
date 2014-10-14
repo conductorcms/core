@@ -2,8 +2,7 @@
 
 use Illuminate\Database\Eloquent\Model as Eloquent;
 
-class Author extends Eloquent
-{
+class Author extends Eloquent {
 
     public $table = 'module_authors';
 

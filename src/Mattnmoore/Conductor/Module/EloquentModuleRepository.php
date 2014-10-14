@@ -1,7 +1,6 @@
 <?php namespace Mattnmoore\Conductor\Module;
 
-class EloquentModuleRepository implements ModuleRepository
-{
+class EloquentModuleRepository implements ModuleRepository {
 
     private $module;
 
@@ -45,7 +44,8 @@ class EloquentModuleRepository implements ModuleRepository
         $module = $this->module->create((array)$info);
 
         $authors = [];
-        foreach ($info->authors as $author) {
+        foreach ($info->authors as $author)
+        {
             $author = $this->author->create((array)$author);
             $authors[] = $author;
         }
