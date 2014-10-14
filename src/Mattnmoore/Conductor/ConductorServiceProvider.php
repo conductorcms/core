@@ -28,7 +28,7 @@ class ConductorServiceProvider extends ServiceProvider {
 
 		$conductor->boot();
 
-		include __DIR__.'/../../routes.php';
+		include __DIR__ . '/../../routes.php';
 	}
 
 	/**

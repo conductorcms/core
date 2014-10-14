@@ -79,9 +79,7 @@ class Fabricator {
                 'sass'
             ],
             'public' => [
-                'assets' => [
-                    'views'
-                ]
+				'views'
             ]
         ];
     }

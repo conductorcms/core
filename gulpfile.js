@@ -41,8 +41,10 @@ gulp.task('build:sass', function()
     gulp.src(assets.sass)
         .pipe(concat('main.css'))
         .pipe(sass())
-        .pipe(gulp.dest('../../../public/packages/mattnmoore/conductor/assets/sass/'))
-})
+        .pipe(gulp.dest('../../../public/packages/mattnmoore/conductor/assets/css/'))
+});
+
+gulp.task('build', ['build:js', 'build:sass']);
 
 gulp.task('watch', function()
 {

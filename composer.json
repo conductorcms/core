@@ -13,13 +13,11 @@
     },
     "autoload": {
         "classmap": [
-            "src/migrations",
-            "src/controllers",
-            "src/console",
-            "src/seeders"
+            "database/migrations",
+            "database/seeders"
         ],
         "psr-0": {
-            "Mattnmoore\\Conductor\\": "src/"
+            "Mattnmoore\\": "src/"
         }
     },
     "minimum-stability": "stable"
