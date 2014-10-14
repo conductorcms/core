@@ -82,7 +82,7 @@ class CompileModuleAssetsCommand extends Command {
             }
         }
 
-        file_put_contents(__DIR__ . '../../../asset_manifest.json', json_encode($assetManifest, JSON_PRETTY_PRINT));
+        file_put_contents(__DIR__ . '../../../../../asset_manifest.json', json_encode($assetManifest, JSON_PRETTY_PRINT));
     }
 
     /**

@@ -11,6 +11,8 @@ if (assets.js === undefined) {
 }
 assets.js.unshift('./resources/js/angular/**/*.js');
 
+
+
 if (assets.sass === undefined) {
     assets.sass = [];
 }
@@ -24,6 +26,12 @@ gulp.task('list:assets', function () {
 });
 
 gulp.task('build:js', function () {
+    console.log('JS files:');
+    for(var ii in assets.js)
+    {
+        console.log(assets.js[ii]);
+    }
+
     gulp.src(assets.js)
         .pipe(annotate())
         .pipe(concat('conductor.js'))

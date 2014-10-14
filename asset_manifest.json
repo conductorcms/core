@@ -1,8 +1,8 @@
 {
     "js": [
-        "\/vagrant\/packages\/workbench\/mattnmoore\/pages\/resources\/js\/**\/*.js"
+        "\/vagrant\/fortify-ii\/workbench\/mattnmoore\/pages\/resources\/js\/**\/*.js"
     ],
     "sass": [
-        "\/vagrant\/packages\/workbench\/mattnmoore\/pages\/resources\/sass\/**\/*.scss"
+        "\/vagrant\/fortify-ii\/workbench\/mattnmoore\/pages\/resources\/sass\/**\/*.scss"
     ]
 }
