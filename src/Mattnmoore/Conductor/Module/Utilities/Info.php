@@ -14,7 +14,7 @@ class Info {
         $this->reflection = new ReflectionClass($this->provider);
     }
 
-    public function getInfo()
+    public function getModuleJson()
     {
         $reflection = $this->reflection;
 

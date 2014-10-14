@@ -1,8 +1,0 @@
-{
-    "name": "Core",
-    "assets": {
-        "js": [
-            "public/assets/js/angular/**/*.js"
-        ]
-    }
-}

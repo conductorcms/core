@@ -18,10 +18,10 @@ abstract class ModuleProvider extends ServiceProvider {
 
         $name = $namespace . '\\' . $name;
 
-        $this->app->singleton($info->name, function () use ($name)
+        $this->app->singleton($info->name, function () use ($name, $info)
         {
             $module = $this->app->make($name);
-            $module->setInfo((new Info($this))->getInfo());
+            $module->setInfo($info);
 
             return $module;
         });
@@ -35,7 +35,7 @@ abstract class ModuleProvider extends ServiceProvider {
     {
         $info = new Info($this);
 
-        return $info->getInfo();
+        return $info->getModuleJson();
     }
 
 }

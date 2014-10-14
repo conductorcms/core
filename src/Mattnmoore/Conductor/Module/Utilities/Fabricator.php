@@ -2,68 +2,48 @@
 
 class Fabricator {
 
-    public function fabricate($module)
+    private $config;
+
+    private $basePath;
+
+    private $moduleInfo;
+
+    public function __construct(Config $config, $module)
     {
-        $basePath = base_path() . '/workbench/' . $module['name'] . '/';
+        $this->config = $config;
+    }
 
-        $this->info('Generating module files');
+    public function setModuleInfo($moduleInfo)
+    {
+        $this->moduleInfo = $moduleInfo;
+        $this->basePath = $this->getModuleRoot($moduleInfo['name']);
+    }
+
+    public function fabricate()
+    {
         //generate module.json
-        $this->files->put($basePath . 'module.json', json_encode($module, JSON_PRETTY_PRINT));
+        $this->generateModuleJson($this->moduleInfo);
 
-        $this->info('Generating angular module skeleton');
+        //create directory structure
+        $this->createDirectories();
 
+        //generate skeleton files
+        $this->generateSkeletonFiles();
+
+        //add new module to config
+        $this->addModuleToConfig();
+    }
+
+    private function generateModuleJson($module)
+    {
+        $this->files->put($this->basePath. 'module.json', json_encode($module, JSON_PRETTY_PRINT));
+    }
+
+    private function createDirectories()
+    {
         $directories = $this->getDirectories();
-        $this->createDirectoriesFromArray($directories, $basePath);
 
-        //generate base angular app
-        $parts = explode('/', $module['name']);
-        $name = $parts[1];
-
-        $data['name'] = $name;
-        $data['package_name'] = $module['name'];
-        $data['display_name'] = $module['display_name'];
-        $data['namespace'] = ucfirst($parts[0]);
-        $data['className'] = ucfirst($parts[1]);
-
-        $skeleton = $this->getSkeleton(__DIR__ . '/resources/app.skeleton.js', $data);
-        $this->files->put($basePath . 'resources/js/' . $name . '.js', $skeleton);
-
-        //generate base angular controller
-        $skeleton = $this->getSkeleton(__DIR__ . '/resources/controller.skeleton.js', $data);
-        $this->files->put($basePath . 'resources/js/controllers/' . $data['display_name'] . 'Ctrl.js', $skeleton);
-
-        $this->files->copy(__DIR__ . '/resources/view.skeleton.html', $basePath . 'public/assets/views/index.html');
-
-        $this->info('Generating Module Provider');
-
-        $providerPath = $basePath . 'src/' . $data['namespace'] . '/' . $data['className'] . '/' . $data['className'];
-
-        $this->files->delete($providerPath . 'ServiceProvider.php');
-
-        $skeleton = $this->getSkeleton(__DIR__ . '/resources/provider.skeleton', $data);
-        $this->files->put($providerPath . 'ModuleProvider.php', $skeleton);
-
-        $this->info('Generating Module');
-
-        $skeleton = $this->getSkeleton(__DIR__ . '/resources/module.skeleton', $data);
-        $this->files->put($providerPath . '.php', $skeleton);
-
-        $this->info('Adding to module provider config');
-
-        //Add new provider to the provider list
-        $file = base_path() . '/workbench/mattnmoore/conductor/src/config/modules.php';
-        $fh = fopen($file, 'r+');
-        $provider = "    '" . $data['namespace'] . "\\" . $data['className'] . "\\" . $data['className'] . "ModuleProvider'," . PHP_EOL . '];';
-        fseek($fh, -2, SEEK_END);
-        fwrite($fh, $provider);
-        fclose($fh);
-
-        //add empty routes file
-        $this->files->put($basePath . '/src/routes.php', '');
-
-        //add empty scss file
-        $this->files->put($basePath . '/resources/sass/main.scss', '');
-
+        $this->createDirectoriesFromArray($directories, $this->basePath);
     }
 
     private function getDirectories()
@@ -101,17 +81,129 @@ class Fabricator {
         }
     }
 
+    private function addModuleToConfig()
+    {
+        $this->addModuleToConfigFile();
+        $this->addModuleToLoadedConfig();
+    }
+
+    private function addModuleToConfigFile()
+    {
+        //open file
+        $file = $this->basePath . 'src/config/modules.php';
+        $fh = fopen($file, 'r+');
+
+        //get provider name
+        $provider = "    '" . $this->getProviderPath($this->data) . "ModuleProvider'," . PHP_EOL . '];';
+
+        //add to config
+        fseek($fh, -2, SEEK_END);
+        fwrite($fh, $provider);
+
+        fclose($fh);
+    }
+
+    private function addModuleToLoadedConfig()
+    {
+        $data = $this->getModuleInfo();
+        $provider = $data['namespace'] . $data['className'] . 'ModuleProvider';
+
+        $config = Config::get('conductor::modules');
+        $config[] = $provider;
+        Config::set('conductor::modules', $config);
+    }
+
+    private function generateSkeletonFiles()
+    {
+        $data = $this->getModuleInfo();
+
+        $providerPath = $this->getProviderPath($data);
+
+        $this->files->delete($providerPath . 'ServiceProvider.php');
+
+        $files = [
+            'resources/js/' . $data['name'] . '.js'                      => $this->getSkeletonPath('app.skeleton.js'),
+            'resources/js/controllers/' . $data['className'] . 'Ctrl.js' => $this->getSkeletonPath('controller.skeleton.js'),
+            $providerPath . $data['className'] . 'ModuleProvider.php'    => $this->getSkeletonPath('provider.skeleton'),
+            $providerPath . $data['className'] . '.php'                  => $this->getSkeletonPath('module.skeleton')
+        ];
+
+        $this->generateSkeletonsFromArray($files, $data);
+
+        $this->files->copy(__DIR__ . '/resources/view.skeleton.html', $this->basePath . 'public/assets/views/index.html');
+
+        //add empty routes file
+        $this->files->put($this->basePath . '/src/routes.php', '');
+
+        //add empty scss file
+        $this->files->put($this->basePath . '/resources/sass/main.scss', '');
+    }
+
+
+    private function getSkeletonPath($name)
+    {
+        return base_path() . '/workbench/mattnmoore/conductor/resources/skeletons/' . $name;
+    }
+
+    private function getProviderPath($data)
+    {
+        return $this->getModuleRoot($data['packageName']) . 'src/' . $data['namespace'] . '/' . $data['className'];
+    }
+
+    private function generateSkeletonsFromArray($files, $data)
+    {
+        foreach($files as $path => $skeleton)
+        {
+            $skeleton = $this->getSkeleton($skeleton, $data);
+            $this->files->put($path, $skeleton);
+        }
+    }
+
     private function getSkeleton($path, $data)
     {
         $skeleton = $this->files->get($path);
 
-        $skeleton = str_replace('##module_name##', $data['name'], $skeleton);
-        $skeleton = str_replace('##module_package##', $data['package_name'], $skeleton);
-        $skeleton = str_replace('##module_display_name##', $data['display_name'], $skeleton);
-        $skeleton = str_replace('##module_class_name##', $data['className'], $skeleton);
-        $skeleton = str_replace('##module_namespace##', $data['namespace'], $skeleton);
+        $tags = $this->getSkeletonTags($data);
+
+        return $this->replaceTags($tags, $skeleton);
+    }
+
+    private function getSkeletonTags($data)
+    {
+        return [
+            '##module_name##'         => $data['name'],
+            '##module_package##'      => $data['packageName'],
+            '##module_display_name##' => $data['displayName'],
+            '##module_class_name##'   => $data['className'],
+            '##module_namespace##'    => $data['namespace']
+        ];
+    }
+
+    private function replaceTags($tags, $skeleton)
+    {
+        foreach($tags as $tag => $replacement)
+        {
+            $skeleton = str_replace($tag, $replacement, $skeleton);
+        }
 
         return $skeleton;
     }
 
+    private function getModuleRoot($packageName)
+    {
+        return base_path() . '/workbench/' . $packageName . '/';
+    }
+
+    private function getModuleInfo()
+    {
+        $parts = explode('/', $this->moduleInfo['name']);
+
+        return [
+            'name' => $parts[1],
+            'packageName' => $this->moduleInfo['name'],
+            'displayName' => $this->moduleInfo['display_name'],
+            'namespace' => ucfirst($parts[0]) . '\\' . ucfirst($parts[1]),
+            'className' => ucfirst($parts[1])
+        ];
+    }
 }

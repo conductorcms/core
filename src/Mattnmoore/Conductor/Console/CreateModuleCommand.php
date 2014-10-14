@@ -2,6 +2,7 @@
 
 use Illuminate\Console\Application;
 use Illuminate\Console\Command;
+use Mattnmoore\Conductor\Module\Utilities\Fabricator;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Illuminate\Filesystem\Filesystem;
@@ -9,7 +10,13 @@ use App, Config;
 
 class CreateModuleCommand extends Command {
 
-    protected $files;
+    /**
+     * Fabricator class to fabricate
+     *
+     * @var Fabricator
+     */
+    protected $fabricator;
+
     /**
      * The console command name.
      *
@@ -27,11 +34,11 @@ class CreateModuleCommand extends Command {
     /**
      * Create a new Console Instance
      *
-     * @param Filesystem $files
+     * @param Fabricator $fabricator
      */
-    public function __construct(Filesystem $files)
+    public function __construct(Fabricator $fabricator)
     {
-        $this->files = $files;
+        $this->fabricator = $fabricator;
 
         parent::__construct();
     }
@@ -43,33 +50,25 @@ class CreateModuleCommand extends Command {
      */
     public function fire()
     {
-        $module = $this->getModuleInfo();
+        //get module info from user
+        $info = $this->getModuleInfo();
 
         //make package
-        $this->call('workbench', ['package' => $module['name'], '--resources' => true]);
+        $this->call('workbench', ['package' => $info['name'], '--resources' => true]);
 
         //generate skeleton files
-        $this->fabricator->fabricate($module);
+        $this->fabricator->setModuleInfo($info);
+        $this->fabricator->fabricate();
 
-        //include new module files
-        require $providerPath . 'ModuleProvider.php';
-        require $providerPath . '.php';
-
-        $provider = $data['namespace'] . '\\' . $data['className'] . '\\' . $data['className'] . 'ModuleProvider';
-
-        $config = Config::get('conductor::modules');
-        $config[] = $provider;
-        Config::set('conductor::modules', $config);
-
-        $provider = new $provider(App::make('app'));
-        $provider->registerModule();
-
-        $this->call('publish:assets', ['--bench' => $data['package_name']]);
-
-        $this->call('module:scan');
-        $this->call('module:compile-assets');
+        //refresh module list, publish assets, etc
+        $this->refreshModules($info['name']);
     }
 
+    /**
+     * Get info for new module from user
+     *
+     * @return array
+     */
     private function getModuleInfo()
     {
         //get module info
@@ -86,6 +85,11 @@ class CreateModuleCommand extends Command {
         return $module;
     }
 
+    /**
+     * Get questions array
+     *
+     * @return array
+     */
     private function getModuleQuestions()
     {
         return [
@@ -98,6 +102,12 @@ class CreateModuleCommand extends Command {
         ];
     }
 
+    /**
+     * Ask questions from array
+     *
+     * @param array $questions
+     * @return array
+     */
     private function askQuestionsFromArray(array $questions)
     {
         $answers = [];
@@ -108,11 +118,22 @@ class CreateModuleCommand extends Command {
         return $answers;
     }
 
+    /**
+     * Converts string to true/false
+     *
+     * @param $string
+     * @return bool
+     */
     private function stringToBoolean($string)
     {
         return ($string == 'Y' || $string == 'y' ? true : false);
     }
 
+    /**
+     * Return module assets array for module.json
+     *
+     * @return array
+     */
     private function getModuleAssets()
     {
         return [
@@ -123,6 +144,19 @@ class CreateModuleCommand extends Command {
                 'resources/sass/**/*.scss'
             ]
         ];
+    }
+
+    /**
+     * Run commands to integrate new module
+     *
+     * @param $newModule
+     */
+    public function refreshModules($newModule)
+    {
+        $this->call('publish:assets', ['--bench' => $newModule['package_name']]);
+
+        $this->call('module:scan');
+        $this->call('module:compile-assets');
     }
 
     /**

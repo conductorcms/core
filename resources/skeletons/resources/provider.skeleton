@@ -1,4 +1,4 @@
-<?php namespace ##module_namespace##\##module_class_name##;
+<?php namespace ##module_namespace##;
 
 use Mattnmoore\Conductor\Module\ModuleProvider;
 
