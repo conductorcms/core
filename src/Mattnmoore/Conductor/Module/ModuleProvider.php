@@ -29,7 +29,7 @@ abstract class ModuleProvider extends ServiceProvider {
 
 	public function getInfo()
 	{
-		$info = $this->app->make('Mattnmoore\Conductor\Module\Info');
+		$info = $this->app->make('Mattnmoore\Conductor\Module\Utilities\Info');
 		return $info->getInfo($this);
 	}
 

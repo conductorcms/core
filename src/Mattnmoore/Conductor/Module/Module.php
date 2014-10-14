@@ -1,7 +1,7 @@
 <?php namespace Mattnmoore\Conductor\Module;
 
 use Illuminate\Foundation\Artisan;
-use Mattnmoore\Conductor\Module\Info;
+use Mattnmoore\Conductor\Module\Utilities\Info;
 
 class Module {
 

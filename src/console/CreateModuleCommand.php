@@ -45,70 +45,11 @@ class CreateModuleCommand extends Command {
 	{
 		$module = $this->getModuleInfo();
 
-		$this->info('Making workbench package');
+        //make package
+        $this->call('workbench', ['package' => $module['name'], '--resources' => true]);
 
-		//make package
-		$this->call('workbench', ['package' => $module['name'], '--resources' => true]);
-
-		$basePath = base_path() . '/workbench/' . $module['name'] . '/';
-
-		$this->info('Generating module files');
-		//generate module.json
-		$this->files->put($basePath . 'module.json', json_encode($module, JSON_PRETTY_PRINT));
-
-		$this->info('Generating angular module skeleton');
-
-		$directories = $this->getDirectories();
-		$this->createDirectoriesFromArray($directories, $basePath);
-
-		//generate base angular app
-		$parts = explode('/', $module['name']);
-		$name = $parts[1];
-
-		$data['name'] = $name;
-		$data['package_name'] = $module['name'];
-		$data['display_name'] = $module['display_name'];
-        $data['namespace']    = ucfirst($parts[0]);
-        $data['className']    = ucfirst($parts[1]);
-
-        $skeleton = $this->getSkeleton(__DIR__ . '/resources/app.skeleton.js', $data);
-		$this->files->put($basePath . 'resources/js/' . $name . '.js', $skeleton);
-
-		//generate base angular controller
-		$skeleton = $this->getSkeleton(__DIR__ . '/resources/controller.skeleton.js', $data);
-		$this->files->put($basePath . 'resources/js/controllers/' . $data['display_name'] . 'Ctrl.js', $skeleton);
-
-		$this->files->copy(__DIR__ . '/resources/view.skeleton.html', $basePath . 'public/assets/views/index.html');
-
-        $this->info('Generating Module Provider');
-
-        $providerPath = $basePath . 'src/' . $data['namespace'] . '/' . $data['className'] . '/' . $data['className'];
-
-        $this->files->delete($providerPath . 'ServiceProvider.php');
-
-        $skeleton = $this->getSkeleton(__DIR__ . '/resources/provider.skeleton', $data);
-        $this->files->put($providerPath . 'ModuleProvider.php', $skeleton);
-
-        $this->info('Generating Module');
-
-        $skeleton = $this->getSkeleton(__DIR__ . '/resources/module.skeleton', $data);
-        $this->files->put($providerPath . '.php', $skeleton);
-
-        $this->info('Adding to module provider config');
-
-        //Add new provider to the provider list
-        $file = base_path() . '/workbench/mattnmoore/conductor/src/config/modules.php';
-        $fh = fopen($file, 'r+');
-        $provider = "    '" . $data['namespace'] . "\\" . $data['className'] . "\\" . $data['className'] . "ModuleProvider'," . PHP_EOL . '];';
-        fseek($fh, -2, SEEK_END);
-        fwrite($fh, $provider);
-        fclose($fh);
-
-        //add empty routes file
-        $this->files->put($basePath . '/src/routes.php', '');
-
-        //add empty scss file
-        $this->files->put($basePath . '/resources/sass/main.scss', '');
+        //generate skeleton files
+        $this->fabricator->fabricate($module);
 
 		//include new module files
 		require $providerPath . 'ModuleProvider.php';
@@ -131,100 +72,59 @@ class CreateModuleCommand extends Command {
 
 	private function getModuleInfo()
 	{
-		$module['name'] = $this->ask("What is the package name? (E.g. mattnmoore/conductor)");
-		$module['display_name']  = $this->ask("What is the module's name?");
-		$module['version'] = $this->ask("What is the module's version?");
-		$module['description'] = $this->ask("What is the module's description?");
+        //get module info
+        $questions = $this->getModuleQuestions();
+        $module = $this->askQuestionsFromArray($questions);
 
-		$backend = $this->ask("Will this module have a back-end component? (Y or N)");
-		$module['backend'] = ($backend == 'Y' || $backend == 'y' ? true : false);
+        //transform some properties
+        $module['backend'] = $this->stringToBoolean($module['backend']);
+        $module['frontend'] = $this->stringToBoolean($module['frontend']);
 
-		$frontend = $this->ask("Will this module have a front-end component? (Y or N)");
-		$module['frontend'] = ($frontend == 'Y' || $frontend == 'y' ? true : false);
-
-		$module['authors'] = [];
-		$multipleAuthors  = $this->ask("Are there multiple authors? (Y or N)");
-		if($multipleAuthors == 'Y' || $multipleAuthors == 'y')
-		{
-			$numberofAuthors = $this->ask("How many? (1, 2, 3...");
-			foreach(range(1, $numberofAuthors) as $author)
-			{
-				$newAuthor = [];
-				$newAuthor['name'] = $this->ask("What is author #$author's name?");
-				$newAuthor['email'] = $this->ask("What is author #$author's email?");
-				$module['authors'][] = $newAuthor;
-			}
-		}
-		else
-		{
-			$author['name'] = $this->ask("What is the author's name?");
-			$author['email'] = $this->ask("What is the author's email?");
-			$module['authors'][] = $author;
-		}
-
-		//register default assets
-		$module['assets'] = [];
-
-		$module['assets']['js'] = [
-			'resources/js/**/*.js'
-		];
-
-        $module['assets']['sass'] = [
-            'resources/sass/**/*.scss'
-        ];
+        //get assets
+        $module['assets'] = $this->getModuleAssets();
 
 		return $module;
 	}
 
-	private function getDirectories()
-	{
-		return [
-			'resources' => [
-				'js' => [
-					'controllers',
-					'services',
-					'filters',
-					'directives'
-				],
-                'sass'
-			],
-			'public' => [
-				'assets' => [
-					'views'
-				]
-			]
-		];
-	}
+    private function getModuleQuestions()
+    {
+        return [
+            'name' => 'What is the package name? (E.g. mattnmoore/conductor)',
+            'display_name' => 'What is the module\'s name?',
+            'version' => 'What is the module\'s version?',
+            'description' => 'What is the module\'s description?',
+            'backend' => 'Will this module have a back-end component? (Y or N)',
+            'frontend' => 'Will this module have a front-end component? (Y or N)',
+        ];
+    }
 
-	private function createDirectoriesFromArray($directories, $basePath)
-	{
-		foreach($directories as $key => $directory)
-		{
-			if(is_array($directory))
-			{
-                if(!$this->files->exists($basePath . $key)) $this->files->makeDirectory($basePath . $key);
+    private function askQuestionsFromArray(array $questions)
+    {
+        $answers = [];
+        foreach($questions as $key => $question)
+        {
+            $answers[$key] = $this->ask($question);
+        }
+        return $answers;
+    }
 
-                $this->createDirectoriesFromArray($directory, $basePath . $key . '/');
-            }
-			else
-			{
-                if(!$this->files->exists($basePath . $directory)) $this->files->makeDirectory($basePath . $directory);
-			}
-		}
-	}
+    private function stringToBoolean($string)
+    {
+        return ($string == 'Y' || $string == 'y' ? true : false);
+    }
 
-	private function getSkeleton($path, $data)
-	{
-		$skeleton = $this->files->get($path);
+    private function getModuleAssets()
+    {
+        return [
+            'js' => [
+                'resources/js/**/*.js'
+            ],
+            'sass' => [
+                'resources/sass/**/*.scss'
+            ]
+        ];
+    }
 
-		$skeleton = str_replace('##module_name##', $data['name'], $skeleton);
-		$skeleton = str_replace('##module_package##', $data['package_name'], $skeleton);
-		$skeleton = str_replace('##module_display_name##', $data['display_name'], $skeleton);
-        $skeleton = str_replace('##module_class_name##', $data['className'], $skeleton);
-        $skeleton = str_replace('##module_namespace##', $data['namespace'], $skeleton);
-
-		return $skeleton;
-	}
 	/**
 	 * Get the console command arguments.
 	 *

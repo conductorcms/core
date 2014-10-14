@@ -12,3 +12,4 @@ Route::get('admin/api/v1/module/{id}/uninstall', 'Mattnmoore\Conductor\Controlle
 Route::get('/admin/api/v1/session', 'Mattnmoore\Conductor\Controllers\SessionController@get');
 Route::post('/admin/api/v1/session', 'Mattnmoore\Conductor\Controllers\SessionController@create');
 Route::get('/admin/api/v1/session/destroy', 'Mattnmoore\Conductor\Controllers\SessionController@destroy');
+
