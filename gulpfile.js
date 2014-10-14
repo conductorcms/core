@@ -12,6 +12,12 @@ if(assets.js === undefined)
 }
 assets.js.unshift('./public/assets/js/angular/**/*.js');
 
+if(assets.sass === undefined)
+{
+    assets.sass = [];
+}
+assets.sass.unshift('./public/assets/sass/**/*.scss');
+
 gulp.task('list:assets', function()
 {
     console.log('Assets found: ' + assets.length);
@@ -21,7 +27,7 @@ gulp.task('list:assets', function()
     }
 });
 
-gulp.task('build', function()
+gulp.task('build:js', function()
 {
     gulp.src(assets.js)
         .pipe(annotate())
@@ -29,6 +35,14 @@ gulp.task('build', function()
         .pipe(uglify())
         .pipe(gulp.dest('../../../public/packages/mattnmoore/conductor/assets/js/'))
 });
+
+gulp.task('build:sass', function()
+{
+    gulp.src(assets.sass)
+        .pipe(concat('main.css'))
+        .pipe(sass())
+        .pipe(gulp.dest('../../../public/packages/mattnmoore/conductor/assets/sass/'))
+})
 
 gulp.task('watch', function()
 {
