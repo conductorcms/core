@@ -1,21 +1,22 @@
 <?php namespace Mattnmoore\Conductor\Module\Utilities;
 
-use Mattnmoore\Conductor\Module\Module;
 use ReflectionClass;
 
 class Info {
 
-    private $module;
+    private $provider;
 
-    function __construct(Module $module)
+    private $reflection;
+
+    function __construct($provider)
     {
-        $this->module = $module;
-        $this->reflection = new ReflectionClass($this->module);
+        $this->provider = $provider;
+        $this->reflection = new ReflectionClass($this->provider);
     }
 
 	public function getInfo()
 	{
-		$reflection = new ReflectionClass($this->module);
+		$reflection = $this->reflection;
 
 		$name = $reflection->getShortName();
 		$path = $reflection->getFileName();

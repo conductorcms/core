@@ -7,15 +7,19 @@ class Module {
 
     private $artisan;
 
-	private $info;
+	public $info;
 
 	private $repository;
 
-    function __construct(Artisan $artisan, Info $info, ModuleRepository $repository)
+    function __construct(Artisan $artisan, ModuleRepository $repository)
     {
         $this->artisan = $artisan;
-		$this->info = $info;
 		$this->repository = $repository;
+    }
+
+    function setInfo($info)
+    {
+        $this->info = $info;
     }
 
 	public function install()

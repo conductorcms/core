@@ -1,6 +1,7 @@
 <?php namespace Mattnmoore\Conductor\Module;
 
 use Illuminate\Support\ServiceProvider;
+use Mattnmoore\Conductor\Module\Utilities\Info;
 use ReflectionClass;
 
 abstract class ModuleProvider extends ServiceProvider {
@@ -9,7 +10,7 @@ abstract class ModuleProvider extends ServiceProvider {
 	{
 		$info = $this->getInfo();
 
-		$reflection = new ReflectionClass($this);
+        $reflection = new ReflectionClass($this);
 		$namespace = $reflection->getNamespaceName();
 
         $name = explode('\\', $namespace);
@@ -17,20 +18,26 @@ abstract class ModuleProvider extends ServiceProvider {
 
 		$name = $namespace . '\\' . $name;
 
-		$this->app->bind($info->name, function() use ($name)
+		$this->app->singleton($info->name, function() use ($name)
 		{
-			return $this->app->make($name);
+            $module = $this->app->make($name);
+            $module->setInfo((new Info($this))->getInfo());
+
+            return $module;
 		});
+
 
 		$this->app->tag($info->name, 'conductor:module');
 
-		$this->app->register(get_class($this));
+
+        $this->app->register(get_class($this));
 	}
 
 	public function getInfo()
 	{
-		$info = $this->app->make('Mattnmoore\Conductor\Module\Utilities\Info');
-		return $info->getInfo($this);
+		$info = new Info($this);
+
+		return $info->getInfo();
 	}
 
 }
