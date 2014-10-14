@@ -20,7 +20,7 @@ abstract class ModuleProvider extends ServiceProvider {
 
 		$this->app->singleton($info->name, function() use ($name)
 		{
-            $module = $this->app->make($name);
+			$module = $this->app->make($name);
             $module->setInfo((new Info($this))->getInfo());
 
             return $module;
