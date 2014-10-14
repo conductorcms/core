@@ -159,6 +159,7 @@ class CreateModuleCommand extends Command {
     public function refreshModules($newModule)
     {
         $this->call('publish:assets', ['--bench' => $newModule]);
+        $this->call('dump-autoload');
 
         $this->call('module:scan');
         $this->call('module:compile-assets');
