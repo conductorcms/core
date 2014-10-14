@@ -1,24 +1,74 @@
 <?php namespace Mattnmoore\Conductor\Module\Utilities;
 
+use Illuminate\Foundation\Application;
+use Illuminate\Config\Repository;
+use Illuminate\Filesystem\Filesystem;
+
+
 class Fabricator {
 
+    /**
+     * Laravel's IoC container
+     *
+     */
+    private $app;
+
+    /**
+     * Config class
+     *
+     * @var Repository
+     */
     private $config;
 
+    /**
+     * Filesystem class
+     *
+     * @var Filesystem
+     */
+    private $files;
+
+    /**
+     * Module basepath
+     *
+     * @var string
+     */
     private $basePath;
 
+    /**
+     * Module info array
+     *
+     * @var array
+     */
     private $moduleInfo;
 
-    public function __construct(Config $config, $module)
+    /**
+     * Create a new Fabricator instance
+     *
+     * @param Repository $config
+     * @param Filesystem $files
+     */
+    public function __construct(Application $app, Repository $config, Filesystem $files)
     {
+        $this->app = $app;
         $this->config = $config;
+        $this->files = $files;
     }
 
+    /**
+     * Set the module info property
+     *
+     * @param $moduleInfo
+     */
     public function setModuleInfo($moduleInfo)
     {
         $this->moduleInfo = $moduleInfo;
         $this->basePath = $this->getModuleRoot($moduleInfo['name']);
     }
 
+    /**
+     * Fabricate the module
+     *
+     */
     public function fabricate()
     {
         //generate module.json
@@ -32,6 +82,9 @@ class Fabricator {
 
         //add new module to config
         $this->addModuleToConfig();
+
+        //load the new module
+        $this->loadNewModule();
     }
 
     private function generateModuleJson($module)
@@ -87,14 +140,32 @@ class Fabricator {
         $this->addModuleToLoadedConfig();
     }
 
+    private function loadNewModule()
+    {
+        $moduleRoot = $this->basePath;
+        $data = $this->getModuleInfo();
+
+        $path = $moduleRoot . '/src/' .  $data['packageName'] . '/';
+
+        require $path . $data['className'] .  'ModuleProvider.php';
+        require $path . $data['className'] .  '.php';
+
+        $provider = $data['namespace'] . '\\' . $data['className'] . 'ModuleProvider';
+        $provider = new $provider($this->app->make('app'));
+        $provider->registerModule();
+    }
+
     private function addModuleToConfigFile()
     {
         //open file
-        $file = $this->basePath . 'src/config/modules.php';
+        $file = base_path() . '/workbench/mattnmoore/conductor/src/config/modules.php';
         $fh = fopen($file, 'r+');
 
+        $data = $this->getModuleInfo();
+        $provider = $data['namespace'] . '\\' . $data['className'] . 'ModuleProvider';
+
         //get provider name
-        $provider = "    '" . $this->getProviderPath($this->data) . "ModuleProvider'," . PHP_EOL . '];';
+        $provider = "    '" . $provider . "'," . PHP_EOL . "];";
 
         //add to config
         fseek($fh, -2, SEEK_END);
@@ -106,11 +177,11 @@ class Fabricator {
     private function addModuleToLoadedConfig()
     {
         $data = $this->getModuleInfo();
-        $provider = $data['namespace'] . $data['className'] . 'ModuleProvider';
+        $provider = $data['namespace'] . '\\' . $data['className'] . 'ModuleProvider';
 
-        $config = Config::get('conductor::modules');
+        $config = $this->config->get('conductor::modules');
         $config[] = $provider;
-        Config::set('conductor::modules', $config);
+        $this->config->set('conductor::modules', $config);
     }
 
     private function generateSkeletonFiles()
@@ -124,19 +195,20 @@ class Fabricator {
         $files = [
             'resources/js/' . $data['name'] . '.js'                      => $this->getSkeletonPath('app.skeleton.js'),
             'resources/js/controllers/' . $data['className'] . 'Ctrl.js' => $this->getSkeletonPath('controller.skeleton.js'),
-            $providerPath . $data['className'] . 'ModuleProvider.php'    => $this->getSkeletonPath('provider.skeleton'),
-            $providerPath . $data['className'] . '.php'                  => $this->getSkeletonPath('module.skeleton')
+            $providerPath . 'ModuleProvider.php'                         => $this->getSkeletonPath('provider.skeleton'),
+            $providerPath . '.php'                                       => $this->getSkeletonPath('module.skeleton')
         ];
 
         $this->generateSkeletonsFromArray($files, $data);
-
-        $this->files->copy(__DIR__ . '/resources/view.skeleton.html', $this->basePath . 'public/assets/views/index.html');
 
         //add empty routes file
         $this->files->put($this->basePath . '/src/routes.php', '');
 
         //add empty scss file
         $this->files->put($this->basePath . '/resources/sass/main.scss', '');
+
+        //add view skeleton
+        $this->files->copy($this->getSkeletonPath('view.skeleton.html'), $this->basePath . 'public/views/index.html');
     }
 
 
@@ -147,7 +219,9 @@ class Fabricator {
 
     private function getProviderPath($data)
     {
-        return $this->getModuleRoot($data['packageName']) . 'src/' . $data['namespace'] . '/' . $data['className'];
+        $path = $this->getModuleRoot($data['packageName']) . 'src/' . $data['namespace'] . '/' . $data['className'];
+
+        return str_replace('\\', '/', $path);
     }
 
     private function generateSkeletonsFromArray($files, $data)

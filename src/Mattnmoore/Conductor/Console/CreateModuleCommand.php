@@ -5,8 +5,7 @@ use Illuminate\Console\Command;
 use Mattnmoore\Conductor\Module\Utilities\Fabricator;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
-use Illuminate\Filesystem\Filesystem;
-use App, Config;
+use Config;
 
 class CreateModuleCommand extends Command {
 
@@ -82,6 +81,12 @@ class CreateModuleCommand extends Command {
         //get assets
         $module['assets'] = $this->getModuleAssets();
 
+        //get author
+        $module['authors'] = [
+            'name' => Config::get('workbench.name'),
+            'email' => Config::get('workbench.email')
+        ];
+
         return $module;
     }
 
@@ -153,7 +158,7 @@ class CreateModuleCommand extends Command {
      */
     public function refreshModules($newModule)
     {
-        $this->call('publish:assets', ['--bench' => $newModule['package_name']]);
+        $this->call('publish:assets', ['--bench' => $newModule]);
 
         $this->call('module:scan');
         $this->call('module:compile-assets');
