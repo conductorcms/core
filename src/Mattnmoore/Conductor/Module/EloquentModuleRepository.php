@@ -1,21 +1,22 @@
 <?php namespace Mattnmoore\Conductor\Module;
 
-class EloquentModuleRepository implements ModuleRepository {
+class EloquentModuleRepository implements ModuleRepository
+{
 
-	private $module;
+    private $module;
 
     private $author;
 
-	function __construct(Model $module, Author $author)
-	{
-		$this->module = $module;
+    function __construct(Model $module, Author $author)
+    {
+        $this->module = $module;
         $this->author = $author;
-	}
+    }
 
-	public function getAll()
-	{
-		return $this->module->all();
-	}
+    public function getAll()
+    {
+        return $this->module->all();
+    }
 
     public function getAllWithAuthors()
     {
@@ -27,26 +28,25 @@ class EloquentModuleRepository implements ModuleRepository {
         return $this->module->all();
     }
 
-	public function findById($id)
-	{
-		return $this->module->find($id);
-	}
+    public function findById($id)
+    {
+        return $this->module->find($id);
+    }
 
-	public function findByName($name)
-	{
-		return $this->module->whereName($name)->first();
-	}
+    public function findByName($name)
+    {
+        return $this->module->whereName($name)->first();
+    }
 
-	public function createFromModuleProvider($provider)
-	{
+    public function createFromModuleProvider($provider)
+    {
         $info = $provider->getInfo();
 
-		$module = $this->module->create((array) $info);
+        $module = $this->module->create((array)$info);
 
         $authors = [];
-        foreach($info->authors as $author)
-        {
-            $author = $this->author->create((array) $author);
+        foreach ($info->authors as $author) {
+            $author = $this->author->create((array)$author);
             $authors[] = $author;
         }
 
@@ -55,42 +55,42 @@ class EloquentModuleRepository implements ModuleRepository {
         $module->authors()->saveMany($authors);
 
         return true;
-	}
+    }
 
-	public function deleteByName($name)
-	{
-		$module = $this->findByName($name);
+    public function deleteByName($name)
+    {
+        $module = $this->findByName($name);
 
-		return $module->delete();
-	}
+        return $module->delete();
+    }
 
     public function deleteAll()
     {
         return $this->module->truncate();
     }
 
-	public function isInDb($name)
-	{
-		return ($this->findByName($name) ? true : false);
-	}
+    public function isInDb($name)
+    {
+        return ($this->findByName($name) ? true : false);
+    }
 
-	public function setInstalledStatus($name, $status)
-	{
-		$module = $this->findByName($name);
+    public function setInstalledStatus($name, $status)
+    {
+        $module = $this->findByName($name);
 
-		$module->installed = $status;
+        $module->installed = $status;
 
-		return $module->save();
-	}
+        return $module->save();
+    }
 
-	public function markAsInstalled($name)
-	{
-		return $this->setInstalledStatus($name, true);
-	}
+    public function markAsInstalled($name)
+    {
+        return $this->setInstalledStatus($name, true);
+    }
 
-	public function markAsUninstalled($name)
-	{
-		return $this->setInstalledStatus($name, false);
-	}
+    public function markAsUninstalled($name)
+    {
+        return $this->setInstalledStatus($name, false);
+    }
 
 }

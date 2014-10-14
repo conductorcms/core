@@ -3,18 +3,19 @@
 use Illuminate\Foundation\Artisan;
 use Mattnmoore\Conductor\Module\Utilities\Info;
 
-class Module {
+class Module
+{
 
     private $artisan;
 
-	public $info;
+    public $info;
 
-	private $repository;
+    private $repository;
 
     function __construct(Artisan $artisan, ModuleRepository $repository)
     {
         $this->artisan = $artisan;
-		$this->repository = $repository;
+        $this->repository = $repository;
     }
 
     function setInfo($info)
@@ -22,26 +23,26 @@ class Module {
         $this->info = $info;
     }
 
-	public function install()
-	{
-		$info = $this->info->getInfo($this);
+    public function install()
+    {
+        $info = $this->info->getInfo($this);
 
-		$this->artisan->call('migrate', ['--bench' => $info->name]);
+        $this->artisan->call('migrate', ['--bench' => $info->name]);
 
-		$this->repository->markAsInstalled($info->name);
+        $this->repository->markAsInstalled($info->name);
 
-		return true;
-	}
+        return true;
+    }
 
-	public function uninstall()
-	{
-		$info = $this->info->getInfo($this);
+    public function uninstall()
+    {
+        $info = $this->info->getInfo($this);
 
-		$this->artisan->call('migrate:reset', ['--bench' => $info->name]);
+        $this->artisan->call('migrate:reset', ['--bench' => $info->name]);
 
-		$this->repository->markAsUninstalled($info->name);
+        $this->repository->markAsUninstalled($info->name);
 
-		return true;
-	}
+        return true;
+    }
 
 }

@@ -1,19 +1,15 @@
-angular.module('admin.core').provider('Navigation', function()
-{
+angular.module('admin.core').provider('Navigation', function () {
     var _navigation = [];
 
-    this.$get = function()
-    {
+    this.$get = function () {
         return {
-            getNav: function()
-            {
+            getNav: function () {
                 return _navigation;
             }
         }
     }
 
-    this.addSection = function(section)
-    {
+    this.addSection = function (section) {
         _navigation.push(section);
     }
 })

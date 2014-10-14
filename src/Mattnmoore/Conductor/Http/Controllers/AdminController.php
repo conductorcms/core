@@ -3,22 +3,22 @@
 use Mattnmoore\Conductor\Module\ModuleRepository;
 use View;
 
-class AdminController {
+class AdminController
+{
 
-	private $module;
+    private $module;
 
-	function __construct(ModuleRepository $module)
-	{
-		$this->module = $module;
-	}
+    function __construct(ModuleRepository $module)
+    {
+        $this->module = $module;
+    }
 
-	public function index()
-	{
+    public function index()
+    {
         $modules = $this->module->getInstalled();
         $names = [];
 
-        foreach($modules as $module)
-        {
+        foreach ($modules as $module) {
             $parts = explode('/', $module->name);
 
             $names[] = 'admin.' . strtolower($parts[1]);
@@ -27,32 +27,31 @@ class AdminController {
         $data['modules'] = $names;
 
         return View::make('conductor::admin.index', $data);
-	}
+    }
 
-	public function login()
-	{
-		return View::make('conductor::admin.login');
-	}
+    public function login()
+    {
+        return View::make('conductor::admin.login');
+    }
 
-	public function modules()
-	{
-		$data['modules'] = $this->module->getAll();
+    public function modules()
+    {
+        $data['modules'] = $this->module->getAll();
 
-		foreach($data['modules'] as $module)
-		{
-			$module->installed = ($module->installed ? 'Yes' : 'No');
-		}
+        foreach ($data['modules'] as $module) {
+            $module->installed = ($module->installed ? 'Yes' : 'No');
+        }
 
-		return View::make('conductor::admin.modules', $data);
-	}
+        return View::make('conductor::admin.modules', $data);
+    }
 
-	public function moduleAdmin($slug)
-	{
-		$module = $this->module->findByName($slug);
+    public function moduleAdmin($slug)
+    {
+        $module = $this->module->findByName($slug);
 
-		$name = $module->name . '::admin.index';
+        $name = $module->name . '::admin.index';
 
-		return View::make($name);
-	}
+        return View::make($name);
+    }
 
 }

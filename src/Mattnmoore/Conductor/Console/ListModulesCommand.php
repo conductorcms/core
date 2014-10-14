@@ -6,7 +6,8 @@ use Mattnmoore\Conductor\Module\ModuleRepository;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 
-class ListModulesCommand extends Command {
+class ListModulesCommand extends Command
+{
 
     protected $module;
 
@@ -47,8 +48,7 @@ class ListModulesCommand extends Command {
 
         $this->info('Modules found: ' . $modules->count());
 
-        foreach($modules as $module)
-        {
+        foreach ($modules as $module) {
             $installed = ($module->installed ? 'Yes' : 'No');
             $this->info($module->name . ' ' . $installed);
         }

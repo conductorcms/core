@@ -2,7 +2,8 @@
 
 use ReflectionClass;
 
-class Info {
+class Info
+{
 
     private $provider;
 
@@ -14,29 +15,29 @@ class Info {
         $this->reflection = new ReflectionClass($this->provider);
     }
 
-	public function getInfo()
-	{
-		$reflection = $this->reflection;
+    public function getInfo()
+    {
+        $reflection = $this->reflection;
 
-		$name = $reflection->getShortName();
-		$path = $reflection->getFileName();
+        $name = $reflection->getShortName();
+        $path = $reflection->getFileName();
 
-		$moduleName = preg_split('/(?=[A-Z])/', $name);
-		$moduleName = strtolower($moduleName[1]);
+        $moduleName = preg_split('/(?=[A-Z])/', $name);
+        $moduleName = strtolower($moduleName[1]);
 
-		$info = substr($path, 0, strpos($path, $moduleName . '/'));
+        $info = substr($path, 0, strpos($path, $moduleName . '/'));
 
-		$moduleRoot = $info . $moduleName . '/';
+        $moduleRoot = $info . $moduleName . '/';
 
-		$info = $moduleRoot . 'module.json';
+        $info = $moduleRoot . 'module.json';
 
-		return json_decode(file_get_contents($info));
-	}
+        return json_decode(file_get_contents($info));
+    }
 
-	public function getModuleRoot()
-	{
+    public function getModuleRoot()
+    {
 
-	}
+    }
 
     public function getNamespace()
     {

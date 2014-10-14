@@ -7,43 +7,44 @@ use Symfony\Component\Console\Input\InputArgument;
 use Illuminate\Filesystem\Filesystem;
 use App, Config;
 
-class CreateModuleCommand extends Command {
+class CreateModuleCommand extends Command
+{
 
-	protected $files;
-	/**
-	 * The console command name.
-	 *
-	 * @var string
-	 */
-	protected $name = 'module:make';
+    protected $files;
+    /**
+     * The console command name.
+     *
+     * @var string
+     */
+    protected $name = 'module:make';
 
-	/**
-	 * The console command description.
-	 *
-	 * @var string
-	 */
-	protected $description = 'Create a new module.';
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Create a new module.';
 
-	/**
-	 * Create a new Console Instance
-	 *
-	 * @param Filesystem $files
-	 */
-	public function __construct(Filesystem $files)
-	{
-		$this->files = $files;
+    /**
+     * Create a new Console Instance
+     *
+     * @param Filesystem $files
+     */
+    public function __construct(Filesystem $files)
+    {
+        $this->files = $files;
 
-		parent::__construct();
-	}
+        parent::__construct();
+    }
 
-	/**
-	 * Execute the console command.
-	 *
-	 * @return mixed
-	 */
-	public function fire()
-	{
-		$module = $this->getModuleInfo();
+    /**
+     * Execute the console command.
+     *
+     * @return mixed
+     */
+    public function fire()
+    {
+        $module = $this->getModuleInfo();
 
         //make package
         $this->call('workbench', ['package' => $module['name'], '--resources' => true]);
@@ -51,27 +52,27 @@ class CreateModuleCommand extends Command {
         //generate skeleton files
         $this->fabricator->fabricate($module);
 
-		//include new module files
-		require $providerPath . 'ModuleProvider.php';
-		require $providerPath . '.php';
+        //include new module files
+        require $providerPath . 'ModuleProvider.php';
+        require $providerPath . '.php';
 
-		$provider = $data['namespace'] . '\\' . $data['className'] . '\\' . $data['className'] . 'ModuleProvider';
+        $provider = $data['namespace'] . '\\' . $data['className'] . '\\' . $data['className'] . 'ModuleProvider';
 
-		$config = Config::get('conductor::modules');
-		$config[] = $provider;
-		Config::set('conductor::modules', $config);
+        $config = Config::get('conductor::modules');
+        $config[] = $provider;
+        Config::set('conductor::modules', $config);
 
-		$provider = new $provider(App::make('app'));
-		$provider->registerModule();
+        $provider = new $provider(App::make('app'));
+        $provider->registerModule();
 
         $this->call('publish:assets', ['--bench' => $data['package_name']]);
 
-		$this->call('module:scan');
-		$this->call('module:compile-assets');
-	}
+        $this->call('module:scan');
+        $this->call('module:compile-assets');
+    }
 
-	private function getModuleInfo()
-	{
+    private function getModuleInfo()
+    {
         //get module info
         $questions = $this->getModuleQuestions();
         $module = $this->askQuestionsFromArray($questions);
@@ -83,8 +84,8 @@ class CreateModuleCommand extends Command {
         //get assets
         $module['assets'] = $this->getModuleAssets();
 
-		return $module;
-	}
+        return $module;
+    }
 
     private function getModuleQuestions()
     {
@@ -101,8 +102,7 @@ class CreateModuleCommand extends Command {
     private function askQuestionsFromArray(array $questions)
     {
         $answers = [];
-        foreach($questions as $key => $question)
-        {
+        foreach ($questions as $key => $question) {
             $answers[$key] = $this->ask($question);
         }
         return $answers;
@@ -125,24 +125,24 @@ class CreateModuleCommand extends Command {
         ];
     }
 
-	/**
-	 * Get the console command arguments.
-	 *
-	 * @return array
-	 */
-	protected function getArguments()
-	{
-		return [];
-	}
+    /**
+     * Get the console command arguments.
+     *
+     * @return array
+     */
+    protected function getArguments()
+    {
+        return [];
+    }
 
-	/**
-	 * Get the console command options.
-	 *
-	 * @return array
-	 */
-	protected function getOptions()
-	{
-		return [];
-	}
+    /**
+     * Get the console command options.
+     *
+     * @return array
+     */
+    protected function getOptions()
+    {
+        return [];
+    }
 
 }

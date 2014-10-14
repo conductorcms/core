@@ -1,6 +1,7 @@
 <?php namespace Mattnmoore\Conductor\Module\Utilities;
 
-class Fabricator {
+class Fabricator
+{
 
     public function fabricate($module)
     {
@@ -22,8 +23,8 @@ class Fabricator {
         $data['name'] = $name;
         $data['package_name'] = $module['name'];
         $data['display_name'] = $module['display_name'];
-        $data['namespace']    = ucfirst($parts[0]);
-        $data['className']    = ucfirst($parts[1]);
+        $data['namespace'] = ucfirst($parts[0]);
+        $data['className'] = ucfirst($parts[1]);
 
         $skeleton = $this->getSkeleton(__DIR__ . '/resources/app.skeleton.js', $data);
         $this->files->put($basePath . 'resources/js/' . $name . '.js', $skeleton);
@@ -79,24 +80,20 @@ class Fabricator {
                 'sass'
             ],
             'public' => [
-				'views'
+                'views'
             ]
         ];
     }
 
     private function createDirectoriesFromArray($directories, $basePath)
     {
-        foreach($directories as $key => $directory)
-        {
-            if(is_array($directory))
-            {
-                if(!$this->files->exists($basePath . $key)) $this->files->makeDirectory($basePath . $key);
+        foreach ($directories as $key => $directory) {
+            if (is_array($directory)) {
+                if (!$this->files->exists($basePath . $key)) $this->files->makeDirectory($basePath . $key);
 
                 $this->createDirectoriesFromArray($directory, $basePath . $key . '/');
-            }
-            else
-            {
-                if(!$this->files->exists($basePath . $directory)) $this->files->makeDirectory($basePath . $directory);
+            } else {
+                if (!$this->files->exists($basePath . $directory)) $this->files->makeDirectory($basePath . $directory);
             }
         }
     }

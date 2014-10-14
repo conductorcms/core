@@ -1,4 +1,3 @@
-angular.module('admin').controller('HomeCtrl', function($scope)
-{
+angular.module('admin').controller('HomeCtrl', function ($scope) {
 
 });
