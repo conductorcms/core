@@ -4,15 +4,24 @@ Route::group(['namespace' => 'Mattnmoore\\Conductor\\Http\\Controllers'], functi
 {
 	Route::get('admin/login', 'AdminController@login');
 
-	Route::get('admin', ['middleware' => 'admin', 'uses' => 'AdminController@index']);
-	Route::get('admin/{slug}', ['middleware' => 'admin', 'uses' => 'AdminController@index']);
+	//Admin panel routes
+	Route::group(['middleware' => 'admin'], function()
+	{
+		Route::get('admin', 'AdminController@index');
+		Route::get('admin/{slug{', 'AdminController@index');
+	});
 
-	Route::get('admin/api/v1/modules', 'ApiController@modules');
-	Route::get('admin/api/v1/module/{id}/install', 'ApiController@installModule');
-	Route::get('admin/api/v1/module/{id}/uninstall', 'ApiController@uninstallModule');
+	//Admin panel API endpoints
+	Route::group(['prefix' => 'admin/api/v1/'], function()
+	{
+		Route::get('modules', 'ApiController@modules');
+		Route::get('module/{id}/install', 'ApiController@installModule');
+		Route::get('module/{id}/uninstall', 'ApiController@uninstallModule');
 
-	Route::get('/admin/api/v1/session', 'SessionController@get');
-	Route::post('/admin/api/v1/session', 'SessionController@create');
-	Route::get('/admin/api/v1/session/destroy', 'SessionController@destroy');
+		Route::get('session', 'SessionController@get');
+		Route::post('session', 'SessionController@create');
+		Route::get('session/destroy', 'SessionController@destroy');
+	});
+
 
 });
