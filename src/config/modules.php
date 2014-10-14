@@ -3,5 +3,6 @@
 /**/
 
 return [
+
     'Mattnmoore\Pages\PagesModuleProvider',
 ];

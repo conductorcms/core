@@ -1,7 +1,5 @@
 <?php
 
-//Route::get('admin', 'Mattnmoore\Conductor\Controllers\AdminController@index');
-
 Route::get('admin/login', 'Mattnmoore\Conductor\Controllers\AdminController@login');
 
 Route::get('admin', ['middleware' => 'admin', 'uses' => 'Mattnmoore\Conductor\Controllers\AdminController@index']);

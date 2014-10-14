@@ -107,6 +107,9 @@ class CreateModuleCommand extends Command {
         //add empty routes file
         $this->files->put($basePath . '/src/routes.php', '');
 
+        //add empty scss file
+        $this->files->put($basePath . '/resources/sass/main.scss', '');
+
 		//include new module files
 		require $providerPath . 'ModuleProvider.php';
 		require $providerPath . '.php';
@@ -166,6 +169,10 @@ class CreateModuleCommand extends Command {
 			'resources/js/**/*.js'
 		];
 
+        $module['assets']['sass'] = [
+            'resources/sass/**/*.scss'
+        ];
+
 		return $module;
 	}
 
@@ -178,7 +185,8 @@ class CreateModuleCommand extends Command {
 					'services',
 					'filters',
 					'directives'
-				]
+				],
+                'sass'
 			],
 			'public' => [
 				'assets' => [

@@ -73,8 +73,13 @@ class CompileModuleAssetsCommand extends Command {
 
 			foreach($json->assets->js as $asset)
 			{
-				$assetManifest[] = $moduleRoot . $asset;
+				$assetManifest['js'][] = $moduleRoot . $asset;
 			}
+
+            foreach($json->assets->sass as $asset)
+            {
+                $assetManifest['sass'][] = $moduleRoot. $asset;
+            }
 		}
 
 		file_put_contents(__DIR__ . '../../../asset_manifest.json', json_encode($assetManifest, JSON_PRETTY_PRINT));
