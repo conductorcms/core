@@ -61,7 +61,7 @@ class ConductorServiceProvider extends ServiceProvider {
 
 	private function registerCommandsFromArray($commands)
 	{
-		$namespace = 'Mattnmoore\\Console\\';
+		$namespace = 'Mattnmoore\\Conductor\\Console\\';
 
 		foreach($commands as $command)
 		{
