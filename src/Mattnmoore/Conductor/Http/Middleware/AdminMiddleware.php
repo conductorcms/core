@@ -1,4 +1,4 @@
-<?php namespace Mattnmoore\Http\Middleware;
+<?php namespace Mattnmoore\Conductor\Http\Middleware;
 
 use Sentinel;
 use Closure;

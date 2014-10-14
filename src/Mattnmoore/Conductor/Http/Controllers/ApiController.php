@@ -1,4 +1,4 @@
-<?php namespace Mattnmoore\Http\Controllers;
+<?php namespace Mattnmoore\Conductor\Http\Controllers;
 
 use Mattnmoore\Conductor\Module\ModuleRepository;
 use Illuminate\Foundation\Application;

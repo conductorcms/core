@@ -48,13 +48,25 @@ class ConductorServiceProvider extends ServiceProvider {
 	 */
 	public function registerCommands()
 	{
-		$namespace = 'Mattnmoore\Conductor\Console\\';
+		$commands = [
+			'ScanModulesCommand',
+			'CreateModuleCommand',
+			'ListModulesCommand',
+			'CompileModuleAssetsCommand',
+			'CreateAdminCommand'
+		];
 
-		$this->commands($namespace . 'ScanModulesCommand');
-		$this->commands($namespace . 'CreateModuleCommand');
-        $this->commands($namespace . 'ListModulesCommand');
-		$this->commands($namespace . 'CompileModuleAssetsCommand');
-		$this->commands($namespace . 'CreateAdminCommand');
+		$this->registerCommandsFromArray($commands);
+	}
+
+	private function registerCommandsFromArray($commands)
+	{
+		$namespace = 'Mattnmoore\\Console\\';
+
+		foreach($commands as $command)
+		{
+			$this->commands($namespace . $command);
+		}
 	}
 
 	/**
