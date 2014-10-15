@@ -1,5 +1,5 @@
 /vendor
-/workbench/mattnmoore/conductor/resources/vendor
+/resources/vendor
 /node_modules
 composer.phar
 composer.lock

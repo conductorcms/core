@@ -1,18 +1,19 @@
 {
-    "name": "conductor",
-    "version": "0.0.0",
-    "license": "MIT",
-    "ignore": [
-        "**/.*",
-        "node_modules",
-        "bower_components",
-        "test",
-        "tests"
-    ],
-    "dependencies": {
-        "angular": "~1.2.26",
-        "ui-bootstrap": "~0.11.2",
-        "angular-route": "~1.2.26",
-        "angular-bootstrap": "~0.11.2"
-    }
+  "name": "conductor",
+  "version": "0.0.0",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.2.26",
+    "ui-bootstrap": "~0.11.2",
+    "angular-route": "~1.2.26",
+    "angular-bootstrap": "~0.11.2",
+    "admin-lte": "~1.2.1"
+  }
 }

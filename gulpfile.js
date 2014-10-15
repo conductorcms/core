@@ -9,7 +9,7 @@ var gulp = require('gulp')
 if (assets.js === undefined) {
     assets.js = [];
 }
-assets.js.unshift('./resources/js/angular/**/*.js');
+assets.js.unshift('./resources/js/**/*.js');
 
 
 if (assets.sass === undefined) {
