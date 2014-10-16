@@ -147,6 +147,9 @@ class CreateModuleCommand extends Command {
             ],
             'sass' => [
                 'resources/sass/**/*.scss'
+            ],
+            'views' => [
+                'resources/views/**/*.html'
             ]
         ];
     }

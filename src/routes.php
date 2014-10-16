@@ -25,3 +25,12 @@ Route::group(['namespace' => 'Mattnmoore\\Conductor\\Http\\Controllers'], functi
 
 
 });
+
+Route::get('theme', function()
+{
+    $data['theme'] = Config::get('conductor::themes.active');
+    $data['layout'] = $data['theme'] . '.layouts.master';
+    $data['title'] = 'Title Test';
+
+    return View::make($data['theme']. '.index', $data);
+});

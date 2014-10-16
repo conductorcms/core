@@ -11,12 +11,12 @@ for (var ii in window.modules) {
 
 angular.module('admin', dependencies).config(function ($routeProvider, $locationProvider, $interpolateProvider, NavigationProvider) {
     $routeProvider.when('/admin', {
-        templateUrl: '/packages/mattnmoore/conductor/assets/views/index.html',
+        templateUrl: 'core/index.html',
         controller: 'HomeCtrl'
     });
 
     $routeProvider.when('/admin/modules', {
-        templateUrl: '/packages/mattnmoore/conductor/assets/views/modules.html',
+        templateUrl: 'core/modules.html',
         controller: 'ModulesCtrl'
     });
 

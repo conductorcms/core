@@ -74,15 +74,6 @@ class EloquentModuleRepository implements ModuleRepository {
         return ($this->findByName($name) ? true : false);
     }
 
-    public function setInstalledStatus($name, $status)
-    {
-        $module = $this->findByName($name);
-
-        $module->installed = $status;
-
-        return $module->save();
-    }
-
     public function markAsInstalled($name)
     {
         return $this->setInstalledStatus($name, true);
@@ -91,6 +82,15 @@ class EloquentModuleRepository implements ModuleRepository {
     public function markAsUninstalled($name)
     {
         return $this->setInstalledStatus($name, false);
+    }
+
+    public function setInstalledStatus($name, $status)
+    {
+        $module = $this->findByName($name);
+
+        $module->installed = $status;
+
+        return $module->save();
     }
 
 }

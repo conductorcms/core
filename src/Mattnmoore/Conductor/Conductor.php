@@ -3,6 +3,7 @@
 use Illuminate\Cache\Repository as Cache;
 use Illuminate\Config\Repository as Config;
 use Illuminate\Foundation\Application;
+use Illuminate\View\Factory;
 use Mattnmoore\Conductor\Module\ModuleRepository;
 
 class Conductor {
@@ -27,12 +28,18 @@ class Conductor {
      */
     private $module;
 
-    function __construct(Application $app, Cache $cache, Config $config, ModuleRepository $module)
+    /**
+     * @var
+     */
+    private $view;
+
+    function __construct(Application $app, Cache $cache, Config $config, ModuleRepository $module, Factory $view)
     {
         $this->app = $app;
         $this->cache = $cache;
         $this->config = $config;
         $this->module = $module;
+        $this->view = $view;
     }
 
     /**
@@ -41,6 +48,7 @@ class Conductor {
     public function boot()
     {
         $this->registerModules();
+        $this->registerTheme();
     }
 
     public function registerModules()
@@ -54,6 +62,15 @@ class Conductor {
             $module = new $module($this->app->make('app'));
             $module->registerModule();
         }
+    }
+
+    public function registerTheme()
+    {
+        $theme = $this->config->get('conductor::themes.active');
+        $path = base_path() . '/' . $this->config->get('conductor::themes.dir');
+
+        $this->view->addLocation($path);
+        $this->view->addNamespace($theme, $path);
     }
 
     public function scanModules($refresh = false)

@@ -9,7 +9,7 @@
        <!-- Ionicons -->
        <link href="//code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css" rel="stylesheet" type="text/css" />
        <!-- Theme style -->
-       <link href="/packages/mattnmoore/conductor/assets/css/AdminLTE.css" rel="stylesheet" type="text/css" />
+       <link href="/conductor/admin/css/AdminLTE.css" rel="stylesheet" type="text/css" />
 
     </head>
     <body ng-app="admin" class="bg-black">
@@ -42,15 +42,15 @@
         </div>
 
           <!-- Angular, son! -->
-         <script src="/packages/mattnmoore/conductor/vendor/angular/angular.js"></script>
+         <script src="/conductor/vendor/angular/angular.js"></script>
          <!-- ngRoute, homie! -->
-         <script src="/packages/mattnmoore/conductor/vendor/angular-route/angular-route.js"></script>
+         <script src="/conductor/vendor/angular-route/angular-route.js"></script>
          <!-- ui-bootstrap -->
-         <script src="/packages/mattnmoore/conductor/vendor/angular-bootstrap/ui-bootstrap.js"></script>
-         <script src="/packages/mattnmoore/conductor/vendor/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+         <script src="/conductor/vendor/angular-bootstrap/ui-bootstrap.js"></script>
+         <script src="/conductor/vendor/angular-bootstrap/ui-bootstrap-tpls.js"></script>
 
          <!-- Mah app -->
-         <script src="/packages/mattnmoore/conductor/assets/js/conductor.js"></script>
+         <script src="/conductor/admin/js/conductor.js"></script>
 
          <!-- jQuery 2.0.2 -->
          <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>

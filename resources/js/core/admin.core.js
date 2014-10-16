@@ -1,1 +1,1 @@
-angular.module('admin.core', []);
+angular.module('admin.core', ['admin.core.templates']);

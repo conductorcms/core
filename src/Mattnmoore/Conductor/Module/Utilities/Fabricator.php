@@ -8,7 +8,7 @@ use Illuminate\Filesystem\Filesystem;
 class Fabricator {
 
     /**
-     * Laravel's IoC container
+     * IoC container
      *
      */
     private $app;
@@ -87,11 +87,20 @@ class Fabricator {
         $this->loadNewModule();
     }
 
-    private function generateModuleJson($module)
+    /**
+     * Generate module.json from array
+     *
+     * @param array $module
+     */
+    private function generateModuleJson(array $module)
     {
         $this->files->put($this->basePath. 'module.json', json_encode($module, JSON_PRETTY_PRINT));
     }
 
+    /**
+     * Get directories and call method to generate them
+     *
+     */
     private function createDirectories()
     {
         $directories = $this->getDirectories();
@@ -99,6 +108,11 @@ class Fabricator {
         $this->createDirectoriesFromArray($directories, $this->basePath);
     }
 
+    /**
+     * Get directory structure
+     *
+     * @return array
+     */
     private function getDirectories()
     {
         return [
@@ -109,15 +123,19 @@ class Fabricator {
                     'filters',
                     'directives'
                 ],
-                'sass'
-            ],
-            'public' => [
+                'sass',
                 'views'
-            ]
+            ],
         ];
     }
 
-    private function createDirectoriesFromArray($directories, $basePath)
+    /**
+     * Recursively create directory structure from array
+     *
+     * @param array $directories
+     * @param $basePath
+     */
+    private function createDirectoriesFromArray(array $directories, $basePath)
     {
         foreach ($directories as $key => $directory)
         {
@@ -134,12 +152,22 @@ class Fabricator {
         }
     }
 
+    /**
+     * Call methods to include module in the config
+     * file and the config loaded into memory
+     *
+     */
     private function addModuleToConfig()
     {
         $this->addModuleToConfigFile();
         $this->addModuleToLoadedConfig();
     }
 
+    /**
+     * Include new module files and register
+     * the module provider and underlying
+     * service provider
+     */
     private function loadNewModule()
     {
         $moduleRoot = $this->basePath;
@@ -155,6 +183,10 @@ class Fabricator {
         $provider->registerModule();
     }
 
+    /**
+     * Add module provider to the
+     * module config array
+     */
     private function addModuleToConfigFile()
     {
         //open file
@@ -174,6 +206,10 @@ class Fabricator {
         fclose($fh);
     }
 
+    /**
+     * Add module provider to the
+     * config loaded in memory
+     */
     private function addModuleToLoadedConfig()
     {
         $data = $this->getModuleInfo();
@@ -184,6 +220,9 @@ class Fabricator {
         $this->config->set('conductor::modules', $config);
     }
 
+    /**
+     * Generate skeleton files for module
+     */
     private function generateSkeletonFiles()
     {
         $data = $this->getModuleInfo();
@@ -208,15 +247,27 @@ class Fabricator {
         $this->files->put($this->basePath . '/resources/sass/main.scss', '');
 
         //add view skeleton
-        $this->files->copy($this->getSkeletonPath('view.skeleton.html'), $this->basePath . 'public/views/index.html');
+        $this->files->copy($this->getSkeletonPath('view.skeleton.html'), $this->basePath . 'resources/views/index.html');
     }
 
-
+    /**
+     * Get the path to a skeleton
+     * file from the name
+     *
+     * @param $name
+     * @return string
+     */
     private function getSkeletonPath($name)
     {
         return base_path() . '/workbench/mattnmoore/conductor/resources/skeletons/' . $name;
     }
 
+    /**
+     * Get the module provider filepath
+     *
+     * @param $data
+     * @return mixed
+     */
     private function getProviderPath($data)
     {
         $path = $this->getModuleRoot($data['packageName']) . 'src/' . $data['namespace'] . '/' . $data['className'];
@@ -224,7 +275,13 @@ class Fabricator {
         return str_replace('\\', '/', $path);
     }
 
-    private function generateSkeletonsFromArray($files, $data)
+    /**
+     * Generate skeleton files from array
+     *
+     * @param array $files
+     * @param $data
+     */
+    private function generateSkeletonsFromArray(array $files, $data)
     {
         foreach($files as $path => $skeleton)
         {
@@ -233,6 +290,13 @@ class Fabricator {
         }
     }
 
+    /**
+     * Get a skeleton file with replaced tags
+     *
+     * @param $path
+     * @param $data
+     * @return mixed
+     */
     private function getSkeleton($path, $data)
     {
         $skeleton = $this->files->get($path);
@@ -242,6 +306,13 @@ class Fabricator {
         return $this->replaceTags($tags, $skeleton);
     }
 
+    /**
+     * Get tags to replace in skeleton files
+     * and values to replace them with
+     *
+     * @param $data
+     * @return array
+     */
     private function getSkeletonTags($data)
     {
         return [
@@ -253,7 +324,14 @@ class Fabricator {
         ];
     }
 
-    private function replaceTags($tags, $skeleton)
+    /**
+     * Find and replace for skeleton files
+     *
+     * @param array $tags
+     * @param $skeleton
+     * @return mixed
+     */
+    private function replaceTags(array $tags, $skeleton)
     {
         foreach($tags as $tag => $replacement)
         {
@@ -263,11 +341,22 @@ class Fabricator {
         return $skeleton;
     }
 
+    /**
+     * Get the module's root path
+     *
+     * @param $packageName
+     * @return string
+     */
     private function getModuleRoot($packageName)
     {
         return base_path() . '/workbench/' . $packageName . '/';
     }
 
+    /**
+     * Get module info array
+     *
+     * @return array
+     */
     private function getModuleInfo()
     {
         $parts = explode('/', $this->moduleInfo['name']);
