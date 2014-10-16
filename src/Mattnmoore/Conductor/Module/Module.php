@@ -2,6 +2,7 @@
 
 use Illuminate\Foundation\Artisan;
 use Mattnmoore\Conductor\Module\Utilities\Info;
+use Mattnmoore\Conductor\Module\Utilities\CustomMigrator;
 
 class Module {
 
@@ -11,10 +12,13 @@ class Module {
 
     private $repository;
 
-    function __construct(Artisan $artisan, ModuleRepository $repository)
+    private $migrator;
+
+    function __construct(Artisan $artisan, ModuleRepository $repository, CustomMigrator $migrator)
     {
         $this->artisan = $artisan;
         $this->repository = $repository;
+        $this->migrator = $migrator;
     }
 
     function setInfo($info)
@@ -24,22 +28,18 @@ class Module {
 
     public function install()
     {
-        $info = $this->info->getInfo($this);
+        $this->artisan->call('migrate', ['--bench' => $this->info->name]);
 
-        $this->artisan->call('migrate', ['--bench' => $info->name]);
-
-        $this->repository->markAsInstalled($info->name);
+        $this->repository->markAsInstalled($this->info->name);
 
         return true;
     }
 
     public function uninstall()
     {
-        $info = $this->info->getInfo($this);
+        $this->migrator->rollBackPath(base_path() . '/workbench/' . $this->info->name . '/src/migrations');
 
-        $this->artisan->call('migrate:reset', ['--bench' => $info->name]);
-
-        $this->repository->markAsUninstalled($info->name);
+        $this->repository->markAsUninstalled($this->info->name);
 
         return true;
     }

@@ -29,7 +29,7 @@ angular.module('admin', dependencies).config(function ($routeProvider, $location
         'title': 'Core',
         'items': [
             {
-                'title': 'Homeee',
+                'title': 'Home',
                 'link': '/admin'
             },
             {

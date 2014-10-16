@@ -21,13 +21,8 @@ gulp.task('list:assets', function()
     listAssets('views');
 });
 
-gulp.task('build:js', function()
+gulp.task('build:js', ['build:views'], function()
 {
-    for(var ii in assets.js)
-    {
-        console.log(assets.js[ii]);
-    }
-
     gulp.src(assets.js)
         .pipe(annotate())
         .pipe(concat('conductor.js'))
@@ -45,8 +40,6 @@ gulp.task('build:sass', function()
 
 gulp.task('build:views', function()
 {
-    console.log(assets.views);
-
     for(var module in assets.views)
     {
         var options = {
@@ -60,17 +53,6 @@ gulp.task('build:views', function()
             .pipe(templateCache(options))
             .pipe(gulp.dest('./resources/js/templates'))
     }
-
-    //for(var ii in assets.views)
-    //{
-    //    console.log(assets.views[ii]);
-    //    //gulp.src(sources)
-    //    //    .pipe((templateCache()))
-    //    //    .pipe(gulp.dest('./resources/js/templates'))
-    //}
-
-
-
 });
 
 gulp.task('build', ['build:js', 'build:sass']);

@@ -1,6 +1,7 @@
 <?php namespace Mattnmoore\Conductor;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Database\Migrations\DatabaseMigrationRepository;
 use Mattnmoore\Conductor\Console\ScanModulesCommand;
 use Blade;
 
@@ -23,6 +24,12 @@ class ConductorServiceProvider extends ServiceProvider {
         $this->package('mattnmoore/conductor');
 
         $this->app->bind('Mattnmoore\Conductor\Module\ModuleRepository', 'Mattnmoore\Conductor\Module\EloquentModuleRepository');
+        $this->app->bind('Illuminate\Database\Migrations\MigrationRepositoryInterface', function()
+        {
+            return new DatabaseMigrationRepository($this->app->make('db'), 'migrations');
+        });
+        $this->app->bind('Illuminate\Database\ConnectionResolverInterface', 'Illuminate\Database\ConnectionResolver');
+
 
         $conductor = $this->app->make('Mattnmoore\Conductor\Conductor');
 

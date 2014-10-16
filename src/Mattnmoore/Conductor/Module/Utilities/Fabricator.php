@@ -117,14 +117,18 @@ class Fabricator {
     {
         return [
             'resources' => [
-                'js' => [
-                    'controllers',
-                    'services',
-                    'filters',
-                    'directives'
+                'admin' => [
+                    'js' => [
+                        'controllers',
+                        'services',
+                        'filters',
+                        'directives'
+                    ],
+                    'sass',
+                    'views'
                 ],
-                'sass',
-                'views'
+                'frontend' => [
+                ]
             ],
         ];
     }
@@ -232,8 +236,8 @@ class Fabricator {
         $this->files->delete($providerPath . 'ServiceProvider.php');
 
         $files = [
-            'resources/js/' . $data['name'] . '.js'                      => $this->getSkeletonPath('app.skeleton.js'),
-            'resources/js/controllers/' . $data['className'] . 'Ctrl.js' => $this->getSkeletonPath('controller.skeleton.js'),
+            'resources/admin/js/' . $data['name'] . '.js'                      => $this->getSkeletonPath('app.skeleton.js'),
+            'resources/admin/js/controllers/' . $data['className'] . 'Ctrl.js' => $this->getSkeletonPath('controller.skeleton.js'),
             $providerPath . 'ModuleProvider.php'                         => $this->getSkeletonPath('provider.skeleton'),
             $providerPath . '.php'                                       => $this->getSkeletonPath('module.skeleton')
         ];
@@ -244,10 +248,10 @@ class Fabricator {
         $this->files->put($this->basePath . '/src/routes.php', '');
 
         //add empty scss file
-        $this->files->put($this->basePath . '/resources/sass/main.scss', '');
+        $this->files->put($this->basePath . '/resources/admin/sass/main.scss', '');
 
         //add view skeleton
-        $this->files->copy($this->getSkeletonPath('view.skeleton.html'), $this->basePath . 'resources/views/index.html');
+        $this->files->copy($this->getSkeletonPath('view.skeleton.html'), $this->basePath . 'resources/admin/views/index.html');
     }
 
     /**

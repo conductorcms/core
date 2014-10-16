@@ -1,6 +1,6 @@
-angular.module('admin.##module_name##', ['ngRoute', 'admin.core']).config(function ($routeProvider, NavigationProvider) {
+angular.module('admin.##module_name##', ['ngRoute', 'admin.core', 'admin.##module_name##.templates']).config(function ($routeProvider, NavigationProvider) {
     $routeProvider.when('/admin/##module_name##', {
-        templateUrl: '/packages/##module_package##/assets/views/index.html',
+        templateUrl: '##module_name##/index.html',
         controller: '##module_display_name##Ctrl'
     });
 

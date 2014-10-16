@@ -1,13 +1,13 @@
 {
     "js": [
-        "\/vagrant\/fortify-ii\/workbench\/mattnmoore\/pages\/resources\/js\/**\/*.js"
+        "\/vagrant\/fortify-ii\/workbench\/mattnmoore\/pages\/resources\/admin\/js\/**\/*.js"
     ],
     "sass": [
-        "\/vagrant\/fortify-ii\/workbench\/mattnmoore\/pages\/resources\/sass\/**\/*.scss"
+        "\/vagrant\/fortify-ii\/workbench\/mattnmoore\/pages\/resources\/admin\/sass\/**\/*.scss"
     ],
     "views": {
         "pages": [
-            "\/vagrant\/fortify-ii\/workbench\/mattnmoore\/pages\/resources\/views\/**\/*.html"
+            "\/vagrant\/fortify-ii\/workbench\/mattnmoore\/pages\/resources\/admin\/views\/**\/*.html"
         ]
     }
 }

@@ -143,13 +143,13 @@ class CreateModuleCommand extends Command {
     {
         return [
             'js' => [
-                'resources/js/**/*.js'
+                'resources/admin/js/**/*.js'
             ],
             'sass' => [
-                'resources/sass/**/*.scss'
+                'resources/admin/sass/**/*.scss'
             ],
             'views' => [
-                'resources/views/**/*.html'
+                'resources/admin/views/**/*.html'
             ]
         ];
     }

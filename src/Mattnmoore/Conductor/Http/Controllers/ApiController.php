@@ -1,5 +1,6 @@
 <?php namespace Mattnmoore\Conductor\Http\Controllers;
 
+use Illuminate\Database\Migrations\DatabaseMigrationRepository;
 use Mattnmoore\Conductor\Module\ModuleRepository;
 use Illuminate\Foundation\Application;
 use Response;
@@ -26,6 +27,7 @@ class ApiController {
     public function installModule($id)
     {
         $module = $this->module->findById($id);
+
 
         //get Module
         $module = $this->app->make($module->name);
