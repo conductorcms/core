@@ -1,4 +1,4 @@
-<?php namespace Mattnmoore\Conductor\Module\Utilities;
+<?php namespace Conductor\Core\Module\Utilities;
 
 use ReflectionClass;
 

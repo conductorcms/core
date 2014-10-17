@@ -2,7 +2,7 @@
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Migrations\DatabaseMigrationRepository;
-use Mattnmoore\Conductor\Console\ScanModulesCommand;
+use Conductor\Core\Console\ScanModulesCommand;
 use Blade;
 
 class ConductorServiceProvider extends ServiceProvider {

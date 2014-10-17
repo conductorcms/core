@@ -1,7 +1,7 @@
 <?php namespace Conductor\Core\Module;
 
 use Illuminate\Support\ServiceProvider;
-use Mattnmoore\Conductor\Module\Utilities\Info;
+use Conductor\Core\Module\Utilities\Info;
 use ReflectionClass;
 
 abstract class ModuleProvider extends ServiceProvider {

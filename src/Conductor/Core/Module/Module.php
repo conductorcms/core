@@ -1,8 +1,8 @@
 <?php namespace Conductor\Core\Module;
 
 use Illuminate\Foundation\Artisan;
-use Mattnmoore\Conductor\Module\Utilities\Info;
-use Mattnmoore\Conductor\Module\Utilities\CustomMigrator;
+use Conductor\Core\Module\Utilities\Info;
+use Conductor\Core\Module\Utilities\CustomMigrator;
 
 class Module {
 

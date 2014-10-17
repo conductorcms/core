@@ -4,7 +4,7 @@ use Illuminate\Cache\Repository as Cache;
 use Illuminate\Config\Repository as Config;
 use Illuminate\Foundation\Application;
 use Illuminate\View\Factory;
-use Mattnmoore\Conductor\Module\ModuleRepository;
+use Conductor\Core\Module\ModuleRepository;
 
 class Conductor {
 
