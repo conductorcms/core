@@ -8,7 +8,7 @@ Route::group(['namespace' => 'Mattnmoore\\Conductor\\Http\\Controllers'], functi
     Route::group(['middleware' => 'admin'], function ()
     {
         Route::get('admin', 'AdminController@index');
-        Route::get('admin/{slug{', 'AdminController@index');
+        Route::get('admin/{slug}', 'AdminController@index');
     });
 
     //Admin panel API endpoints
@@ -17,6 +17,7 @@ Route::group(['namespace' => 'Mattnmoore\\Conductor\\Http\\Controllers'], functi
         Route::get('modules', 'ApiController@modules');
         Route::get('module/{id}/install', 'ApiController@installModule');
         Route::get('module/{id}/uninstall', 'ApiController@uninstallModule');
+        Route::get('routes', 'ApiController@routes');
 
         Route::get('session', 'SessionController@get');
         Route::post('session', 'SessionController@create');

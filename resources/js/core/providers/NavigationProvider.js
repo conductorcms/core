@@ -1,4 +1,4 @@
-angular.module('admin.core').provider('Navigation', function () {
+angular.module('admin.core').provider('Navigation', function() {
     var _navigation = [];
 
     this.$get = function () {

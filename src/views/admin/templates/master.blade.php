@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-
+		<base href="/">
         <meta charset="UTF-8">
         <title>Fortify Admin</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
@@ -11,6 +11,7 @@
         <link href="//code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css" rel="stylesheet" type="text/css" />
         <!-- Theme style -->
         <link href="/conductor/admin/css/AdminLTE.css" rel="stylesheet" type="text/css" />
+        <link href="/conductor/admin/css/toaster.css" rel="stylesheet" type="text/css" />
         <link href="/conductor/admin/css/admin.css" rel="stylesheet" type="text/css" />
 
 
@@ -32,6 +33,7 @@
     </head>
 
      <body ng-app="admin" class="skin-blue">
+        <toaster-container toaster-options="{'position-class': 'toast-bottom-right'}"></toaster-container>
 
          <!-- header logo: style can be found in header.less -->
 	     <header class="header">
@@ -105,13 +107,8 @@
         @yield('content')
 
 
-         <!-- Angular, son! -->
-         <script src="/conductor/vendor/angular/angular.js"></script>
-		 <!-- ngRoute, homie! -->
-         <script src="/conductor/vendor/angular-route/angular-route.js"></script>
-         <!-- ui-bootstrap -->
-         <script src="/conductor/vendor/angular-bootstrap/ui-bootstrap.js"></script>
-         <script src="/conductor/vendor/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+         <!-- Dependencies -->
+         <script src="/conductor/admin/js/dependencies.js"></script>
 
          <!-- Mah app -->
          <script src="/conductor/admin/js/conductor.js"></script>

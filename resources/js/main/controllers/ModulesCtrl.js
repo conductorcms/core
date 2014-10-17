@@ -1,11 +1,30 @@
-angular.module('admin').controller('ModulesCtrl', function ($scope, Module) {
+angular.module('admin').controller('ModulesCtrl', function ($scope, Module, toaster) {
+
+    $scope.modules = Module.modules;
+
     Module.getAll();
 
-    $scope.$watch(function () {
-        return Module.modules
-    }, function (newValue, oldValue) {
-        $scope.modules = newValue;
+    $scope.install = function(module)
+    {
+        module.installing = true;
 
-        console.log($scope.modules);
-    });
+        Module.install(module.id).success(function(data)
+        {
+            module.installing = false;
+            toaster.pop('success', 'Module installed!', 'The ' + module.display_name + ' module was successfully installed');
+            location.reload();
+        });
+    }
+
+    $scope.uninstall = function(module)
+    {
+        module.uninstalling = true;
+        Module.uninstall(module.id).success(function()
+        {
+            module.uninstalling = false;
+            toaster.pop('error', 'Module uninstalled!', 'The ' + module.display_name + ' module was sucessfully uninstalled');
+            location.reload();
+        });
+    }
+
 });

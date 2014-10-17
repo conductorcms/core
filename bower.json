@@ -14,6 +14,7 @@
     "ui-bootstrap": "~0.11.2",
     "angular-route": "~1.2.26",
     "angular-bootstrap": "~0.11.2",
-    "admin-lte": "~1.2.1"
+    "admin-lte": "~1.2.1",
+    "AngularJS-Toaster": "~0.4.8"
   }
 }

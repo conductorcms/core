@@ -2,7 +2,8 @@ var dependencies = [
     'admin.core',
     'admin.login',
     'ngRoute',
-    'ui.bootstrap'
+    'ui.bootstrap',
+    'toaster'
 ];
 
 for (var ii in window.modules) {
@@ -20,6 +21,11 @@ angular.module('admin', dependencies).config(function ($routeProvider, $location
         controller: 'ModulesCtrl'
     });
 
+    $routeProvider.when('/admin/routes', {
+        templateUrl: 'core/routes.html',
+        controller: 'RoutesCtrl'
+    });
+
     $locationProvider.html5Mode(true);
 
     $interpolateProvider.startSymbol('<%');
@@ -35,6 +41,10 @@ angular.module('admin', dependencies).config(function ($routeProvider, $location
             {
                 'title': 'Modules',
                 'link': '/admin/modules'
+            },
+            {
+                'title': 'Routes',
+                'link': '/admin/routes'
             }
         ]
     });

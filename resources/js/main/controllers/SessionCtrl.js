@@ -2,14 +2,17 @@ angular.module('admin').controller('SessionCtrl', function ($scope, Session) {
     $scope.session = Session.current;
 
     var check = Session.check();
-    check.then(function () {
-        console.log($scope.session);
+    check.then(function()
+    {
+
     });
 
-    $scope.logout = function () {
+    $scope.logout = function()
+    {
         var logout = Session.logout();
 
-        logout.then(function () {
+        logout.then(function()
+        {
             window.location = '/admin/login';
         });
     }

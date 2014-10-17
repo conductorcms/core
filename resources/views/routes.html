@@ -1,0 +1,16 @@
+<table class="table table-hover">
+    <thead>
+    <tr>
+        <th>HTTP Method</th>
+        <th>Route</th>
+        <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="route in routes">
+        <td><% route.http %></td>
+        <td><% route.route %></td>
+        <td><% route.action %></td>
+    </tr>
+    </tbody>
+</table>

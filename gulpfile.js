@@ -30,6 +30,17 @@ gulp.task('build:js', ['build:views'], function()
         .pipe(gulp.dest('../../../public/conductor/admin/js/'))
 });
 
+gulp.task('build:js:dependencies', function()
+{
+    var dependencies = getJsDependencies();
+
+    gulp.src(dependencies)
+        .pipe(annotate())
+        .pipe(concat('dependencies.js'))
+        .pipe(uglify())
+        .pipe(gulp.dest('../../../public/conductor/admin/js'))
+});
+
 gulp.task('build:sass', function()
 {
     gulp.src(assets.sass)
@@ -103,4 +114,32 @@ function listAssets(type)
     {
         console.log(assets[type][ii]);
     }
+}
+
+function getJsDependencies()
+{
+    var prefix = './resources/vendor/';
+
+    var dependencies = [
+        'angular/angular.js',
+        'angular-animate/angular-animate.js',
+        'angular-bootstrap/ui-bootstrap.js',
+        'angular-bootstrap/ui-bootstrap-tpls.js',
+        'angular-route/angular-route.js',
+        'AngularJS-Toaster/toaster.js'
+    ];
+
+    for(var ii in dependencies)
+    {
+        dependencies[ii] = prefix + dependencies[ii];
+    }
+
+    return dependencies;
+}
+
+function getStyleDependencies()
+{
+    var prefix = './resources/vendor/';
+
+    var dependencies = ''
 }
