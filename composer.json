@@ -1,5 +1,5 @@
 {
-    "name": "mattnmoore/conductor",
+    "name": "conductorcms/core",
     "description": "",
     "authors": [
         {
@@ -17,7 +17,7 @@
             "database/seeders"
         ],
         "psr-0": {
-            "Mattnmoore\\": "src/"
+            "Conductor\\": "src/"
         }
     },
     "minimum-stability": "stable"

@@ -1,4 +1,4 @@
-<?php namespace Mattnmoore\Conductor\Http\Controllers;
+<?php namespace Conductor\Core\Http\Controllers;
 
 use Sentinel;
 use View;

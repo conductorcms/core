@@ -1,6 +1,6 @@
 <?php namespace ##module_namespace##;
 
-use Mattnmoore\Conductor\Module\Module;
+use Conductor\Core\Module\Module;
 
 class ##module_class_name## extends Module {
 

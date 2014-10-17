@@ -1,4 +1,4 @@
-<?php namespace Mattnmoore\Conductor\Console;
+<?php namespace Conductor\Core\Console;
 
 use Illuminate\Foundation\Application as App;
 use Illuminate\Console\Application;

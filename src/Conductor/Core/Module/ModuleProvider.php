@@ -1,4 +1,4 @@
-<?php namespace Mattnmoore\Conductor\Module;
+<?php namespace Conductor\Core\Module;
 
 use Illuminate\Support\ServiceProvider;
 use Mattnmoore\Conductor\Module\Utilities\Info;

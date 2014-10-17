@@ -1,4 +1,4 @@
-<?php namespace Mattnmoore\Conductor;
+<?php namespace Conductor\Core;
 
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Migrations\DatabaseMigrationRepository;

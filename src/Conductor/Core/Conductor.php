@@ -1,4 +1,4 @@
-<?php namespace Mattnmoore\Conductor;
+<?php namespace Conductor\Core;
 
 use Illuminate\Cache\Repository as Cache;
 use Illuminate\Config\Repository as Config;
