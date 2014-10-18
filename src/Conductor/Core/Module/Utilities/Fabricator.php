@@ -127,10 +127,6 @@ class Fabricator {
 		$module['packagePrefix'] = ucfirst($package[0]);
 
         return [
-			'database' => [
-				'migrations',
-				'seeders'
-			],
             'resources' => [
                 'admin' => [
                     'js' => [
@@ -191,7 +187,6 @@ class Fabricator {
 		$basePath = base_path() . '/workbench/' . $info['packageName'] . '/';
 
 		$this->files->deleteDirectory($basePath . 'src/controllers');
-		$this->files->deleteDirectory($basePath . 'src/migrations');
 	}
 
     /**

@@ -54,7 +54,7 @@ class Conductor {
     public function registerModules()
     {
         //get module providers from config
-        $moduleProviders = $this->config->get('conductor::modules');
+        $moduleProviders = $this->config->get('core::modules');
 
         //register modules in tagged container
         foreach ($moduleProviders as $module)
@@ -66,8 +66,8 @@ class Conductor {
 
     public function registerTheme()
     {
-        $theme = $this->config->get('conductor::themes.active');
-        $path = base_path() . '/' . $this->config->get('conductor::themes.dir');
+        $theme = $this->config->get('core::themes.active');
+        $path = base_path() . '/' . $this->config->get('core::themes.dir');
 
         $this->view->addLocation($path);
         $this->view->addNamespace($theme, $path);
@@ -85,7 +85,7 @@ class Conductor {
         $registeredModules = $this->getRegisteredModules();
 
         //get module provider names from config
-        $moduleProviders = $this->config->get('conductor::modules');
+        $moduleProviders = $this->config->get('core::modules');
 
         //sync the providers in the config with the registered modules
         $this->syncModules($moduleProviders, $registeredModules);
