@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Config\Repository;
 use Illuminate\Filesystem\Filesystem;
+use ReflectionClass;
 
 
 class Fabricator {
@@ -77,6 +78,9 @@ class Fabricator {
         //create directory structure
         $this->createDirectories();
 
+		//delete obsolete directories
+		$this->cleanDirectories();
+
         //generate skeleton files
         $this->generateSkeletonFiles();
 
@@ -103,7 +107,9 @@ class Fabricator {
      */
     private function createDirectories()
     {
-        $directories = $this->getDirectories();
+		$info = $this->getModuleInfo();
+
+        $directories = $this->getDirectories($info);
 
         $this->createDirectoriesFromArray($directories, $this->basePath);
     }
@@ -111,11 +117,20 @@ class Fabricator {
     /**
      * Get directory structure
      *
+	 * @param array $module
      * @return array
      */
-    private function getDirectories()
+    private function getDirectories($module)
     {
+		//get "package prefix"
+		$package = explode('/', $module['packageName']);
+		$module['packagePrefix'] = ucfirst($package[0]);
+
         return [
+			'database' => [
+				'migrations',
+				'seeders'
+			],
             'resources' => [
                 'admin' => [
                     'js' => [
@@ -130,6 +145,16 @@ class Fabricator {
                 'frontend' => [
                 ]
             ],
+			'src' => [
+				$module['packagePrefix'] => [
+					$module['className'] => [
+						'Console',
+						'Http' => [
+							'Controllers'
+						]
+					]
+				]
+			]
         ];
     }
 
@@ -155,6 +180,19 @@ class Fabricator {
             }
         }
     }
+
+	/**
+	 * Clean out directories that won't be
+	 * used in default structure
+	 */
+	private function cleanDirectories()
+	{
+		$info = $this->getModuleInfo();
+		$basePath = base_path() . '/workbench/' . $info['packageName'] . '/';
+
+		$this->files->deleteDirectory($basePath . 'src/controllers');
+		$this->files->deleteDirectory($basePath . 'src/migrations');
+	}
 
     /**
      * Call methods to include module in the config
@@ -193,12 +231,8 @@ class Fabricator {
      */
     private function addModuleToConfigFile()
     {
-		$reflection = new ReflectionClass($this);
-		$path = dirname($reflection->getFileName);
-		dd($path);
-
         //open file
-        $file = base_path() . '/workbench/mattnmoore/conductor/src/config/modules.php';
+        $file = $this->getCoreRoot() . 'src/config/modules.php';
         $fh = fopen($file, 'r+');
 
         $data = $this->getModuleInfo();
@@ -233,7 +267,7 @@ class Fabricator {
      */
     private function generateSkeletonFiles()
     {
-        $data = $this->getModuleInfo();
+		$data = $this->getModuleInfo();
 
         $providerPath = $this->getProviderPath($data);
 
@@ -249,7 +283,7 @@ class Fabricator {
         $this->generateSkeletonsFromArray($files, $data);
 
         //add empty routes file
-        $this->files->put($this->basePath . '/src/routes.php', '');
+        $this->files->put($this->basePath . '/src/'. $data['packageName'] .'/Http/routes.php', '');
 
         //add empty scss file
         $this->files->put($this->basePath . '/resources/admin/sass/main.scss', '');
@@ -267,7 +301,7 @@ class Fabricator {
      */
     private function getSkeletonPath($name)
     {
-        return base_path() . '/workbench/mattnmoore/conductor/resources/skeletons/' . $name;
+        return $this->getCoreRoot() . 'resources/skeletons/' . $name;
     }
 
     /**
@@ -377,4 +411,17 @@ class Fabricator {
             'className' => ucfirst($parts[1])
         ];
     }
+
+	/**
+	 * Return the absolute root path
+	 * of the Conductor core
+	 *
+	 * @return mixed
+	 */
+	private function getCoreRoot()
+	{
+		$reflection = new ReflectionClass($this);
+		$path = dirname($reflection->getFileName());
+		return explode('src/', $path)[0];
+	}
 }
