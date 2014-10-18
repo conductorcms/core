@@ -1,6 +1,6 @@
 <?php namespace Conductor\Core\Http\Controllers;
 
-use Mattnmoore\Conductor\Module\ModuleRepository;
+use Conductor\Core\Module\ModuleRepository;
 use View;
 
 class AdminController {

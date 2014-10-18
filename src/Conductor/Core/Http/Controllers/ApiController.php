@@ -1,7 +1,7 @@
 <?php namespace Conductor\Core\Http\Controllers;
 
 use Illuminate\Database\Migrations\DatabaseMigrationRepository;
-use Mattnmoore\Conductor\Module\ModuleRepository;
+use Conductor\Core\Module\ModuleRepository;
 use Illuminate\Foundation\Application;
 use Response;
 use Route;

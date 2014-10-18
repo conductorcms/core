@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['namespace' => 'Mattnmoore\\Conductor\\Http\\Controllers'], function ()
+Route::group(['namespace' => 'Conductor\\Core\\Http\\Controllers'], function ()
 {
     Route::get('admin/login', 'AdminController@login');
 

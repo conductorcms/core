@@ -2,7 +2,7 @@
 
 use Illuminate\Console\Application;
 use Illuminate\Console\Command;
-use Mattnmoore\Conductor\Module\Utilities\Fabricator;
+use Conductor\Core\Module\Utilities\Fabricator;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use Config;
@@ -98,7 +98,7 @@ class CreateModuleCommand extends Command {
     private function getModuleQuestions()
     {
         return [
-            'name' => 'What is the package name? (E.g. mattnmoore/conductor)',
+            'name' => 'What is the package name? (E.g. conductor/pages)',
             'display_name' => 'What is the module\'s name?',
             'version' => 'What is the module\'s version?',
             'description' => 'What is the module\'s description?',

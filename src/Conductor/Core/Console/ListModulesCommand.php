@@ -2,7 +2,7 @@
 
 use Illuminate\Console\Application;
 use Illuminate\Console\Command;
-use Mattnmoore\Conductor\Module\ModuleRepository;
+use Conductor\Core\Module\ModuleRepository;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 

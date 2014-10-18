@@ -193,6 +193,10 @@ class Fabricator {
      */
     private function addModuleToConfigFile()
     {
+		$reflection = new ReflectionClass($this);
+		$path = dirname($reflection->getFileName);
+		dd($path);
+
         //open file
         $file = base_path() . '/workbench/mattnmoore/conductor/src/config/modules.php';
         $fh = fopen($file, 'r+');

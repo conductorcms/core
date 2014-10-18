@@ -10,7 +10,7 @@ class Model extends Eloquent {
 
     public function authors()
     {
-        return $this->hasMany('Mattnmoore\Conductor\Module\Author', 'module_id');
+        return $this->hasMany('Conductor\Core\Module\Author', 'module_id');
     }
 
 }

@@ -21,9 +21,9 @@ class ConductorServiceProvider extends ServiceProvider {
      */
     public function boot()
     {
-        $this->package('mattnmoore/conductor');
+        $this->package('conductor/core');
 
-        $this->app->bind('Mattnmoore\Conductor\Module\ModuleRepository', 'Mattnmoore\Conductor\Module\EloquentModuleRepository');
+        $this->app->bind('Conductor\Core\Module\ModuleRepository', 'Conductor\Core\Module\EloquentModuleRepository');
         $this->app->bind('Illuminate\Database\Migrations\MigrationRepositoryInterface', function()
         {
             return new DatabaseMigrationRepository($this->app->make('db'), 'migrations');
@@ -31,7 +31,7 @@ class ConductorServiceProvider extends ServiceProvider {
         $this->app->bind('Illuminate\Database\ConnectionResolverInterface', 'Illuminate\Database\ConnectionResolver');
 
 
-        $conductor = $this->app->make('Mattnmoore\Conductor\Conductor');
+        $conductor = $this->app->make('Conductor\Core\Conductor');
 
         $conductor->boot();
 
@@ -68,7 +68,7 @@ class ConductorServiceProvider extends ServiceProvider {
 
     private function registerCommandsFromArray($commands)
     {
-        $namespace = 'Mattnmoore\\Conductor\\Console\\';
+        $namespace = 'Conductor\\Core\\Console\\';
 
         foreach ($commands as $command)
         {

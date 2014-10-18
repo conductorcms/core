@@ -1,4 +1,4 @@
-<?php namespace Mattnmoore\Conductor\Seeders;
+<?php namespace Conductor\Core\Seeders;
 
 use Illuminate\Database\Seeder;
 use Sentinel;

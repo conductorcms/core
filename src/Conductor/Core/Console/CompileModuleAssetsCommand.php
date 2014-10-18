@@ -6,7 +6,7 @@ use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
 use ReflectionClass;
-use Mattnmoore\Conductor\Module\ModuleRepository;
+use Conductor\Core\Module\ModuleRepository;
 
 class CompileModuleAssetsCommand extends Command {
 

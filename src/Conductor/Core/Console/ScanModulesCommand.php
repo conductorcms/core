@@ -5,7 +5,7 @@ use Illuminate\Foundation\Application as App;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
-use Mattnmoore\Conductor\Conductor;
+use Conductor\Core\Conductor;
 
 class ScanModulesCommand extends Command {
 
@@ -42,7 +42,7 @@ class ScanModulesCommand extends Command {
      */
     public function fire()
     {
-        $conductor = $this->app->make('Mattnmoore\Conductor\Conductor');
+        $conductor = $this->app->make('Conductor\Core\Conductor');
 
         return $this->info($conductor->scanModules($this->option('refresh')));
     }
