@@ -1,5 +1,5 @@
 {
-    "name": "conductorcms/core",
+    "name": "conductor/core",
     "description": "",
     "authors": [
         {
@@ -13,8 +13,8 @@
     },
     "autoload": {
         "classmap": [
-            "database/migrations",
-            "database/seeders"
+            "src/migrations",
+            "src/seeders"
         ],
         "psr-0": {
             "Conductor\\": "src/"

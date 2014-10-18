@@ -24,12 +24,8 @@ class ConductorServiceProvider extends ServiceProvider {
         $this->package('conductor/core');
 
         $this->app->bind('Conductor\Core\Module\ModuleRepository', 'Conductor\Core\Module\EloquentModuleRepository');
-        $this->app->bind('Illuminate\Database\Migrations\MigrationRepositoryInterface', function()
-        {
-            return new DatabaseMigrationRepository($this->app->make('db'), 'migrations');
-        });
-        $this->app->bind('Illuminate\Database\ConnectionResolverInterface', 'Illuminate\Database\ConnectionResolver');
 
+		$this->registerMigratorBindings();
 
         $conductor = $this->app->make('Conductor\Core\Conductor');
 
@@ -75,6 +71,15 @@ class ConductorServiceProvider extends ServiceProvider {
             $this->commands($namespace . $command);
         }
     }
+
+	private function registerMigratorBindings()
+	{
+		$this->app->bind('Illuminate\Database\Migrations\MigrationRepositoryInterface', function()
+		{
+			return new DatabaseMigrationRepository($this->app->make('db'), 'migrations');
+		});
+		$this->app->bind('Illuminate\Database\ConnectionResolverInterface', 'Illuminate\Database\ConnectionResolver');
+	}
 
     /**
      * Get the services provided by the provider.

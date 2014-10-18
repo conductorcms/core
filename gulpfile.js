@@ -1,7 +1,7 @@
 var gulp = require('gulp')
     concat         = require('gulp-concat')
     uglify         = require('gulp-uglify')
-    sass           = require('gulp-sass')
+    sass           = require('gulp-ruby-sass')
     watch          = require('gulp-watch')
     templateCache  = require('gulp-angular-templatecache')
     annotate       = require('gulp-ng-annotate');
@@ -19,6 +19,11 @@ gulp.task('list:assets', function()
     listAssets('sass');
     console.log('views:');
     listAssets('views');
+});
+
+gulp.task('dir', function()
+{
+	console.log(__dirname);
 });
 
 gulp.task('build:js', ['build:views'], function()
@@ -69,7 +74,13 @@ gulp.task('build:views', function()
 gulp.task('build', ['build:js', 'build:sass']);
 
 gulp.task('watch', function () {
-    gulp.watch(assets, ['build']);
+	var views = [];
+	for(var ii in assets.views)
+	{
+		views = views.concat(assets.views[ii]);
+	}
+	var watch = assets.js.concat(assets.sass, views);
+	gulp.watch(watch, ['build:js']);
 });
 
 
