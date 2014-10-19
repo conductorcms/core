@@ -118,7 +118,7 @@ function addCoreAssets(type)
             assets.js.unshift('./resources/js/**/*.js');
             break;
         case 'sass':
-            assets.sass.unshift('./resources/sass/*.scss');
+            assets.sass.unshift('./resources/sass/**/*.scss');
             break;
         case 'views':
             assets.views.core = [];
