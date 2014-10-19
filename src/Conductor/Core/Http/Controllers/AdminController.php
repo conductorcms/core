@@ -1,9 +1,10 @@
 <?php namespace Conductor\Core\Http\Controllers;
 
 use Conductor\Core\Module\ModuleRepository;
+use Illuminate\Routing\Controller;
 use View;
 
-class AdminController {
+class AdminController extends Controller{
 
     private $module;
 
@@ -26,12 +27,12 @@ class AdminController {
 
         $data['modules'] = $names;
 
-        return View::make('conductor::admin.index', $data);
+        return View::make('core::admin.index', $data);
     }
 
     public function login()
     {
-        return View::make('conductor::admin.login');
+        return View::make('core::admin.login');
     }
 
     public function modules()
@@ -43,7 +44,7 @@ class AdminController {
             $module->installed = ($module->installed ? 'Yes' : 'No');
         }
 
-        return View::make('conductor::admin.modules', $data);
+        return View::make('core::admin.modules', $data);
     }
 
     public function moduleAdmin($slug)

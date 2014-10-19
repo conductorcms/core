@@ -9,8 +9,15 @@
     ],
     "require": {
         "php": ">=5.4.0",
-        "illuminate/support": "5.0.*"
+        "illuminate/support": "5.0.*",
+		"cartalyst/sentinel": "1.0.*"
     },
+	"repositories": [
+		{
+			"type": "composer",
+			"url": "https://packages.cartalyst.com"
+		}
+	],
     "autoload": {
         "classmap": [
             "src/migrations",
@@ -20,5 +27,5 @@
             "Conductor\\": "src/"
         }
     },
-    "minimum-stability": "stable"
+    "minimum-stability": "dev"
 }

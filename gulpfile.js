@@ -21,11 +21,6 @@ gulp.task('list:assets', function()
     listAssets('views');
 });
 
-gulp.task('dir', function()
-{
-	console.log(__dirname);
-});
-
 gulp.task('build:js', ['build:views'], function()
 {
     gulp.src(assets.js)
@@ -35,7 +30,7 @@ gulp.task('build:js', ['build:views'], function()
         .pipe(gulp.dest('../../../public/conductor/admin/js/'))
 });
 
-gulp.task('build:js:dependencies', function()
+gulp.task('build:dependencies:js', function()
 {
     var dependencies = getJsDependencies();
 
@@ -46,12 +41,23 @@ gulp.task('build:js:dependencies', function()
         .pipe(gulp.dest('../../../public/conductor/admin/js'))
 });
 
+gulp.task('build:dependencies:styles', function()
+{
+	var dependencies = getStyleDependencies();
+
+	gulp.src(dependencies)
+		.pipe(concat('dependencies.css'))
+		.pipe(gulp.dest('../../../public/conductor/admin/css'));
+});
+
+
 gulp.task('build:sass', function()
 {
-    gulp.src(assets.sass)
-        .pipe(concat('main.css'))
-        .pipe(sass())
-        .pipe(gulp.dest('../../../public/conductor/admin/css/'))
+    return gulp.src(assets.sass)
+        .pipe(sass({sourcemaps: false}))
+		.on('error', function (err) { console.log(err.message); })
+        .pipe(concat('admin.css'))
+		.pipe(gulp.dest('../../../public/conductor/admin/css'));
 });
 
 gulp.task('build:views', function()
@@ -71,8 +77,6 @@ gulp.task('build:views', function()
     }
 });
 
-gulp.task('build', ['build:js', 'build:sass']);
-
 gulp.task('watch', function () {
 	var views = [];
 	for(var ii in assets.views)
@@ -83,6 +87,11 @@ gulp.task('watch', function () {
 	gulp.watch(watch, ['build:js']);
 });
 
+gulp.task('build:dependencies', ['build:dependencies:js', 'build:dependencies:styles']);
+gulp.task('build', ['build:js', 'build:sass']);
+gulp.task('build:all', ['build:dependencies', 'build']);
+
+//helper functions
 
 function setCoreAssets()
 {
@@ -109,13 +118,12 @@ function addCoreAssets(type)
             assets.js.unshift('./resources/js/**/*.js');
             break;
         case 'sass':
-            assets.sass.unshift('./resources/sass/**/*.scss');
+            assets.sass.unshift('./resources/sass/*.scss');
             break;
         case 'views':
             assets.views.core = [];
             assets.views.core.unshift('./resources/views/**/*.html');
             break;
-
     }
 }
 
@@ -129,8 +137,6 @@ function listAssets(type)
 
 function getJsDependencies()
 {
-    var prefix = './resources/vendor/';
-
     var dependencies = [
         'angular/angular.js',
         'angular-animate/angular-animate.js',
@@ -140,17 +146,25 @@ function getJsDependencies()
         'AngularJS-Toaster/toaster.js'
     ];
 
-    for(var ii in dependencies)
-    {
-        dependencies[ii] = prefix + dependencies[ii];
-    }
-
-    return dependencies;
+	return prefixDependencies('./resources/vendor/', dependencies);
 }
 
 function getStyleDependencies()
 {
-    var prefix = './resources/vendor/';
+    var dependencies = [
+		'admin-lte/css/AdminLTE.css',
+		'AngularJS-Toaster/toaster.css'
+	];
 
-    var dependencies = ''
+	return prefixDependencies('./resources/vendor/', dependencies);
+}
+
+function prefixDependencies(prefix, dependencies)
+{
+	for(var ii in dependencies)
+	{
+		dependencies[ii] = prefix + dependencies[ii];
+	}
+
+	return dependencies;
 }

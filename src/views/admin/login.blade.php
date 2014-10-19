@@ -2,14 +2,12 @@
 <html class="bg-black">
     <head>
        <meta charset="UTF-8">
-       <title>Fortify Admin | Log in</title>
+       <title>Conductor Admin | Log in</title>
        <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
        <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
        <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-       <!-- Ionicons -->
        <link href="//code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css" rel="stylesheet" type="text/css" />
-       <!-- Theme style -->
-       <link href="/conductor/admin/css/AdminLTE.css" rel="stylesheet" type="text/css" />
+       <link href="/conductor/admin/css/dependencies.css" rel="stylesheet" type="text/css" />
 
     </head>
     <body ng-app="admin" class="bg-black">
@@ -41,26 +39,15 @@
 
         </div>
 
-          <!-- Angular, son! -->
-         <script src="/conductor/vendor/angular/angular.js"></script>
-         <!-- ngRoute, homie! -->
-         <script src="/conductor/vendor/angular-route/angular-route.js"></script>
-         <!-- ui-bootstrap -->
-         <script src="/conductor/vendor/angular-bootstrap/ui-bootstrap.js"></script>
-         <script src="/conductor/vendor/angular-bootstrap/ui-bootstrap-tpls.js"></script>
-
+        <!-- Angular, son! -->
+        <script src="/conductor/admin/js/dependencies.js"></script>
          <!-- Mah app -->
          <script src="/conductor/admin/js/conductor.js"></script>
-
          <!-- jQuery 2.0.2 -->
          <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
          <!-- Bootstrap -->
          <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-
-
         <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
         <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js" type="text/javascript"></script>
-
-
     </body>
 </html>

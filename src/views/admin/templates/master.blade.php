@@ -10,8 +10,7 @@
         <!-- Ionicons -->
         <link href="//code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css" rel="stylesheet" type="text/css" />
         <!-- Theme style -->
-        <link href="/conductor/admin/css/AdminLTE.css" rel="stylesheet" type="text/css" />
-        <link href="/conductor/admin/css/toaster.css" rel="stylesheet" type="text/css" />
+        <link href="/conductor/admin/css/dependencies.css" />
         <link href="/conductor/admin/css/admin.css" rel="stylesheet" type="text/css" />
 
 

@@ -3,10 +3,11 @@
 use Illuminate\Database\Migrations\DatabaseMigrationRepository;
 use Conductor\Core\Module\ModuleRepository;
 use Illuminate\Foundation\Application;
+use Illuminate\Routing\Controller;
 use Response;
 use Route;
 
-class ApiController {
+class ApiController extends Controller {
 
     private $app;
 
