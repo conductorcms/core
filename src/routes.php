@@ -1,15 +1,15 @@
 <?php
 
+Route::filter('permissions', 'Conductor\Core\Http\Filters\Permissions');
+
 Route::group(['namespace' => 'Conductor\\Core\\Http\\Controllers'], function ()
 {
     Route::get('admin/login', 'AdminController@login');
 
     //Admin panel routes
-    Route::group(['middleware' => 'admin'], function ()
-    {
-        Route::get('admin', 'AdminController@index');
-        Route::get('admin/{slug}', 'AdminController@index');
-    });
+	Route::get('admin', 'AdminController@index')->before(setPermissions(['admin']));
+	Route::get('admin/{slug}', 'AdminController@index');
+
 
     //Admin panel API endpoints
     Route::group(['prefix' => 'admin/api/v1/'], function ()
