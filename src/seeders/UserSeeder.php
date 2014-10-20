@@ -13,7 +13,7 @@ class UserSeeder extends Seeder {
         ]);
 
         $role->permissions = [
-            'admin'
+            'admin' => true
         ];
 
         $role->save();
@@ -24,7 +24,7 @@ class UserSeeder extends Seeder {
         ]);
 
         $role->permissions = [
-            'users'
+            'users' => true
         ];
 
         $role->save();

@@ -8,6 +8,8 @@ function setPermissions(array $permissions)
 	{
 		$filter = $filter . $permission . ';';
 	}
-	$filter = rtrim($filter, ';');
+    $filter = rtrim($filter, ';');
 	return $filter;
 }
+
+

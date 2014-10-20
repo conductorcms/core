@@ -1,27 +1,43 @@
 angular.module('admin.core').factory('Session', function ($http) {
     var session = {};
 
-    session.current = {status: 'initializing'};
+    session.current = { session: false };
 
-    session.login = function (data) {
+    // attempt to establish a session
+    session.login = function(data) {
         return $http.post('/admin/api/v1/session', data).success(function (data) {
             angular.copy(data, session.current);
         });
     };
 
-    session.logout = function () {
+    // destory current session
+    session.logout = function() {
         return $http.get('/admin/api/v1/session/destroy').success(function (data) {
 
         });
     };
 
-    session.check = function () {
-        return $http.get('/admin/api/v1/session').success(function (data) {
-            angular.copy(data, session.current);
-        });
+    // check and retrieve session if established
+    session.check = function() {
+
+        if(!this.current.session)
+        {
+            return $http.get('/admin/api/v1/session').success(function (data) {
+                angular.copy(data, session.current);
+            });
+        }
+
+        return this.current.user;
     };
 
-    session.isGuest = function () {
+    // check if current user is logged in
+    session.isGuest = function() {
+        return !this.current.session;
+    }
+
+    // check if current session has sufficient permissions
+    // for requested route
+    session.isAuthorized = function(permissions) {
 
     }
 

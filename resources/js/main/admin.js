@@ -1,3 +1,4 @@
+//get all admin dependencies
 var dependencies = [
     'admin.core',
     'admin.login',
@@ -6,46 +7,37 @@ var dependencies = [
     'toaster'
 ];
 
+//get dependencies from constant defined by back-end
 for (var ii in window.modules) {
     dependencies.push(window.modules[ii]);
 }
 
-angular.module('admin', dependencies).config(function ($routeProvider, $locationProvider, $interpolateProvider, NavigationProvider) {
-    $routeProvider.when('/admin', {
-        templateUrl: 'core/index.html',
-        controller: 'HomeCtrl'
-    });
+//configure interceptor, location mode, interpolators
+angular.module('admin', dependencies).config(function($httpProvider, $locationProvider, $interpolateProvider) {
 
-    $routeProvider.when('/admin/modules', {
-        templateUrl: 'core/modules.html',
-        controller: 'ModulesCtrl'
-    });
+    //setup http authentication interceptor
+    var interceptor = function($q, $rootScope) {
+        return {
+            'responseError': function(rejection) {
+                switch(rejection.status) {
+                    case 401:
+                        break;
 
-    $routeProvider.when('/admin/routes', {
-        templateUrl: 'core/routes.html',
-        controller: 'RoutesCtrl'
-    });
+                }
+                return $q.reject(rejection);
+            }
+        }
+    }
 
+    //push new interceptor onto stack
+    $httpProvider.interceptors.push(interceptor);
+
+    //html mode gets rid of /#/
     $locationProvider.html5Mode(true);
 
+    //change interpolator because of Laravel Blade conflicts
     $interpolateProvider.startSymbol('<%');
     $interpolateProvider.endSymbol('%>');
 
-    NavigationProvider.addSection({
-        'title': 'Core',
-        'items': [
-            {
-                'title': 'Home',
-                'link': '/admin'
-            },
-            {
-                'title': 'Modules',
-                'link': '/admin/modules'
-            },
-            {
-                'title': 'Routes',
-                'link': '/admin/routes'
-            }
-        ]
-    });
 });
+

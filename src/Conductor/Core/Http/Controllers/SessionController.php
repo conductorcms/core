@@ -1,10 +1,7 @@
 <?php namespace Conductor\Core\Http\Controllers;
 
 use Illuminate\Routing\Controller;
-use Sentinel;
-use View;
-use Response;
-use Input;
+use Sentinel, View, Response, Input;
 
 class SessionController extends Controller {
 

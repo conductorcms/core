@@ -1,4 +1,4 @@
-@extends('conductor::admin.templates.master')
+@extends('core::admin.templates.master')
 
 @section('content')
 

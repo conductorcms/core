@@ -10,9 +10,8 @@
         <!-- Ionicons -->
         <link href="//code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css" rel="stylesheet" type="text/css" />
         <!-- Theme style -->
-        <link href="/conductor/admin/css/dependencies.css" />
+        <link href="/conductor/admin/css/dependencies.css" rel="stylesheet" type="text/css" />
         <link href="/conductor/admin/css/admin.css" rel="stylesheet" type="text/css" />
-
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -21,7 +20,7 @@
           <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
         <![endif]-->
 
-        @include('conductor::admin.partials.registerModules')
+        @include('core::admin.partials.registerModules')
 
 		<!-- temporary -->
 		<!-- ui-bootstrap style -->
