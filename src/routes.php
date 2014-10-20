@@ -7,10 +7,12 @@ Route::group(['namespace' => 'Conductor\\Core\\Http\\Controllers'], function ()
     Route::get('admin/login', 'AdminController@login');
 
     //Admin panel routes
-	Route::get('admin', 'AdminController@index')->before(setPermissions(['admin']));
-	Route::get('admin/{slug}', 'AdminController@index');
-
-
+	Route::group(['before' => setPermissions(['admin'])], function()
+	{
+		Route::get('admin', 'AdminController@index');
+		Route::get('admin/{slug}', 'AdminController@index');
+	});
+	
     //Admin panel API endpoints
     Route::group(['prefix' => 'admin/api/v1/'], function ()
     {
