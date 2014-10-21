@@ -1,16 +1,11 @@
 {
     "js": [
-        "\/vagrant\/conductorcms\/workbench\/conductor\/users\/resources\/admin\/js\/**\/*.js",
         "\/vagrant\/conductorcms\/workbench\/conductor\/pages\/resources\/admin\/js\/**\/*.js"
     ],
     "sass": [
-        "\/vagrant\/conductorcms\/workbench\/conductor\/users\/resources\/admin\/sass\/**\/*.scss",
         "\/vagrant\/conductorcms\/workbench\/conductor\/pages\/resources\/admin\/sass\/**\/*.scss"
     ],
     "views": {
-        "users": [
-            "\/vagrant\/conductorcms\/workbench\/conductor\/users\/resources\/admin\/views\/**\/*.html"
-        ],
         "pages": [
             "\/vagrant\/conductorcms\/workbench\/conductor\/pages\/resources\/admin\/views\/**\/*.html"
         ]

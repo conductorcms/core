@@ -271,6 +271,8 @@ class Fabricator {
         $files = [
             'resources/admin/js/' . $data['name'] . '.js'                      => $this->getSkeletonPath('app.skeleton.js'),
             'resources/admin/js/controllers/' . $data['className'] . 'Ctrl.js' => $this->getSkeletonPath('controller.skeleton.js'),
+			'resources/admin/js/routes.js'									   => $this->getSkeletonPath('routes.skeleton.js'),
+		    'resources/admin/js/navigation.js'								   => $this->getSkeletonPath('navigation.skeleton.js'),
             $providerPath . 'ModuleProvider.php'                         => $this->getSkeletonPath('provider.skeleton'),
             $providerPath . '.php'                                       => $this->getSkeletonPath('module.skeleton')
         ];

@@ -1,17 +1,5 @@
-angular.module('admin.##module_name##', ['ngRoute', 'admin.core', 'admin.##module_name##.templates']).config(function ($routeProvider, NavigationProvider) {
-    $routeProvider.when('/admin/##module_name##', {
-        templateUrl: '##module_name##/index.html',
-        controller: '##module_display_name##Ctrl'
-    });
+// Main module declaration with dependencies. You may
+// perform additional module-level configuration
+// here by chaining .config(function()
 
-    NavigationProvider.addSection({
-        'title': '##module_display_name##',
-        'items': [
-            {
-                'title': 'Overview',
-                'link': '/admin/##module_name##'
-            }
-        ]
-    });
-
-});
+angular.module('admin.##module_name##', ['ngRoute', 'admin.core', 'admin.##module_name##.templates']);
