@@ -130,6 +130,7 @@ class Fabricator {
             'resources' => [
                 'admin' => [
                     'js' => [
+                        'config',
                         'controllers',
                         'services',
                         'filters',
@@ -269,10 +270,10 @@ class Fabricator {
         $this->files->delete($providerPath . 'ServiceProvider.php');
 
         $files = [
-            'resources/admin/js/' . $data['name'] . '.js'                      => $this->getSkeletonPath('app.skeleton.js'),
-            'resources/admin/js/controllers/' . $data['className'] . 'Ctrl.js' => $this->getSkeletonPath('controller.skeleton.js'),
-			'resources/admin/js/routes.js'									   => $this->getSkeletonPath('routes.skeleton.js'),
-		    'resources/admin/js/navigation.js'								   => $this->getSkeletonPath('navigation.skeleton.js'),
+            'resources/admin/js/' . $data['name'] . '.js'                       => $this->getSkeletonPath('app.skeleton.js'),
+            'resources/admin/js/controllers/' . $data['className'] . 'Ctrl.js'  => $this->getSkeletonPath('controller.skeleton.js'),
+			'resources/admin/js/config/routes.js'							    => $this->getSkeletonPath('routes.skeleton.js'),
+		    'resources/admin/js/config/navigation.js'						    => $this->getSkeletonPath('navigation.skeleton.js'),
             $providerPath . 'ModuleProvider.php'                         => $this->getSkeletonPath('provider.skeleton'),
             $providerPath . '.php'                                       => $this->getSkeletonPath('module.skeleton')
         ];
