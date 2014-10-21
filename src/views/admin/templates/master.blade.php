@@ -78,7 +78,7 @@
 	                <accordion close-others="false">
                         <accordion-group ng-repeat="section in nav.menu" heading="<% section.title %>">
                             <ul>
-                                <li ng-repeat="item in section.items"><a href="<% item.link %>"><% item.title %></a></li>
+                                <li ng-repeat="item in section.items"><a href="<% item.uri %>"><% item.title %></a></li>
                             </ul>
                         </accordion-group>
                     </accordion>
