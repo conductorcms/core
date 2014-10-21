@@ -7,7 +7,12 @@ class SessionController extends Controller {
 
     public function get()
     {
-        if($user = Sentinel::check()) return Response::json(['session' => true, 'user' => $user], 200);
+        if($user = Sentinel::check())
+        {
+            $user->getRoles();
+            $user->permissions = $user->roles[0]->permissions;
+            return Response::json(['session' => true, 'user' => $user], 200);
+        }
 
         return Response::json(['session' => false], 200);
     }

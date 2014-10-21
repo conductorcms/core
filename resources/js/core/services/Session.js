@@ -38,7 +38,17 @@ angular.module('admin.core').factory('Session', function ($http) {
     // check if current session has sufficient permissions
     // for requested route
     session.isAuthorized = function(permissions) {
+        var authorized = true;
 
+        for(var ii in permissions)
+        {
+            if(this.current.user.permissions[permissions[ii]] != true)
+            {
+                authorized = false;
+            }
+        }
+
+        return authorized;
     }
 
     return session;
