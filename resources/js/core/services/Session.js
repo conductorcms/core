@@ -5,14 +5,14 @@ angular.module('admin.core').factory('Session', function ($http) {
 
     // attempt to establish a session
     session.login = function(data) {
-        return $http.post('/admin/api/v1/session', data).success(function (data) {
+        return $http.post('/session', data).success(function (data) {
             angular.copy(data, session.current);
         });
     };
 
     // destory current session
     session.logout = function() {
-        return $http.get('/admin/api/v1/session/destroy').success(function (data) {
+        return $http.get('/session/destroy').success(function (data) {
 
         });
     };
@@ -22,7 +22,7 @@ angular.module('admin.core').factory('Session', function ($http) {
 
         if(!this.current.session)
         {
-            return $http.get('/admin/api/v1/session').success(function (data) {
+            return $http.get('/session').success(function (data) {
                 angular.copy(data, session.current);
             });
         }
