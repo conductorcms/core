@@ -8,7 +8,7 @@ angular.module('admin').config(function($routeProvider) {
 	$routeProvider.when('/admin/modules', {
 		templateUrl: 'core/modules.html',
 		controller: 'ModulesCtrl',
-		permissions: ['admin']
+		permissions: ['super-admin']
 	});
 
 	$routeProvider.when('/admin/routes', {

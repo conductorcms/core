@@ -1,6 +1,6 @@
 // register events at the app level
 
-angular.module('admin').run(function($rootScope, Session) {
+angular.module('admin').run(function($rootScope, Session, $window) {
 
 	// when a route change starts, check permissions
 	// and restrict access if user does not
@@ -10,11 +10,8 @@ angular.module('admin').run(function($rootScope, Session) {
 
         if(!Session.isAuthorized(next.$$route.permissions))
         {
-            console.log('not authorized');
-        }
-        else
-        {
-            console.log('authorized');
+            evt.preventDefault();
+            $window.location.href = '/';
         }
 	});
 
