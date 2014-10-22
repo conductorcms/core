@@ -51,6 +51,8 @@ class CompileModuleAssetsCommand extends Command {
 
         $this->info('Modules found: ' . $modules->count());
 
+		$basePath = $this->option('basePath');
+
         $assetManifest = [];
 
         foreach ($modules as $module)
@@ -65,20 +67,25 @@ class CompileModuleAssetsCommand extends Command {
 
             $moduleRoot = $assets . $module->name . '/';
 
+			$this->info($moduleRoot);
+
             $assets = $moduleRoot . 'module.json';
 
             $this->info($assets);
 
             $json = json_decode(file_get_contents($assets));
 
+			$base = $moduleRoot;
+			if(isset($basePath)) $base = $basePath . $module->name . '/';
+
             foreach ($json->assets->js as $asset)
             {
-                $assetManifest['js'][] = $moduleRoot . $asset;
+                $assetManifest['js'][] = $base . $asset;
             }
 
             foreach ($json->assets->sass as $asset)
             {
-                $assetManifest['sass'][] = $moduleRoot . $asset;
+                $assetManifest['sass'][] = $base . $asset;
             }
 
             $module = explode('/', $module->name);
@@ -86,11 +93,11 @@ class CompileModuleAssetsCommand extends Command {
 
             foreach($json->assets->views as $asset)
             {
-                $assetManifest['views'][$module][] = $moduleRoot . $asset;
+                $assetManifest['views'][$module][] = $base . $asset;
             }
         }
 
-        file_put_contents(__DIR__ . '../../../../../asset_manifest.json', json_encode($assetManifest, JSON_PRETTY_PRINT));
+        file_put_contents(__DIR__ . '../../../../../asset_manifest.json', json_encode($assetManifest, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
     }
 
     /**
@@ -110,7 +117,9 @@ class CompileModuleAssetsCommand extends Command {
      */
     protected function getOptions()
     {
-        return [];
+        return [
+			['basePath', 'base', InputOption::VALUE_OPTIONAL, 'Register a base path manually (useful for setting host paths instead of VMs', null]
+		];
     }
 
 }

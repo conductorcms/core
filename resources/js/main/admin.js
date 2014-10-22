@@ -20,7 +20,8 @@ function getCoreAdminDependencies()
 		'admin.login',
 		'ngRoute',
 		'ui.bootstrap',
-		'toaster'
+		'toaster',
+		'textAngular'
 	];
 
 	//get dependencies from constant defined by back-end

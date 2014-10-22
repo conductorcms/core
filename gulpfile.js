@@ -4,7 +4,8 @@ var gulp = require('gulp')
     sass           = require('gulp-ruby-sass')
     watch          = require('gulp-watch')
     templateCache  = require('gulp-angular-templatecache')
-    annotate       = require('gulp-ng-annotate');
+    annotate       = require('gulp-ng-annotate')
+	jsonEdit	   = require('gulp-json-editor');
 
 var assets = require('./asset_manifest.json');
 
@@ -19,6 +20,39 @@ gulp.task('list:assets', function()
     listAssets('sass');
     console.log('views:');
     listAssets('views');
+});
+
+// convert asset paths to host paths
+// to allow for gulp tasks to be
+// ran from the host if
+// using Vagrant
+gulp.task('assets:convertPaths', function()
+{
+	var hostPath = __dirname + '/';
+	hostPath = hostPath.substring(0, hostPath.indexOf('\\workbench\\')) + '\\workbench\\';
+	var vagrantPath = assets.js[1].substring(0, assets.js[1].indexOf('/conductor/')) + '/';
+
+	console.log(hostPath);
+	console.log(vagrantPath);
+
+	for(var ii in assets.js)
+	{
+		assets.js[ii] = assets.js[ii].split(vagrantPath).join(hostPath);
+	}
+
+	gulp.src('./asset_manifest.json')
+		.pipe(jsonEdit(function(json)
+		{
+			json.js = assets.js;
+			return json;
+		},
+			{
+				'inden_char': ' ',
+				'indent_size': 4
+			}))
+		.pipe(gulp.dest('./'));
+
+	console.log(assets.js);
 });
 
 gulp.task('build:js', ['build:views'], function()
@@ -143,7 +177,12 @@ function getJsDependencies()
         'angular-bootstrap/ui-bootstrap.js',
         'angular-bootstrap/ui-bootstrap-tpls.js',
         'angular-route/angular-route.js',
-        'AngularJS-Toaster/toaster.js'
+        'AngularJS-Toaster/toaster.js',
+		'textAngular/src/textAngular-rangy.min.js',
+		'textAngular/src/textAngularSetup.js',
+		'textAngular/src/textAngular.js',
+		'textAngular/src/textAngular-sanitize.js',
+
     ];
 
 	return prefixDependencies('./resources/vendor/', dependencies);
@@ -153,7 +192,8 @@ function getStyleDependencies()
 {
     var dependencies = [
 		'admin-lte/css/AdminLTE.css',
-		'AngularJS-Toaster/toaster.css'
+		'AngularJS-Toaster/toaster.css',
+		'textAngular/src/textAngular.css'
 	];
 
 	return prefixDependencies('./resources/vendor/', dependencies);

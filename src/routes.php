@@ -11,6 +11,9 @@ Route::group(['namespace' => 'Conductor\\Core\\Http\\Controllers'], function()
 	{
 		Route::get('admin', 'AdminController@index');
 		Route::get('admin/{slug}', 'AdminController@index');
+		Route::get('admin/{slug}/{slugTwo}', 'AdminController@index');
+		Route::get('admin/{slug}/{slugTwo}/{slugThree}', 'AdminController@index');
+		Route::get('admin/{slug}/{slugTwo}/{slugThree/slugFour}', 'AdminController@index');
 	});
 	
     //Admin panel API endpoints
