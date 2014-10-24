@@ -1,13 +1,21 @@
 <?php namespace Conductor\Core\Http\Controllers;
 
 use Illuminate\Routing\Controller;
-use Sentinel, View, Response, Input;
+use View, Response, Input;
+use Cartalyst\Sentinel\Sentinel;
 
 class SessionController extends Controller {
 
+    private $sentinel;
+
+    function __construct(Sentinel $sentinel)
+    {
+        $this->sentinel = $sentinel;
+    }
+
     public function get()
     {
-        if($user = Sentinel::check())
+        if($user = $this->sentinel->check())
         {
             $user->getRoles();
             $user->permissions = $user->roles[0]->permissions;
@@ -24,14 +32,14 @@ class SessionController extends Controller {
             'password' => Input::get('password')
         ];
 
-        if($user = Sentinel::authenticate($credentials)) return Response::json(['session' => true, 'user' => $user]);
+        if($user = $this->sentinel->authenticate($credentials)) return Response::json(['session' => true, 'user' => $user]);
 
         return Response::json(['session' => false, 'message' => 'Unable to authenticate user']);
     }
 
     public function destroy()
     {
-        if($user = Sentinel::check()) Sentinel::logout();
+        if($user = $this->sentinel->check()) $this->sentinel->logout();
 
         return Response::json(['session' => false], 200);
     }
