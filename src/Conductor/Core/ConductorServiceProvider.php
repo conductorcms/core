@@ -63,7 +63,8 @@ class ConductorServiceProvider extends ServiceProvider {
             'CreateModuleCommand',
             'ListModulesCommand',
             'CompileModuleAssetsCommand',
-            'CreateAdminCommand'
+            'CreateAdminCommand',
+            'InstallCommand'
         ];
 
         $this->registerCommandsFromArray($commands);
