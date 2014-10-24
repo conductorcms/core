@@ -1,5 +1,6 @@
 <?php namespace Conductor\Core;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Migrations\DatabaseMigrationRepository;
 use Conductor\Core\Console\ScanModulesCommand;
@@ -22,6 +23,11 @@ class ConductorServiceProvider extends ServiceProvider {
     public function boot()
     {
         $this->package('conductor/core');
+
+        $this->app->bind('request', function()
+        {
+            return new Request;
+        });
 
         $this->app->bind('Conductor\Core\Module\ModuleRepository', 'Conductor\Core\Module\EloquentModuleRepository');
 
