@@ -4,11 +4,11 @@ use Illuminate\Console\Application;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
-use Sentinel;
+use Cartalyst\Sentinel\Sentinel;
 
 class CreateAdminCommand extends Command {
 
-    protected $files;
+    protected $sentinel;
     /**
      * The console command name.
      *
@@ -26,10 +26,11 @@ class CreateAdminCommand extends Command {
     /**
      * Create a new Console Instance
      *
-     * @param Filesystem $files
+     * @param Sentinel $sentinel
      */
-    public function __construct()
+    public function __construct(Sentinel $sentinel)
     {
+        $this->sentinel = $sentinel;
         parent::__construct();
     }
 
@@ -45,9 +46,9 @@ class CreateAdminCommand extends Command {
             'password' => $this->option('password')
         ];
 
-        $user = Sentinel::registerAndActivate($credentials);
+        $user = $this->sentinel->registerAndActivate($credentials);
 
-        $role = Sentinel::findRoleByName('Administrators');
+        $role = $this->sentinel->findRoleByName('Administrators');
         $role->users()->attach($user);
     }
 

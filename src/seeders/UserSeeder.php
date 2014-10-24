@@ -1,13 +1,20 @@
 <?php namespace Conductor\Core\Seeders;
 
 use Illuminate\Database\Seeder;
-use Sentinel;
+use Cartalyst\Sentinel\Sentinel;
 
 class UserSeeder extends Seeder {
 
+    private $sentinel;
+
+    function __construct(Sentinel $sentinel)
+    {
+        $this->sentinel = $sentinel;
+    }
+
     public function run()
     {
-        $role = Sentinel::getRoleRepository()->createModel()->create([
+        $role = $this->sentinel->getRoleRepository()->createModel()->create([
             'name' => 'Administrators',
             'slug' => 'administrators'
         ]);
@@ -18,7 +25,7 @@ class UserSeeder extends Seeder {
 
         $role->save();
 
-        $role = Sentinel::getRoleRepository()->createModel()->create([
+        $role = $this->sentinel->getRoleRepository()->createModel()->create([
             'name' => 'Users',
             'slug' => 'users'
         ]);
