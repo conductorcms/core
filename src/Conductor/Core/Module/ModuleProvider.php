@@ -26,8 +26,6 @@ abstract class ModuleProvider extends ServiceProvider {
             return $module;
         });
 
-        $this->app->tag($info->name, 'conductor:module');
-
         $this->app->register(get_class($this));
     }
 

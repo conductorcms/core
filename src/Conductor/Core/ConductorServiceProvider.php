@@ -24,16 +24,7 @@ class ConductorServiceProvider extends ServiceProvider {
     {
         $this->package('conductor/core');
 
-        //Temporary workaround for L5
-        $this->app->bindShared('request', function()
-        {
-            $request = new Request;
-            return $request->capture();
-        });
-
         $this->app->bind('Conductor\Core\Module\ModuleRepository', 'Conductor\Core\Module\EloquentModuleRepository');
-
-		$this->registerMigratorBindings();
 
         $conductor = $this->app->make('Conductor\Core\Conductor');
 
