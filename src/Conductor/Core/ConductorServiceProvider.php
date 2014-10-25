@@ -26,6 +26,8 @@ class ConductorServiceProvider extends ServiceProvider {
 
         $this->app->bind('Conductor\Core\Module\ModuleRepository', 'Conductor\Core\Module\EloquentModuleRepository');
 
+		$this->registerMigratorBindings();
+
         $conductor = $this->app->make('Conductor\Core\Conductor');
 
         $conductor->boot();

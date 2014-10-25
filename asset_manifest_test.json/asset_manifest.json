@@ -1,7 +1,0 @@
-{
-  "js": ["./resources/js/**/*.js", "C:\\Users\\Matt\\projects\\conductorcms\\workbench\\conductor/pages/resources/admin/js/**/*.js"],
-  "sass": ["/vagrant/conductorcms/workbench/conductor/pages/resources/admin/sass/**/*.scss"],
-  "views": {
-    "pages": ["/vagrant/conductorcms/workbench/conductor/pages/resources/admin/views/**/*.html"]
-  }
-}

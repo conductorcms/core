@@ -1,13 +1,13 @@
 {
     "js": [
-        "C:/Users/Matt/projects/conductorcms/workbench/conductor/pages/resources/admin/js/**/*.js"
+        "C:/users/matt/projects/conductor42/workbench/conductor/pages/resources/admin/js/**/*.js"
     ],
     "sass": [
-        "C:/Users/Matt/projects/conductorcms/workbench/conductor/pages/resources/admin/sass/**/*.scss"
+        "C:/users/matt/projects/conductor42/workbench/conductor/pages/resources/admin/sass/**/*.scss"
     ],
     "views": {
         "pages": [
-            "C:/Users/Matt/projects/conductorcms/workbench/conductor/pages/resources/admin/views/**/*.html"
+            "C:/users/matt/projects/conductor42/workbench/conductor/pages/resources/admin/views/**/*.html"
         ]
     }
 }

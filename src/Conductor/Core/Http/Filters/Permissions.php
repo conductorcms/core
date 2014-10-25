@@ -1,26 +1,30 @@
 <?php namespace Conductor\Core\Http\Filters;
 
-use Illuminate\Contracts\Routing\ResponseFactory;
+use Illuminate\Http\Response;
+use Illuminate\Routing\Redirector;
 use Cartalyst\Sentinel\Sentinel;
 
 class Permissions {
 
-    private $response;
+    private $auth;
 
-    private $sentinel;
+	private $redirect;
 
-    function __construct(ResponseFactory $response, Sentinel $sentinel)
+	private $response;
+
+    function __construct(Sentinel $auth, Redirector $redirect, Response $response)
     {
-        $this->response = $response;
-        $this->sentinel = $sentinel;
+        $this->auth = $auth;
+		$this->redirect = $redirect;
+		$this->response = $response;
     }
 
 	public function filter($route, $request, $permissions, $options = [])
 	{
-        if(!$user = $this->sentinel->check())
+        if(!$user = $this->auth->check())
         {
             if($request->ajax()) return $this->response->make('Unauthorized', 401);
-            return $this->response->redirectGuest('/login');
+            return $this->redirect->to('/login');
         }
 
         $permissions = explode(';', $permissions);
@@ -28,7 +32,7 @@ class Permissions {
         if(!$user->hasAccess($permissions))
         {
             if($request->ajax()) return $this->response->make('Unauthorized', 401);
-            return $this->response->redirectTo('/');
+            return $this->redirect->to('/');
         }
 	}
 
