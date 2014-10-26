@@ -54,12 +54,21 @@ class Widget {
 
 	public function buildInstanceView($slug)
 	{
-		return 'Widget instance, bitch! '. $slug;
+		$instance = $this->repository->getInstanceBySlug($slug);
+
+		$data = $instance->buildViewData();
+
+		return View::make('conductor:widget:' . $slug, $data);
 	}
 
 	public function buildAreaView($slug)
 	{
-		return 'Widget area, bitch! '. $slug;
+		$area = $this->repository->getAreaBySlug($slug);
+
+		foreach($area->widgetInstance as $instance)
+		{
+			$this->buildInstanceView($instance->slug);
+		}
 	}
 
     public function getOptions()
