@@ -16,4 +16,22 @@ angular.module('admin').config(function($routeProvider) {
 		controller: 'RoutesCtrl',
 		permissions: ['admin']
 	});
+
+	$routeProvider.when('/admin/widgets', {
+		templateUrl: 'core/widgets/list.html',
+		controller: 'WidgetListCtrl',
+		permissions: ['admin']
+	});
+
+	$routeProvider.when('/admin/widgets/instances', {
+		templateUrl: 'core/widgets/instances.html',
+		controller: 'WidgetInstancesCtrl',
+		permissions: ['admin']
+	});
+
+	$routeProvider.when('/admin/widgets/areas', {
+		templateUrl: 'core/widgets/areas.html',
+		controller: 'WidgetAreasCtrl',
+		permissions: ['admin']
+	});
 });

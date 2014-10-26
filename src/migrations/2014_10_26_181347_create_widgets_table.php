@@ -12,12 +12,13 @@ class CreateWidgetsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::create('widget', function($table)
+		Schema::create('widgets', function($table)
         {
             $table->increments('id');
-            $table->integer('module_id');
             $table->string('name');
+			$table->string('slug');
             $table->string('description');
+			$table->timestamps();
         });
 
 	}
@@ -29,7 +30,7 @@ class CreateWidgetsTable extends Migration {
 	 */
 	public function down()
 	{
-		//
+		Schema::drop('widgets');
 	}
 
 }

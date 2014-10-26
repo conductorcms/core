@@ -16,4 +16,22 @@ angular.module('admin').config(function(NavigationProvider) {
 			}
 		]
 	});
+
+	NavigationProvider.addSection({
+		title: 'Widgets',
+		items: [
+			{
+				title: 'List',
+				uri: '/admin/widgets'
+			},
+			{
+				title: 'Instances',
+				uri: '/admin/widgets/instances'
+			},
+			{
+				title: 'Areas',
+				uri: '/admin/widgets/areas'
+			}
+		]
+	});
 });

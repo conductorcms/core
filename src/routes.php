@@ -18,8 +18,10 @@ Route::group(['namespace' => 'Conductor\\Core\\Http\\Controllers'], function()
         Route::get('module/{id}/install', 'ApiController@installModule');
         Route::get('module/{id}/uninstall', 'ApiController@uninstallModule');
         Route::get('routes', 'ApiController@routes');
+		Route::get('widgets', 'WidgetController@all');
+		Route::get('widget/areas', 'WidgetController@areas');
 
-    });
+	});
 
     //Admin panel routes
 	Route::group(['before' => setPermissions(['admin'])], function()

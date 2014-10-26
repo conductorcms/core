@@ -1,1 +1,1 @@
-angular.module('admin.core', ['admin.core.templates']);
+angular.module('admin.core', ['admin.core.templates', 'slugifier']);

@@ -16,6 +16,7 @@
     "angular-bootstrap": "~0.11.2",
     "admin-lte": "~1.2.1",
     "AngularJS-Toaster": "~0.4.8",
-    "textAngular": "~1.2.2"
+    "textAngular": "~1.2.2",
+    "angular-slugify": "~1.0.0"
   }
 }

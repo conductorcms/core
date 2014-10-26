@@ -18,6 +18,7 @@ class CreateWidgetInstancesTable extends Migration {
             $table->integer('widget_id');
             $table->integer('area_id');
             $table->text('options');
+			$table->timestamps();
         });
 	}
 

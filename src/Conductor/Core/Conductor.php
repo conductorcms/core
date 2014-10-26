@@ -48,6 +48,7 @@ class Conductor {
     public function boot()
     {
         $this->registerModules();
+		$this->registerWidgets();
         $this->registerTheme();
     }
 
@@ -63,6 +64,17 @@ class Conductor {
             $module->registerModule();
         }
     }
+
+	private function registerWidgets()
+	{
+		$widgets = $this->config->get('core::widgets');
+
+		foreach($widgets as $widget)
+		{
+			$widget = $this->app->make($widget);
+			$widget->register();
+		}
+	}
 
     public function registerTheme()
     {
