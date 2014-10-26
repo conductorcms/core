@@ -6,7 +6,7 @@ use Illuminate\Config\Repository as Config;
 
 class Widget {
 
-    private $options;
+    private $optionsHandler;
 
 	private $repository;
 
@@ -16,7 +16,7 @@ class Widget {
 
     function __construct(Options $options, WidgetRepository $repository, Str $str, DB $db, Config $config)
     {
-        $this->options =  $options;
+        $this->optionsHandler =  $options;
 		$this->repository = $repository;
 		$this->db = $db;
 		$this->config = $config;
@@ -24,6 +24,11 @@ class Widget {
 		if(isset($this->name))
 		{
 			$this->slug = $str->slug($this->name);
+		}
+
+		if(isset($this->options))
+		{
+			$this->optionsHandler->setOptions($this->options);
 		}
     }
 

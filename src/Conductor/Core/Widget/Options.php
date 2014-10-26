@@ -2,5 +2,11 @@
 
 class Options {
 
+	private $options = [];
+
+	public function setOptions($options)
+	{
+		$this->options = $options;
+	}
 
 }
