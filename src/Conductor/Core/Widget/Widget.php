@@ -52,6 +52,16 @@ class Widget {
 
     }
 
+	public function buildInstanceView($slug)
+	{
+		return 'Widget instance, bitch! '. $slug;
+	}
+
+	public function buildAreaView($slug)
+	{
+		return 'Widget area, bitch! '. $slug;
+	}
+
     public function getOptions()
     {
         return $this->options->getOptions();

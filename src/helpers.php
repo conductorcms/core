@@ -12,6 +12,20 @@ function setPermissions(array $permissions)
 	return $filter;
 }
 
+function loadWidgetInstance($slug)
+{
+	$widget = App::make('conductor:widget:' . $slug);
+
+	return $widget->buildInstanceView($slug);
+}
+
+function loadWidgetArea($slug)
+{
+	$widget = App::make('Conductor\Core\Widget\Widget');
+
+	return $widget->buildAreaView($slug);
+}
+
 
 
 

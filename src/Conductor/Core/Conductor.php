@@ -3,6 +3,7 @@
 use Illuminate\Cache\Repository as Cache;
 use Illuminate\Config\Repository as Config;
 use Illuminate\Foundation\Application;
+use Illuminate\View\Compilers\BladeCompiler;
 use Illuminate\View\Factory;
 use Conductor\Core\Module\ModuleRepository;
 
@@ -12,6 +13,11 @@ class Conductor {
      * @var Application
      */
     private $app;
+
+	/**
+	 * @var BladeCompiler
+	 */
+	private $blade;
 
     /**
      * @var Cache
@@ -33,9 +39,10 @@ class Conductor {
      */
     private $view;
 
-    function __construct(Application $app, Cache $cache, Config $config, ModuleRepository $module, Factory $view)
+    function __construct(Application $app, BladeCompiler $blade, Cache $cache, Config $config, ModuleRepository $module, Factory $view)
     {
         $this->app = $app;
+		$this->blade = $blade;
         $this->cache = $cache;
         $this->config = $config;
         $this->module = $module;
@@ -49,6 +56,7 @@ class Conductor {
     {
         $this->registerModules();
 		$this->registerWidgets();
+		$this->registerWidgetBladeExtensions();
         $this->registerTheme();
     }
 
@@ -72,11 +80,26 @@ class Conductor {
 		foreach($widgets as $widget)
 		{
 			$widget = $this->app->make($widget);
+
+			$this->app->bind('conductor:widget:'. $widget->slug, function() use ($widget)
+			{
+				return $widget;
+			});
+
 			$widget->register();
 		}
+
+		$this->registerWidgetBladeExtensions();
 	}
 
-    public function registerTheme()
+	public function registerWidgetBladeExtensions()
+	{
+		$handler = $this->app->make('Conductor\Core\Widget\CustomBladeTags');
+
+		$handler->registerAll();
+	}
+
+	public function registerTheme()
     {
         $theme = $this->config->get('core::themes.active');
         $path = base_path() . '/' . $this->config->get('core::themes.dir');
