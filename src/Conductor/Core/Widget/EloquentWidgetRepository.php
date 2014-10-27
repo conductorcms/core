@@ -47,6 +47,13 @@ class EloquentWidgetRepository implements WidgetRepository {
 		return $this->widget->create($properties);
 	}
 
+    public function createArea($area)
+    {
+        $properties = ['name' => $are->name, 'slug' => $area->slug];
+
+        return $this->area->create($properties);
+    }
+
 	public function isInDb($widget)
 	{
 		$widget = $this->findBySlug($widget->slug);

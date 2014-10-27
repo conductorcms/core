@@ -13,14 +13,14 @@ Route::group(['namespace' => 'Conductor\\Core\\Http\\Controllers'], function()
     //Admin panel API endpoints
     Route::group(['prefix' => 'admin/api/v1/', 'before' => setPermissions(['admin'])], function()
     {
-
         Route::get('modules', 'ApiController@modules');
         Route::get('module/{id}/install', 'ApiController@installModule');
         Route::get('module/{id}/uninstall', 'ApiController@uninstallModule');
         Route::get('routes', 'ApiController@routes');
 		Route::get('widgets', 'WidgetController@all');
-		Route::get('widget/areas', 'WidgetController@areas');
-
+        Route::post('widget/areas', 'WidgetController@storeArea');
+        Route::get('widget/areas', 'WidgetController@areas');
+        Route::delete('widget/area/{id}', 'WidgetController@destroyArea');
 	});
 
     //Admin panel routes

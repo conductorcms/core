@@ -3,14 +3,18 @@
 use Illuminate\Routing\Controller;
 use Conductor\Core\Widget\WidgetRepository;
 use Response;
+use Symfony\Component\HttpFoundation\Request;
 
 class WidgetController extends Controller {
 
 	private $repository;
 
-	function __construct(WidgetRepository $repository)
+    private $request;
+
+	function __construct(WidgetRepository $repository, Request $request)
 	{
 		$this->repository = $repository;
+        $this->request = $request;
 	}
 
 	public function all()
@@ -20,8 +24,22 @@ class WidgetController extends Controller {
 
 	public function areas()
 	{
-		return  Response::json(['areas' => $this->repository->getAreas()], 200);
+		return Response::json(['areas' => $this->repository->getAreas()], 200);
 	}
+
+    public function storeArea()
+    {
+        $area = $this->request->only(['name', 'slug']);
+
+        $this->repository->createArea($area);
+
+        return Response::json(['message' => 'Area created successfully'], 201);
+    }
+
+    public function destroyArea($id)
+    {
+
+    }
 
 
 }

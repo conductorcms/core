@@ -24,7 +24,7 @@ class CacheWidgetRepository implements WidgetRepository
 
 	public function getAreas()
 	{
-		return $this->cache->rememberForever('conductor:widgets:areas', function()
+		return $this->cache->rememberForever('conductor:widget:areas', function()
 		{
 			return $this->widget->getAreas();
 		});
@@ -32,7 +32,7 @@ class CacheWidgetRepository implements WidgetRepository
 
 	public function create($widget)
 	{
-		$widget = $this->widget->create($widget);
+		$widget = $this->widget->createArea($widget);
 
         $this->cache->tags('conductor:widgets')->flush();
 
@@ -43,6 +43,21 @@ class CacheWidgetRepository implements WidgetRepository
 			return $widget;
 		});
 	}
+
+    public function createArea($area)
+    {
+        $area = $this->widget->createArea($area);
+
+        $this->cache->forget('conductor:widget:areas');
+
+        $this->getAreas();
+
+        return $this->cache->rememberForever('conductor:widget:area: ' . $area->slug, function() use($area)
+        {
+            return $area;
+        });
+
+    }
 
 	public function isInDb($widget)
     {

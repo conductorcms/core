@@ -1,5 +1,39 @@
-Widget Areas
-
-<div class="box box-success" ng-repeat="area in areas">
-	<h3>Test</h3>
+<h4 class="page-header">
+    Widget Areas
+    <small>Define your widget areas here</small>
+</h4>
+<button ng-click="addArea()" class="btn btn-primary">Add an area</button>
+<br /><br />
+<div class="row">
+    <div ng-repeat="area in areas" class="col-lg-4">
+        <div class="box box-success">
+            <span ng-hide="area.newArea">
+                <div class="box-header">
+                    <h3 class="box-title"><% area.name %></h3>
+                </div>
+            </span>
+            <span ng-show="area.newArea">
+                <div class="box-header">
+                    <h4 class="box-title">New Area</h4>
+                </div>
+                <div class="box-body">
+                    <form>
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input ng-model="area.name" type="text" class="form-control" />
+                        </div>
+                        <slug from="area.name" to="area.slug"></slug>
+                        <div class="form-group">
+                            <label for="slug">Slug</label>
+                            <input ng-model="area.slug" type="text" class="form-control" disabled />
+                        </div>
+                    </form>
+                </div>
+                <div class="box-footer">
+                    <button ng-click="saveArea(area)" class="btn btn-primary btn-small">Save</button>
+                    <button ng-click="deleteArea(area)" class="btn btn-danger btn-small">Delete</button>
+                </div>
+            </span>
+        </div>
+    </div>
 </div>
