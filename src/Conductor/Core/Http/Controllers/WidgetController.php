@@ -3,7 +3,7 @@
 use Illuminate\Routing\Controller;
 use Conductor\Core\Widget\WidgetRepository;
 use Response;
-use Symfony\Component\HttpFoundation\Request;
+use Illuminate\Http\Request;
 
 class WidgetController extends Controller {
 
@@ -21,25 +21,4 @@ class WidgetController extends Controller {
 	{
 		return  Response::json(['widgets' => $this->repository->getAll()], 200);
 	}
-
-	public function areas()
-	{
-		return Response::json(['areas' => $this->repository->getAreas()], 200);
-	}
-
-    public function storeArea()
-    {
-        $area = $this->request->only(['name', 'slug']);
-
-        $this->repository->createArea($area);
-
-        return Response::json(['message' => 'Area created successfully'], 201);
-    }
-
-    public function destroyArea($id)
-    {
-
-    }
-
-
 }

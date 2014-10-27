@@ -8,11 +8,15 @@ angular.module('admin').run(function($rootScope, Session, $window) {
 	$rootScope.$on('$routeChangeStart', function(evt, next, curr) {
         var session = Session.check();
 
-        if(!Session.isAuthorized(next.$$route.permissions))
+        if(next.$$route.permission !== undefined)
         {
-            evt.preventDefault();
-            $window.location.href = '/';
+            if(!Session.isAuthorized(next.$$route.permissions))
+            {
+                evt.preventDefault();
+                $window.location.href = '/';
+            }
         }
+
 	});
 
 });

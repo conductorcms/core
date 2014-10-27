@@ -21,7 +21,8 @@ function getCoreAdminDependencies()
 		'ngRoute',
 		'ui.bootstrap',
 		'toaster',
-		'textAngular'
+		'textAngular',
+        'ngDragDrop'
 	];
 
 	//get dependencies from constant defined by back-end

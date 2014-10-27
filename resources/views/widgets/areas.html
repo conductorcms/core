@@ -1,15 +1,39 @@
-<h4 class="page-header">
-    Widget Areas
-    <small>Define your widget areas here</small>
-</h4>
-<button ng-click="addArea()" class="btn btn-primary">Add an area</button>
-<br /><br />
-<div class="row">
-    <div ng-repeat="area in areas" class="col-lg-4">
-        <div class="box box-success">
+<style>
+    .widget-areas {
+        display: -webkit-flex;
+        display: flex;
+        -webkit-justify-content: center;
+        justify-content: center;
+        -webkit-flex-flow: row wrap;
+        flex-flow: row wrap;
+    }
+
+
+    .drag-hover {
+        -webkit-box-shadow:inset 0px 0px 0px 3px yellow;
+        -moz-box-shadow:inset 0px 0px 0px 3px yellow;
+        box-shadow:inset 0px 0px 0px 3px yellow;
+    }
+</style>
+
+<div class="col-lg-8">
+    <h4 class="page-header">
+        Widget Areas
+        <small>Define your widget areas here</small>
+    </h4>
+    <button ng-click="addArea()" class="btn btn-primary">Add an area</button>
+    <br /><br />
+    <div class="row widget-areas">
+        <div ng-repeat="area in areas" class="col-lg-6 widget-area">
+            <div ui-on-drop="onDrop($data, area)" drag-hover-class="drag-hover" class="box box-success">
             <span ng-hide="area.newArea">
                 <div class="box-header">
                     <h3 class="box-title"><% area.name %></h3>
+                </div>
+                <div class="box-body">
+                    <ul>
+                        <li ng-repeat="instance in area.instances"><% instance.name %></li>
+                    </ul>
                 </div>
             </span>
             <span ng-show="area.newArea">
@@ -34,6 +58,20 @@
                     <button ng-click="deleteArea(area)" class="btn btn-danger btn-small">Delete</button>
                 </div>
             </span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-lg-4">
+    <h4 class="page-header">
+        Widget Instances
+        <small>Available widgets</small>
+    </h4>
+    <div ng-repeat="instance in instances" class="box box-primary" ui-draggable="true" drag="instance">
+        <div class="box-header">
+            <div class="inner">
+                <h5><% instance.name %></h5>
+            </div>
         </div>
     </div>
 </div>

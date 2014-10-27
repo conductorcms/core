@@ -25,6 +25,11 @@ class EloquentWidgetRepository implements WidgetRepository {
 		return $this->area->all();
 	}
 
+    public function getInstances()
+    {
+        return $this->instance->all();
+    }
+
 	public function findBySlug($slug)
 	{
 		return $this->widget->where('slug', $slug)->first();
@@ -49,9 +54,7 @@ class EloquentWidgetRepository implements WidgetRepository {
 
     public function createArea($area)
     {
-        $properties = ['name' => $are->name, 'slug' => $area->slug];
-
-        return $this->area->create($properties);
+        return $this->area->create($area);
     }
 
 	public function isInDb($widget)

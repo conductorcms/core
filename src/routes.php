@@ -18,10 +18,14 @@ Route::group(['namespace' => 'Conductor\\Core\\Http\\Controllers'], function()
         Route::get('module/{id}/uninstall', 'ApiController@uninstallModule');
         Route::get('routes', 'ApiController@routes');
 		Route::get('widgets', 'WidgetController@all');
-        Route::post('widget/areas', 'WidgetController@storeArea');
-        Route::get('widget/areas', 'WidgetController@areas');
-        Route::delete('widget/area/{id}', 'WidgetController@destroyArea');
-	});
+
+        Route::post('widget/areas', 'WidgetAreaController@store');
+        Route::get('widget/areas', 'WidgetAreaController@all');
+        Route::delete('widget/area/{id}', 'WidgetAreaController@destroy');
+
+        Route::get('widget/instances', 'WidgetInstanceController@all');
+
+    });
 
     //Admin panel routes
 	Route::group(['before' => setPermissions(['admin'])], function()

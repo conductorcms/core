@@ -30,9 +30,19 @@ class CacheWidgetRepository implements WidgetRepository
 		});
 	}
 
+    public function getInstances()
+    {
+        $this->cache->forget('conductor:widget:instances');
+
+        return $this->cache->rememberForever('conductor:widget:instances', function()
+        {
+            return $this->widget->getInstances();
+        });
+    }
+
 	public function create($widget)
 	{
-		$widget = $this->widget->createArea($widget);
+		$widget = $this->widget->create($widget);
 
         $this->cache->tags('conductor:widgets')->flush();
 

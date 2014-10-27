@@ -17,6 +17,7 @@
     "admin-lte": "~1.2.1",
     "AngularJS-Toaster": "~0.4.8",
     "textAngular": "~1.2.2",
-    "angular-slugify": "~1.0.0"
+    "angular-slugify": "~1.0.0",
+    "angular-native-dragdrop": "~1.0.4"
   }
 }
