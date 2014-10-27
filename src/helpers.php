@@ -14,16 +14,16 @@ function setPermissions(array $permissions)
 
 function loadWidgetInstance($slug)
 {
-	$widget = App::make('conductor:widget:' . $slug);
+    $widget = App::make('Conductor\Core\Widget\Widget');
 
-	return $widget->buildInstanceView($slug);
+    return $widget->loadWidgetInstance($slug);
 }
 
 function loadWidgetArea($slug)
 {
 	$widget = App::make('Conductor\Core\Widget\Widget');
 
-	return $widget->buildAreaView($slug);
+	return $widget->loadWidgetArea($slug);
 }
 
 

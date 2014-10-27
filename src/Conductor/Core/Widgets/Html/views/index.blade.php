@@ -1,0 +1,3 @@
+HTML VIEW <br />
+
+{{ $body }}

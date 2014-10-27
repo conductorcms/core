@@ -5,5 +5,9 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
 class Area extends Eloquent {
 
 	public $table = 'widget_areas';
-    
+
+    public function widgetInstances()
+    {
+        return $this->hasMany('Conductor\Core\Widget\Instance');
+    }
 }

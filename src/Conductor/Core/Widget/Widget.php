@@ -3,6 +3,7 @@
 use Illuminate\Support\Str;
 use Illuminate\Database\DatabaseManager as DB;
 use Illuminate\Config\Repository as Config;
+use Illuminate\View\Factory;
 
 class Widget {
 
@@ -14,12 +15,15 @@ class Widget {
 
 	private $config;
 
-    function __construct(Options $options, WidgetRepository $repository, Str $str, DB $db, Config $config)
+    private $view;
+
+    function __construct(Options $options, WidgetRepository $repository, Str $str, DB $db, Config $config, Factory $view)
     {
         $this->optionsHandler =  $options;
 		$this->repository = $repository;
 		$this->db = $db;
 		$this->config = $config;
+        $this->view = $view;
 
 		if(isset($this->name))
 		{
@@ -57,23 +61,29 @@ class Widget {
 
     }
 
-	public function buildInstanceView($slug)
+	public function loadWidgetInstance($slug)
 	{
-		$instance = $this->repository->getInstanceBySlug($slug);
+        $instance = $this->repository->findInstanceBySlug($slug);
 
-		$data = $instance->buildViewData();
+        $widget = $instance->widget;
+        $data = json_decode($instance->options, true);
 
-		return View::make('conductor:widget:' . $slug, $data);
+        $html = '<div class="widget '. $widget->slug . ' ' . $instance->slug .'">' . PHP_EOL;
+        $html .= $this->view->make('widget.' . $widget->slug . '::index', $data) . PHP_EOL;
+        $html .= '</div>' . PHP_EOL;
+
+        return $html;
 	}
 
-	public function buildAreaView($slug)
+	public function loadWidgetArea($slug)
 	{
-		$area = $this->repository->getAreaBySlug($slug);
-
-		foreach($area->widgetInstance as $instance)
+		$area = $this->repository->findAreaBySlug($slug);
+        $html = '';
+		foreach($area->widgetInstances as $instance)
 		{
-			$this->buildInstanceView($instance->slug);
+			$html .= $this->loadWidgetInstance($instance->slug) . PHP_EOL;
 		}
+        return $html;
 	}
 
     public function getOptions()

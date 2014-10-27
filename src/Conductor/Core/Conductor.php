@@ -87,10 +87,25 @@ class Conductor {
 			});
 
 			$widget->register();
+            $viewPath = $this->getWidgetViewPath($widget);
+            $this->view->addNamespace('widget.' . $widget->slug, $viewPath);
+
 		}
 
 		$this->registerWidgetBladeExtensions();
 	}
+
+    private function getWidgetViewPath($widget)
+    {
+        $reflection = new \ReflectionClass($widget);
+        $path = $reflection->getFileName();
+
+        $pieces = explode('/', $path);
+
+        $pieces[count($pieces) - 1] = 'views/';
+
+        return implode('/', $pieces);
+    }
 
 	public function registerWidgetBladeExtensions()
 	{

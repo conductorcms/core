@@ -4,7 +4,6 @@ use Illuminate\Cache\Repository;
 
 class CacheWidgetRepository implements WidgetRepository
 {
-
 	private $widget;
 
 	private $cache;
@@ -17,7 +16,7 @@ class CacheWidgetRepository implements WidgetRepository
 
 	public function getAll()
 	{
-		return $this->cache->rememberForever('conductor:widgets:all', function()
+		return $this->cache->tags('conductor:widgets')->rememberForever('conductor:widgets:all', function()
 		{
 			return $this->widget->getAll();
 		});
@@ -35,12 +34,9 @@ class CacheWidgetRepository implements WidgetRepository
 	{
 		$widget = $this->widget->create($widget);
 
-		$this->cache->forget('conductor:widgets:all');
+        $this->cache->tags('conductor:widgets')->flush();
 
-		$allWidgets = $this->cache->rememberForever('conductor:widgets:all', function()
-		{
-			return $this->widget->getAll();
-		});
+        $this->getAll();
 
 		return $this->cache->rememberForever('conductor:widget:' . $widget->slug, function() use ($widget)
 		{
@@ -49,8 +45,8 @@ class CacheWidgetRepository implements WidgetRepository
 	}
 
 	public function isInDb($widget)
-	{
-		return $this->cache->rememberForever('conductor:widget:' . $widget->slug . ':inDb', function() use ($widget)
+    {
+        return $this->cache->tags('conductor:widgets')->rememberForever('conductor:widget:' . $widget->slug . ':inDb', function() use ($widget)
 		{
 			return $this->widget->isInDb($widget);
 		});
@@ -63,5 +59,23 @@ class CacheWidgetRepository implements WidgetRepository
 			return $this->widget->findBySlug($slug);
 		});
 	}
+
+    public function findInstanceBySlug($slug)
+    {
+        $this->cache->forget('conductor:widget:'.$slug.':instance');
+        return $this->cache->rememberForever('conductor:widget:' . $slug . ':instance', function() use ($slug)
+        {
+            return $this->widget->findInstanceBySlug($slug);
+        });
+    }
+
+    public function findAreaBySlug($slug)
+    {
+        $this->cache->forget('conductor:widget:area' . $slug);
+        return $this->cache->rememberForever('conductor:widget:area:' . $slug, function() use ($slug)
+        {
+            return $this->widget->findAreaBySlug($slug);
+        });
+    }
 
 }

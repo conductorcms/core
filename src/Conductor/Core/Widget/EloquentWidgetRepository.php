@@ -6,10 +6,13 @@ class EloquentWidgetRepository implements WidgetRepository {
 
 	private $area;
 
-    function __construct(Model $widget, Area $area)
+    private $instance;
+
+    function __construct(Model $widget, Area $area, Instance $instance)
     {
         $this->widget = $widget;
 		$this->area = $area;
+        $this->instance = $instance;
     }
 
     public function getAll()
@@ -26,6 +29,16 @@ class EloquentWidgetRepository implements WidgetRepository {
 	{
 		return $this->widget->where('slug', $slug)->first();
 	}
+
+    public function findInstanceBySlug($slug)
+    {
+        return $this->instance->where('slug', $slug)->first();
+    }
+
+    public function findAreaBySlug($slug)
+    {
+        return $this->area->where('slug', $slug)->first();
+    }
 
 	public function create($widget)
 	{
