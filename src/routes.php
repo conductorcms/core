@@ -18,8 +18,10 @@ Route::group(['namespace' => 'Conductor\\Core\\Http\\Controllers'], function()
         Route::get('module/{id}/uninstall', 'ApiController@uninstallModule');
         Route::get('routes', 'ApiController@routes');
 		Route::get('widgets', 'WidgetController@all');
+        Route::get('widget/{id}/options', 'WidgetController@getOptions');
 
         Route::post('widget/areas', 'WidgetAreaController@store');
+        Route::put('widget/area/{id}/instances', 'WidgetAreaController@syncInstances');
         Route::get('widget/areas', 'WidgetAreaController@all');
         Route::delete('widget/area/{id}', 'WidgetAreaController@destroy');
 

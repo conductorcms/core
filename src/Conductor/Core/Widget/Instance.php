@@ -8,6 +8,6 @@ class Instance extends Eloquent {
 
     public function widget()
     {
-        return $this->belongsTo('Conductor\Core\Widget\Model');
+        return $this->belongsToMany('Conductor\Core\Widget\Model', 'widget_area_instances', 'area_id', 'instance_id');
     }
 }

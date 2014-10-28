@@ -24,11 +24,21 @@ class CacheWidgetRepository implements WidgetRepository
 
 	public function getAreas()
 	{
+        $this->cache->forget('conductor:widget:areas');
 		return $this->cache->rememberForever('conductor:widget:areas', function()
 		{
 			return $this->widget->getAreas();
 		});
 	}
+
+    public function getAreasWithInstances()
+    {
+        $this->cache->forget('conductor:widget:areas-instances');
+        return $this->cache->rememberForever('conductor:widget:areas-instances', function()
+        {
+            return $this->widget->getAreasWithInstances();
+        });
+    }
 
     public function getInstances()
     {
@@ -77,6 +87,11 @@ class CacheWidgetRepository implements WidgetRepository
 		});
 	}
 
+    public function findById($id)
+    {
+        return $this->widget->findById($id);
+    }
+
 	public function findBySlug($slug)
 	{
 		return $this->cache->rememberForever('conductor:widget:' . $slug, function() use ($slug)
@@ -94,6 +109,16 @@ class CacheWidgetRepository implements WidgetRepository
         });
     }
 
+    public function findAreaById($id)
+    {
+        $this->cache->forget('conductor:widget:area' . $id);
+        return $this->cache->rememberForever('conductor:widget:area:' . $id, function() use ($id)
+        {
+            return $this->widget->findAreaById($id);
+        });
+
+    }
+
     public function findAreaBySlug($slug)
     {
         $this->cache->forget('conductor:widget:area' . $slug);
@@ -101,6 +126,19 @@ class CacheWidgetRepository implements WidgetRepository
         {
             return $this->widget->findAreaBySlug($slug);
         });
+    }
+
+    public function syncInstancesToArea(array $instanceIds, $area)
+    {
+        $this->cache->tags('conductor:widget:instances')->flush();
+
+
+        return $this->widget->syncInstancesToArea($instanceIds, $area);
+    }
+
+    public function destroyArea($id)
+    {
+        return $this->widget->destroyArea($id);
     }
 
 }

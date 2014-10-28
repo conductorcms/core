@@ -11,5 +11,10 @@ angular.module('admin').factory('Widget', function ($http) {
 		});
 	}
 
+    widget.getOptions = function(widget)
+    {
+        return $http.get('/admin/api/v1/widget/' + widget.id + '/options');
+    }
+
 	return widget;
 });

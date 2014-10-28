@@ -1,19 +1,29 @@
 <style>
-    .widget-areas {
-        display: -webkit-flex;
-        display: flex;
-        -webkit-justify-content: center;
-        justify-content: center;
-        -webkit-flex-flow: row wrap;
-        flex-flow: row wrap;
-    }
-
-
     .drag-hover {
         -webkit-box-shadow:inset 0px 0px 0px 3px yellow;
         -moz-box-shadow:inset 0px 0px 0px 3px yellow;
         box-shadow:inset 0px 0px 0px 3px yellow;
     }
+
+    .widget-area-instance {
+        padding-top: 3px;
+        padding-bottom: 3px;
+        padding-left: 5px;
+    }
+
+    .delete-widget-instance, .delete-widget-area {
+        display: none;
+    }
+
+    .widget-area-instance:hover .delete-widget-instance {
+        display: block;
+    }
+
+    .widget-area-header:hover .delete-widget-area
+    {
+        display: block;
+    }
+
 </style>
 
 <div class="col-lg-8">
@@ -24,18 +34,24 @@
     <button ng-click="addArea()" class="btn btn-primary">Add an area</button>
     <br /><br />
     <div class="row widget-areas">
-        <div ng-repeat="area in areas" class="col-lg-6 widget-area">
-            <div ui-on-drop="onDrop($data, area)" drag-hover-class="drag-hover" class="box box-success">
-            <span ng-hide="area.newArea">
-                <div class="box-header">
-                    <h3 class="box-title"><% area.name %></h3>
+        <div ng-repeat="area in areas" class="col-lg-12 widget-area">
+            <div ui-on-drop="onDrop($data, area)" drag-hover-class="drag-hover" class="box box-solid box-primary">
+
+            <div ng-hide="area.newArea" class="box-header widget-area-header">
+                <button ng-click="deleteArea(area)" style="margin-right: 5px; margin-top: 5px" class="btn btn-sm btn-warning pull-right delete-widget-area">X</button>
+                <h3 class="box-title pull-left"><% area.name %> <br /><small style="color: #fff"><% area.slug %></small></h3>
+
+            </div>
+            <div ng-hide="area.newArea" class="box-body">
+                <div class="box box-solid" ng-repeat="instance in area.widget_instances">
+                    <div class="widget-area-instance">
+                        <button ng-click="removeInstance(instance, area)" style="margin-right: 5px; margin-top: 3px" class="btn btn-sm btn-danger pull-right delete-widget-instance">X</button>
+                        <h4 class="pull-left"><% instance.name %> </h4>
+                        <div class="clearfix"></div>
+                    </div>
                 </div>
-                <div class="box-body">
-                    <ul>
-                        <li ng-repeat="instance in area.instances"><% instance.name %></li>
-                    </ul>
-                </div>
-            </span>
+            </div>
+
             <span ng-show="area.newArea">
                 <div class="box-header">
                     <h4 class="box-title">New Area</h4>
@@ -67,10 +83,12 @@
         Widget Instances
         <small>Available widgets</small>
     </h4>
-    <div ng-repeat="instance in instances" class="box box-primary" ui-draggable="true" drag="instance">
+    <button ng-click="newInstance()" class="btn btn-primary">Add a new instance</button>
+    <br /><br />
+    <div ng-repeat="instance in instances" class="box box-solid" ui-draggable="true" drag="instance">
         <div class="box-header">
             <div class="inner">
-                <h5><% instance.name %></h5>
+                <h5 class="box-title"><% instance.name %></h5>
             </div>
         </div>
     </div>

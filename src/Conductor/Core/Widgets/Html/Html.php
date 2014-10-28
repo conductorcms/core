@@ -8,8 +8,10 @@ class Html extends Widget {
 	public $description = 'The HTML Widget';
 
 	public $options = [
-		'body' => 'text'
-
+		'body' => [
+            'name' => 'Body',
+            'type' => 'text'
+        ]
 	];
 
 }

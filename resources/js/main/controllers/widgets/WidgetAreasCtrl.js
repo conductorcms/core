@@ -2,6 +2,7 @@ angular.module('admin').controller('WidgetAreasCtrl', function ($scope, WidgetAr
 
 	$scope.areas = WidgetArea.areas;
     $scope.instances = WidgetInstance.instances;
+    $scope.showTrash = false;
 
 	WidgetArea.getAll();
     WidgetInstance.getAll();
@@ -25,7 +26,7 @@ angular.module('admin').controller('WidgetAreasCtrl', function ($scope, WidgetAr
     $scope.deleteArea = function(area)
     {
         $scope.areas.splice($scope.areas.indexOf(area), 1);
-        if(!area.newArea)
+        if(area.newArea == 'undefined' || !area.newArea)
         {
             WidgetArea.deleteArea(area);
         }
@@ -42,7 +43,43 @@ angular.module('admin').controller('WidgetAreasCtrl', function ($scope, WidgetAr
 
     $scope.onDrop = function(data, area)
     {
-        $scope.areas[$scope.areas.indexOf(area)].instances.push(data);
+        var areaIndex = $scope.areas.indexOf(area);
+
+        $scope.areas[areaIndex].widget_instances.push(data);
+
+        var currentIds = [];
+        for(var ii in $scope.areas[areaIndex].widget_instances)
+        {
+            currentIds.push($scope.areas[areaIndex].widget_instances[ii].id)
+        }
+
+        console.log(currentIds);
+
+        WidgetArea.syncInstances(area.id, currentIds);
+    }
+
+    $scope.removeInstance = function(instance, area) {
+        var areaIndex = $scope.areas.indexOf(area);
+        var instanceIndex = $scope.areas[areaIndex].widget_instances.indexOf(instance);
+
+        $scope.areas[areaIndex].widget_instances.splice(instanceIndex, 1);
+
+        var currentIds = [];
+        for(var ii in $scope.areas[areaIndex].widget_instances)
+        {
+            currentIds.push($scope.areas[areaIndex].widget_instances[ii].id)
+        }
+
+        WidgetArea.syncInstances(area.id, currentIds);
+    }
+
+    $scope.newInstance = function()
+    {
+        var modalInstance = $modal.open({
+            templateUrl: 'core/widgets/instances/create.html',
+            controller: 'NewWidgetInstanceCtrl',
+            size: 'lg'
+        });
     }
 
 });

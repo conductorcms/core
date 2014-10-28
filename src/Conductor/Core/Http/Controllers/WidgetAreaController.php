@@ -19,7 +19,7 @@ class WidgetAreaController extends Controller {
 
     public function all()
     {
-        return Response::json(['areas' => $this->repository->getAreas()], 200);
+        return Response::json(['areas' => $this->repository->getAreasWithInstances()], 200);
     }
 
     public function store()
@@ -33,8 +33,20 @@ class WidgetAreaController extends Controller {
 
     public function destroy($id)
     {
-
+        $this->repository->destroyArea($id);
     }
+
+    public function syncInstances($id)
+    {
+        $area = $this->repository->findAreaById($id);
+
+        $instances = $this->request->only(['instances']);
+
+        $this->repository->syncInstancesToArea($instances['instances'], $area);
+
+        return Response::json(['message' => 'Instances synchronized successfully'], 200);
+    }
+
 
 
 }

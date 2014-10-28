@@ -7,11 +7,6 @@ angular.module('admin').factory('WidgetArea', function ($http) {
 	{
 		$http.get('/admin/api/v1/widget/areas').success(function(data)
 		{
-            for(var ii in data.areas)
-            {
-                data.areas[ii].instances = [];
-            }
-
 			angular.copy(data.areas, area.areas);
 		});
 	}
@@ -30,10 +25,28 @@ angular.module('admin').factory('WidgetArea', function ($http) {
 
     area.deleteArea = function(area)
     {
-        $http.delete('/admin/api/v1/widget/area' + area.id).success(function(data)
+        $http.delete('/admin/api/v1/widget/area/' + area.id).success(function(data)
         {
            area.refresh();
         });
+    }
+
+    area.syncInstances = function(areaId, instances)
+    {
+        $http.put('/admin/api/v1/widget/area/' + areaId + '/instances', {instances: instances}).success(function(data)
+        {
+           area.refresh();
+        });
+    }
+
+    area.removeInstance = function(instance, areaModel)
+    {
+        var areaIndex = $scope.areas.indexOf(areaModel);
+        var instanceIndex = $scope.areas[areaIndex].widget_instances.indexOf(instance);
+
+
+        $scope.areas[areaIndex].widget_instances.splice(instanceIndex, 1);
+
     }
 
     area.refresh = function()
