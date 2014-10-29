@@ -7,10 +7,25 @@ angular.module('admin').controller('NewWidgetInstanceCtrl', function ($scope, $m
 
     Widget.getAll();
 
-    $scope.save = function () {
-        console.log($scope.options);
-        WidgetInstance.save($scope.selectedWidget, $scope.options);
-        //$modalInstance.close();
+    $scope.save = function(instance) {
+
+        var options = {};
+
+        for(var key in $scope.options)
+        {
+            console.log(key);
+            options[key] = $scope.options[key].value;
+        }
+
+        var data = {
+            options: options,
+            name: instance.name,
+            slug: instance.slug
+        };
+
+        WidgetInstance.save($scope.selectedWidget, data);
+
+        $modalInstance.close();
     };
 
     $scope.cancel = function () {

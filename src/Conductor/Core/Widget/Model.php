@@ -8,4 +8,9 @@ class Model extends Eloquent {
 
 	public $fillable = ['name', 'description', 'slug'];
 
+    public function instances()
+    {
+        return $this->hasMany('Conductor\Core\Widget\Instance', 'widget_id', 'id');
+    }
+
 }

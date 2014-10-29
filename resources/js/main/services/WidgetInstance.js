@@ -11,5 +11,13 @@ angular.module('admin').factory('WidgetInstance', function ($http) {
         });
     }
 
+    instance.save = function(widget, data)
+    {
+        $http.post('/admin/api/v1/widget/' + widget.id + '/instance', data).success(function(data)
+        {
+           instance.getAll();
+        });
+    }
+
     return instance;
 });

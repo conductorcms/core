@@ -17,15 +17,25 @@
         </ul>
     </div>
     <div class="widget-options">
-        <div class="form-group" ng-repeat="option in options" ng-init="optionModel = 'instance.' + option.name">
+        <div class="form-group">
+            <label>Instance Name</label>
+            <input ng-model="instance.name" type="text" class="form-control" placeholder="instance name" />
+        </div>
+        <slug from="instance.name" to="instance.slug"></slug>
+        <div class="form-group">
+            <label>Instance Slug</label>
+            <input ng-model="instance.slug" type="text" class="form-control" disabled />
+        </div>
+        <div class="form-group" ng-repeat="option in options">
             <label><% option.name %></label>
             <span ng-switch on="option.type">
                 <textarea ng-model="option.value" class="form-control" ng-switch-when="text"></textarea>
+                <div text-angular ng-model="option.value" ng-switch-when="wysiwyg"></div>
             </span>
         </div>
     </div>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" ng-click="save()">Save</button>
+    <button class="btn btn-primary" ng-click="save(instance)">Save</button>
     <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
 </div>

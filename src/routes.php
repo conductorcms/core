@@ -26,6 +26,7 @@ Route::group(['namespace' => 'Conductor\\Core\\Http\\Controllers'], function()
         Route::delete('widget/area/{id}', 'WidgetAreaController@destroy');
 
         Route::get('widget/instances', 'WidgetInstanceController@all');
+        Route::post('widget/{id}/instance', 'WidgetInstanceController@store');
 
     });
 

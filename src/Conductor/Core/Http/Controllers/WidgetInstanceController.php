@@ -22,4 +22,14 @@ class WidgetInstanceController extends Controller {
         return Response::json(['instances' => $this->repository->getInstances()], 200);
     }
 
+    public function store($id)
+    {
+        $data = $this->request->only(['options', 'name', 'slug']);
+        $data['options'] = json_encode($data['options']);
+
+        $widget = $this->repository->findById($id);
+
+        $instance = $this->repository->createInstance($widget, $data);
+    }
+
 }

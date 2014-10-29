@@ -15,8 +15,16 @@ class CreateAreaInstancesTable extends Migration {
 		Schema::create('widget_area_instances', function($table)
         {
             $table->increments('id');
-            $table->integer('area_id');
-            $table->integer('instance_id');
+            $table->integer('area_id')->unsigned();
+            $table->integer('instance_id')->unsigned();
+
+            $table->foreign('area_id')
+                  ->references('id')->on('widget_areas')
+                  ->onDelete('cascade');
+
+            $table->foreign('instance_id')
+                  ->references('id')->on('widget_instances')
+                  ->onDelete('cascade');
         });
 	}
 

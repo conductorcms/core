@@ -12,12 +12,16 @@ class CreateModuleAuthorTable extends Migration {
      */
     public function up()
     {
-        Schema::create('core_module_authors', function ($table)
+        Schema::create('module_authors', function ($table)
         {
             $table->increments('id');
-            $table->integer('module_id');
+            $table->integer('module_id')->unsigned();
             $table->string('name');
             $table->string('email');
+
+            $table->foreign('module_id')
+                ->references('id')->on('modules')
+                ->onDelete('cascade');
         });
     }
 

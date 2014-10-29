@@ -15,12 +15,15 @@ class CreateWidgetInstancesTable extends Migration {
 		Schema::create('widget_instances', function($table)
         {
             $table->increments('id');
-            $table->integer('widget_id');
-            $table->integer('area_id')->nullable();
+            $table->integer('widget_id')->unsigned();
             $table->string('name');
             $table->string('slug');
             $table->text('options');
 			$table->timestamps();
+
+            $table->foreign('widget_id')
+                  ->references('id')->on('widgets')
+                  ->onDelete('cascade');
         });
 	}
 

@@ -79,6 +79,13 @@ class CacheWidgetRepository implements WidgetRepository
 
     }
 
+    public function createInstance($widget, $data)
+    {
+        $this->cache->forget('conductor:widget:instances');
+
+        return $this->widget->createInstance($widget, $data);
+    }
+
 	public function isInDb($widget)
     {
         return $this->cache->tags('conductor:widgets')->rememberForever('conductor:widget:' . $widget->slug . ':inDb', function() use ($widget)

@@ -12,7 +12,7 @@ class CreateModulesTable extends Migration {
      */
     public function up()
     {
-        Schema::create('core_modules', function ($table)
+        Schema::create('modules', function ($table)
         {
             $table->increments('id');
             $table->string('name');

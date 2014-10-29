@@ -10,7 +10,7 @@ class Html extends Widget {
 	public $options = [
 		'body' => [
             'name' => 'Body',
-            'type' => 'text'
+            'type' => 'wysiwyg'
         ]
 	];
 
