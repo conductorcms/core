@@ -32,7 +32,7 @@ class EloquentWidgetRepository implements WidgetRepository {
 
     public function getInstances()
     {
-        return $this->instance->all();
+        return $this->instance->with('widget')->get();
     }
 
     public function create($widget)
@@ -49,9 +49,9 @@ class EloquentWidgetRepository implements WidgetRepository {
 
     public function createInstance($widget, $data)
     {
-        $instance = $this->instance->create($data);
+        $data['widget_id'] = $widget->id;
 
-        return $widget->instances()->save($instance);
+        return $this->instance->create($data);
     }
 
     public function isInDb($widget)

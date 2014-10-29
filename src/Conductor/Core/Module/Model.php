@@ -4,7 +4,7 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
 
 class Model extends Eloquent {
 
-    public $table = 'core_modules';
+    public $table = 'modules';
 
     public $fillable = ['name', 'display_name', 'description', 'version', 'frontend', 'backend'];
 

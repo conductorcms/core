@@ -25,7 +25,7 @@ class ConductorServiceProvider extends ServiceProvider {
         $this->package('conductor/core');
 
         $this->app->bind('Conductor\Core\Module\ModuleRepository', 'Conductor\Core\Module\EloquentModuleRepository');
-		$this->app->bind('Conductor\Core\Widget\WidgetRepository', 'Conductor\Core\Widget\CacheWidgetRepository');
+		$this->app->bind('Conductor\Core\Widget\WidgetRepository', 'Conductor\Core\Widget\EloquentWidgetRepository');
 
 		$this->registerMigratorBindings();
 

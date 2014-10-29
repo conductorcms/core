@@ -16,6 +16,7 @@ class CacheWidgetRepository implements WidgetRepository
 
 	public function getAll()
 	{
+        $this->cache->tags('conductor:widgets')->flush();
 		return $this->cache->tags('conductor:widgets')->rememberForever('conductor:widgets:all', function()
 		{
 			return $this->widget->getAll();
@@ -88,6 +89,7 @@ class CacheWidgetRepository implements WidgetRepository
 
 	public function isInDb($widget)
     {
+        $this->cache->tags('conductor:widgets')->flush();
         return $this->cache->tags('conductor:widgets')->rememberForever('conductor:widget:' . $widget->slug . ':inDb', function() use ($widget)
 		{
 			return $this->widget->isInDb($widget);
@@ -101,6 +103,7 @@ class CacheWidgetRepository implements WidgetRepository
 
 	public function findBySlug($slug)
 	{
+        $this->cache->forget('conductor:widget:' . $slug);
 		return $this->cache->rememberForever('conductor:widget:' . $slug, function() use ($slug)
 		{
 			return $this->widget->findBySlug($slug);

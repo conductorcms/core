@@ -10,6 +10,6 @@ class Area extends Eloquent {
 
     public function widgetInstances()
     {
-        return $this->BelongsToMany('Conductor\Core\Widget\Instance', 'widget_area_instances', 'area_id', 'instance_id');
+        return $this->belongsToMany('Conductor\Core\Widget\Instance', 'widget_area_instances', 'area_id', 'instance_id');
     }
 }

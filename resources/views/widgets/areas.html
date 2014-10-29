@@ -11,7 +11,7 @@
         padding-left: 5px;
     }
 
-    .delete-widget-instance, .delete-widget-area {
+    .delete-widget-instance, .delete-widget-area, .destroy-instance, .edit-instance {
         display: none;
     }
 
@@ -24,6 +24,17 @@
         display: block;
     }
 
+    .instance-item:hover .destroy-instance
+    {
+        display: block;
+    }
+
+    .instance-item:hover .edit-instance
+    {
+        display: block;
+    }
+
+
 </style>
 
 <div class="col-lg-8">
@@ -33,12 +44,14 @@
     </h4>
     <button ng-click="addArea()" class="btn btn-primary">Add an area</button>
     <br /><br />
+    <input type="search" ng-model="search.areas" class="form-control" placeholder="search areas" />
+    <br />
     <div class="row widget-areas">
-        <div ng-repeat="area in areas" class="col-lg-12 widget-area">
+        <div ng-repeat="area in areas | filter:search.areas" class="col-lg-12 widget-area">
             <div ui-on-drop="onDrop($data, area)" drag-hover-class="drag-hover" class="box box-solid box-primary">
 
             <div ng-hide="area.newArea" class="box-header widget-area-header">
-                <button ng-click="deleteArea(area)" style="margin-right: 5px; margin-top: 5px" class="btn btn-sm btn-warning pull-right delete-widget-area">X</button>
+                <button ng-click="deleteArea(area)" style="margin-right: 5px; margin-top: 5px" class="btn btn-sm btn-danger pull-right delete-widget-area">X</button>
                 <h3 class="box-title pull-left"><% area.name %> <br /><small style="color: #fff"><% area.slug %></small></h3>
 
             </div>
@@ -85,10 +98,14 @@
     </h4>
     <button ng-click="newInstance()" class="btn btn-primary">Add a new instance</button>
     <br /><br />
-    <div ng-repeat="instance in instances" class="box box-solid" ui-draggable="true" drag="instance">
+    <input type="search" ng-model="search.instances" class="form-control" placeholder="search instances" />
+    <br />
+    <div ng-repeat="instance in instances | filter:search.instances" class="box box-solid instance-item" ui-draggable="true" drag="instance">
         <div class="box-header">
             <div class="inner">
-                <h5 class="box-title"><% instance.name %></h5>
+                <button ng-click="destroyInstance(instance)" style="margin-right: 5px; margin-top: 3px" class="btn btn-sm btn-danger pull-right destroy-instance">X</button>
+                <button ng-click="editInstance(instance)" style="margin-right: 5px; margin-top: 3px" class="btn btn-sm btn-warning pull-right edit-instance"><i class="fa fa-pencil"></i></button>
+                <h5 class="box-title"><% instance.name %><br /><small>Slug: <% instance.slug %></small><br /><small>Type: <% instance.widget.name %></small></h5>
             </div>
         </div>
     </div>
