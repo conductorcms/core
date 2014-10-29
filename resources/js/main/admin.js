@@ -19,10 +19,13 @@ function getCoreAdminDependencies()
 		'admin.core',
 		'admin.login',
 		'ngRoute',
+        'ngAnimate',
 		'ui.bootstrap',
 		'toaster',
 		'textAngular',
-        'ngDragDrop'
+        'ngDragDrop',
+        'mgcrea.ngStrap',
+        'mgcrea.ngStrap.helpers.dimensions'
 	];
 
 	//get dependencies from constant defined by back-end

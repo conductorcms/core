@@ -149,8 +149,10 @@ function getJsDependencies()
 		'textAngular/src/textAngular.js',
 		'textAngular/src/textAngular-sanitize.js',
 		'angular-slugify/angular-slugify.js',
-        'angular-native-dragdrop/draganddrop.js'
-
+        'angular-native-dragdrop/draganddrop.js',
+        'angular-strap/dist/angular-strap.js',
+        'angular-strap/dist/modules/dimensions.js',
+        'angular-strap/dist/angular-strap.tpl.js',
     ];
 
 	return prefixDependencies('./resources/vendor/', dependencies);

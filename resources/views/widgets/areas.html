@@ -34,36 +34,36 @@
         display: block;
     }
 
-
 </style>
 
-<div class="col-lg-8">
-    <h4 class="page-header">
-        Widget Areas
-        <small>Define your widget areas here</small>
-    </h4>
-    <button ng-click="addArea()" class="btn btn-primary">Add an area</button>
-    <br /><br />
-    <input type="search" ng-model="search.areas" class="form-control" placeholder="search areas" />
-    <br />
-    <div class="row widget-areas">
-        <div ng-repeat="area in areas | filter:search.areas" class="col-lg-12 widget-area">
-            <div ui-on-drop="onDrop($data, area)" drag-hover-class="drag-hover" class="box box-solid box-primary">
+<div class="row"  bs-affix-target>
+    <div class="col-lg-8">
+        <h4 class="page-header">
+            Widget Areas
+            <small>Define your widget areas here</small>
+        </h4>
+        <button ng-click="addArea()" class="btn btn-primary">Add an area</button>
+        <br /><br />
+        <input type="search" ng-model="search.areas" class="form-control" placeholder="search areas" />
+        <br />
+        <div class="row widget-areas">
+            <div ng-repeat="area in areas | filter:search.areas" class="col-lg-12 widget-area">
+                <div ui-on-drop="onDrop($data, area)" drag-hover-class="drag-hover" class="box box-solid box-primary">
 
-            <div ng-hide="area.newArea" class="box-header widget-area-header">
-                <button ng-click="deleteArea(area)" style="margin-right: 5px; margin-top: 5px" class="btn btn-sm btn-danger pull-right delete-widget-area">X</button>
-                <h3 class="box-title pull-left"><% area.name %> <br /><small style="color: #fff"><% area.slug %></small></h3>
+                    <div ng-hide="area.newArea" class="box-header widget-area-header">
+                        <button ng-click="deleteArea(area)" style="margin-right: 5px; margin-top: 5px" class="btn btn-sm btn-danger pull-right delete-widget-area">X</button>
+                        <h3 class="box-title pull-left"><% area.name %> <br /><small style="color: #fff"><% area.slug %></small></h3>
 
-            </div>
-            <div ng-hide="area.newArea" class="box-body">
-                <div class="box box-solid" ng-repeat="instance in area.widget_instances">
-                    <div class="widget-area-instance">
-                        <button ng-click="removeInstance(instance, area)" style="margin-right: 5px; margin-top: 3px" class="btn btn-sm btn-danger pull-right delete-widget-instance">X</button>
-                        <h4 class="pull-left"><% instance.name %> </h4>
-                        <div class="clearfix"></div>
                     </div>
-                </div>
-            </div>
+                    <div ng-hide="area.newArea" class="box-body">
+                        <div class="box box-solid" ng-repeat="instance in area.widget_instances">
+                            <div class="widget-area-instance">
+                                <button ng-click="removeInstance(instance, area)" style="margin-right: 5px; margin-top: 3px" class="btn btn-sm btn-danger pull-right delete-widget-instance">X</button>
+                                <h4 class="pull-left"><% instance.name %> </h4>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    </div>
 
             <span ng-show="area.newArea">
                 <div class="box-header">
@@ -87,26 +87,31 @@
                     <button ng-click="deleteArea(area)" class="btn btn-danger btn-small">Delete</button>
                 </div>
             </span>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="col-lg-4">
-    <h4 class="page-header">
-        Widget Instances
-        <small>Available widgets</small>
-    </h4>
-    <button ng-click="newInstance()" class="btn btn-primary">Add a new instance</button>
-    <br /><br />
-    <input type="search" ng-model="search.instances" class="form-control" placeholder="search instances" />
-    <br />
-    <div ng-repeat="instance in instances | filter:search.instances" class="box box-solid instance-item" ui-draggable="true" drag="instance">
-        <div class="box-header">
-            <div class="inner">
-                <button ng-click="destroyInstance(instance)" style="margin-right: 5px; margin-top: 3px" class="btn btn-sm btn-danger pull-right destroy-instance">X</button>
-                <button ng-click="editInstance(instance)" style="margin-right: 5px; margin-top: 3px" class="btn btn-sm btn-warning pull-right edit-instance"><i class="fa fa-pencil"></i></button>
-                <h5 class="box-title"><% instance.name %><br /><small>Slug: <% instance.slug %></small><br /><small>Type: <% instance.widget.name %></small></h5>
+    <div class="col-lg-4">
+        <div class="col-lg-12" bs-affix>
+            <h4 class="page-header">
+                Widget Instances
+                <small>Available widgets</small>
+            </h4>
+            <button ng-click="newInstance()" class="btn btn-primary">Add a new instance</button>
+            <br /><br />
+            <input type="search" ng-model="search.instances" class="form-control" placeholder="search instances" />
+            <br />
+            <div ng-repeat="instance in instances | filter:search.instances" class="box box-solid instance-item" ui-draggable="true" drag="instance">
+                <div class="box-header">
+                    <div class="inner">
+                        <button ng-click="destroyInstance(instance)" style="margin-right: 5px; margin-top: 3px" class="btn btn-sm btn-danger pull-right destroy-instance">X</button>
+                        <button ng-click="editInstance(instance)" style="margin-right: 5px; margin-top: 3px" class="btn btn-sm btn-warning pull-right edit-instance"><i class="fa fa-pencil"></i></button>
+                        <h5 class="box-title"><% instance.name %><br /><small>Slug: <% instance.slug %></small><br /><small>Type: <% instance.widget.name %></small></h5>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
 </div>
+
