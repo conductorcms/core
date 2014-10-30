@@ -42,13 +42,5 @@ Route::group(['namespace' => 'Conductor\\Core\\Http\\Controllers'], function()
 	
 });
 
-
-
-Route::get('theme', function()
-{
-    $data['theme'] = Config::get('conductor::themes.active');
-    $data['layout'] = $data['theme'] . '.layouts.master';
-    $data['title'] = 'Title Test';
-
-    return View::make($data['theme']. '.index', $data);
-});
+// catch-all for pages module
+Route::get('{slug}', 'Conductor\Pages\Http\Controllers\PageController@buildPage');

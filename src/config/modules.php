@@ -3,4 +3,5 @@
 /**/
 
 return [
+    'Conductor\Pages\PagesModuleProvider'
 ];

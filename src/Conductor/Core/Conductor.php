@@ -112,12 +112,12 @@ class Conductor {
 		$handler = $this->app->make('Conductor\Core\Widget\CustomBladeTags');
 
 		$handler->registerAll();
-	}
+    }
 
 	public function registerTheme()
     {
         $theme = $this->config->get('core::themes.active');
-        $path = base_path() . '/' . $this->config->get('core::themes.dir');
+        $path = base_path() . '/' . $this->config->get('core::themes.dir') . '/' . $theme;
 
         $this->view->addLocation($path);
         $this->view->addNamespace($theme, $path);
