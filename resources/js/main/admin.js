@@ -23,9 +23,7 @@ function getCoreAdminDependencies()
 		'ui.bootstrap',
 		'toaster',
 		'textAngular',
-        'ngDragDrop',
-        'mgcrea.ngStrap',
-        'mgcrea.ngStrap.helpers.dimensions'
+        'ngDragDrop'
 	];
 
 	//get dependencies from constant defined by back-end
