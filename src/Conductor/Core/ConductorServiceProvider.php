@@ -24,10 +24,18 @@ class ConductorServiceProvider extends ServiceProvider {
     {
         $this->package('conductor/core');
 
+        // bind interfaces
         $this->app->bind('Conductor\Core\Module\ModuleRepository', 'Conductor\Core\Module\EloquentModuleRepository');
 		$this->app->bind('Conductor\Core\Widget\WidgetRepository', 'Conductor\Core\Widget\EloquentWidgetRepository');
+        $this->app->bind('Conductor\Core\Setting\SettingRepository', 'Conductor\Core\Setting\EloquentSettingRepository');
 
-		$this->registerMigratorBindings();
+        // register facades
+        $this->app->bind('setting', function()
+        {
+           return $this->app->make('Conductor\Core\Setting\Setting');
+        });
+
+        $this->registerMigratorBindings();
 
         $conductor = $this->app->make('Conductor\Core\Conductor');
 
@@ -35,6 +43,7 @@ class ConductorServiceProvider extends ServiceProvider {
 
 		include __DIR__ . '/../../helpers.php';
 		include __DIR__ . '/../../routes.php';
+        include __DIR__ . '/../../settings.php';
     }
 
     /**

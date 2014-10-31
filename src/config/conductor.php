@@ -26,6 +26,8 @@ return [
 	*/
 	'modules' => [
 
-	]
+	],
+
+    'site_name' => 'Conductor'
 
 ];
