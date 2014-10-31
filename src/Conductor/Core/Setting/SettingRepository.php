@@ -4,7 +4,7 @@ interface SettingRepository {
 
     public function getAll();
     public function update($setting, $settingId);
-    public function create($key, $type);
+    public function create($options);
     public function exists($key);
 
 }

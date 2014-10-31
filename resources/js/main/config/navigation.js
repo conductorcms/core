@@ -3,8 +3,8 @@ angular.module('admin').config(function(NavigationProvider) {
 		title: 'Core',
 		items: [
 			{
-				title: 'Home',
-				uri: '/admin'
+				title: 'Settings',
+				uri: '/admin/settings'
 			},
 			{
 				title: 'Modules',

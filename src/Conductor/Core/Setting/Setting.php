@@ -2,6 +2,7 @@
 
 use Illuminate\Config\Repository as Config;
 use Illuminate\Database\DatabaseManager as DB;
+use Illuminate\Database\Eloquent\Collection;
 
 // collect setting registrations
 // loop through, check if  it's a valid
@@ -40,23 +41,23 @@ class Setting {
     }
 
 
-    public function register($key, $type)
+    public function register($options)
     {
         if(!$this->tableExists) return false;
 
         // if config doesn't exist, throw an exception
-        if(!$this->config->has($key)) return false;
+        if(!$this->config->has($options['key'])) return false;
 
         // if it doesn't exist in the DB, create it
-        if(!$setting = $this->settingRepository->exists($key))
+        if(!$setting = $this->settingRepository->exists($options['key']))
         {
-            $setting = $this->settingRepository->create($key, $type);
+            $setting = $this->settingRepository->create($options);
             $this->addSetting($setting);
             return true;
         }
 
         // if it exists, load value
-        $this->config->set($key, $setting->value);
+        $this->config->set($options['key'], $setting->value);
         $this->addSetting($setting);
     }
 
@@ -67,6 +68,6 @@ class Setting {
 
     private function addSetting($setting)
     {
-        static::$settings[$setting->key] = $setting;
+        static::$settings[$setting['group']][] = $setting;
     }
 }

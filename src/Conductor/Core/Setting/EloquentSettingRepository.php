@@ -23,12 +23,14 @@ class EloquentSettingRepository implements SettingRepository {
         return $this->setting->all();
     }
 
-    public function create($key, $type)
+    public function create($options)
     {
         $setting = [
-            'key' => $key,
-            'type' => $type,
-            'value' => $this->config->get($key)
+            'key' => $options['key'],
+            'type' => $options['type'],
+            'name' => $options['name'],
+            'group' => $options['group'],
+            'value' => $this->config->get($options['key'])
         ];
 
         return $this->setting->create($setting);

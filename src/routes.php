@@ -13,6 +13,7 @@ Route::group(['namespace' => 'Conductor\\Core\\Http\\Controllers'], function()
     //Admin panel API endpoints
     Route::group(['prefix' => 'admin/api/v1/', 'before' => setPermissions(['admin'])], function()
     {
+        Route::get('settings', 'SettingController@getAll');
         Route::get('modules', 'ApiController@modules');
         Route::get('module/{id}/install', 'ApiController@installModule');
         Route::get('module/{id}/uninstall', 'ApiController@uninstallModule');

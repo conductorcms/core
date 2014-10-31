@@ -15,6 +15,8 @@ class CreateSettingsTable extends Migration {
 		Schema::create('settings', function($table)
         {
             $table->increments('id');
+            $table->string('name');
+            $table->string('group');
             $table->string('key');
             $table->text('value');
             $table->string('type');

@@ -5,7 +5,14 @@ angular.module('admin').config(function($routeProvider) {
 		permissions: ['admin']
 	});
 
-	$routeProvider.when('/admin/modules', {
+    $routeProvider.when('/admin/settings', {
+        templateUrl: 'core/settings.html',
+        controller: 'SettingsCtrl',
+        permissions: ['admin']
+    });
+
+
+    $routeProvider.when('/admin/modules', {
 		templateUrl: 'core/modules.html',
 		controller: 'ModulesCtrl',
 		permissions: ['admin']
