@@ -16,6 +16,8 @@ interface WidgetRepository {
 
     public function createInstance($widget, $data);
 
+    public function getInstance($id);
+
     public function isInDb($widget);
 
     public function findById($id);

@@ -97,5 +97,14 @@ class EloquentWidgetRepository implements WidgetRepository {
         return $this->area->destroy($id);
     }
 
+    public function getInstance($id)
+    {
+        return $this->instance->with('widget')->find($id);
+    }
+
+    public function destroyInstance($id)
+    {
+        return $this->instance->destroy($id);
+    }
 
 }

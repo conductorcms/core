@@ -33,6 +33,8 @@ Route::group(['namespace' => 'Conductor\\Core\\Http\\Controllers'], function()
         Route::get('widget/instances', 'WidgetInstanceController@all');
         Route::post('widget/{id}/instance', 'WidgetInstanceController@store');
 
+        Route::get('widget/instance/{id}', 'WidgetInstanceController@get');
+        Route::delete('widget/instance/{id}', 'WidgetInstanceController@destroy');
     });
 
     //Admin panel routes

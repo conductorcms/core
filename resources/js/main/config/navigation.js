@@ -21,12 +21,8 @@ angular.module('admin').config(function(NavigationProvider) {
 		title: 'Widgets',
 		items: [
 			{
-				title: 'List',
+				title: 'Widgets',
 				uri: '/admin/widgets'
-			},
-			{
-				title: 'Instances',
-				uri: '/admin/widgets/instances'
 			},
 			{
 				title: 'Areas',

@@ -12,12 +12,12 @@ angular.module('admin').controller('WidgetAreasCtrl', function ($scope, WidgetAr
         };
 
         $scope.areas.push(area)
-    }
+    };
 
     $scope.saveArea = function(area)
     {
         WidgetArea.save(area);
-    }
+    };
 
     $scope.deleteArea = function(area)
     {
@@ -26,7 +26,7 @@ angular.module('admin').controller('WidgetAreasCtrl', function ($scope, WidgetAr
         {
             WidgetArea.deleteArea(area);
         }
-    }
+    };
 
     $scope.openWidgetModal = function(size)
     {
@@ -35,7 +35,7 @@ angular.module('admin').controller('WidgetAreasCtrl', function ($scope, WidgetAr
             controller: 'WidgetAreaModalInstanceCtrl',
             size: size
         });
-    }
+    };
 
     $scope.onDrop = function(data, area)
     {
@@ -50,7 +50,7 @@ angular.module('admin').controller('WidgetAreasCtrl', function ($scope, WidgetAr
         }
 
         WidgetArea.syncInstances(area.id, currentIds);
-    }
+    };
 
     $scope.removeInstance = function(instance, area) {
         var areaIndex = $scope.areas.indexOf(area);
@@ -65,7 +65,7 @@ angular.module('admin').controller('WidgetAreasCtrl', function ($scope, WidgetAr
         }
 
         WidgetArea.syncInstances(area.id, currentIds);
-    }
+    };
 
     $scope.newInstance = function()
     {
@@ -74,6 +74,26 @@ angular.module('admin').controller('WidgetAreasCtrl', function ($scope, WidgetAr
             controller: 'NewWidgetInstanceCtrl',
             size: 'lg'
         });
-    }
+    };
+
+    $scope.editInstance = function(instance)
+    {
+        var modalInstance = $modal.open({
+            templateUrl: 'core/widgets/instances/edit.html',
+            controller: 'EditWidgetInstanceCtrl',
+            size: 'lg',
+            resolve: {
+                instance: function(WidgetInstance)
+                {
+                    return WidgetInstance.find(instance.id);
+                }
+            }
+        });
+    };
+
+    $scope.destroyInstance = function(instance)
+    {
+        WidgetInstance.destroy(instance.id);
+    };
 
 });

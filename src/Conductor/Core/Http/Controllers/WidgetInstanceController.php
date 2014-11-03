@@ -22,6 +22,11 @@ class WidgetInstanceController extends Controller {
         return Response::json(['instances' => $this->repository->getInstances()], 200);
     }
 
+    public function get($id)
+    {
+        return Response::json(['instance' => $this->repository->getInstance($id)], 200);
+    }
+
     public function store($id)
     {
         $data = $this->request->only(['options', 'name', 'slug']);
@@ -30,6 +35,13 @@ class WidgetInstanceController extends Controller {
         $widget = $this->repository->findById($id);
 
         $instance = $this->repository->createInstance($widget, $data);
+    }
+
+    public function destroy($id)
+    {
+        $this->repository->destroyInstance($id);
+
+        return Response::json(['message' => 'Instance deleted successfully'], 200);
     }
 
 }

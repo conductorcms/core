@@ -23,7 +23,7 @@ class WidgetController extends Controller {
 
 	public function all()
 	{
-		return  Response::json(['widgets' => $this->repository->getAll()], 200);
+		return Response::json(['widgets' => $this->repository->getAll()], 200);
 	}
 
     public function getOptions($id)

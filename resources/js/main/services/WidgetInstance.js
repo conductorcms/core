@@ -19,5 +19,18 @@ angular.module('admin').factory('WidgetInstance', function ($http) {
         });
     }
 
+    instance.find = function(id)
+    {
+        return $http.get('/admin/api/v1/widget/instance/' + id);
+    }
+
+    instance.destroy = function(id)
+    {
+        return $http.delete('/admin/api/v1/widget/instance/' + id).success(function(data)
+        {
+            instance.getAll();
+        });
+    }
+
     return instance;
 });
