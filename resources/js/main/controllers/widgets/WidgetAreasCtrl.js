@@ -49,8 +49,6 @@ angular.module('admin').controller('WidgetAreasCtrl', function ($scope, WidgetAr
             currentIds.push($scope.areas[areaIndex].widget_instances[ii].id)
         }
 
-        console.log(currentIds);
-
         WidgetArea.syncInstances(area.id, currentIds);
     }
 
