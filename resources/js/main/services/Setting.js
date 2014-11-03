@@ -6,10 +6,17 @@ angular.module('admin').factory('Setting', function ($http) {
 
     setting.getAll = function()
     {
-        $http.get('/admin/api/v1/settings').success(function(data)
+        return $http.get('/admin/api/v1/settings').success(function(data)
         {
             angular.copy(data, setting.settings);
-            console.log(setting.settings);
+        });
+    }
+
+    setting.save = function(settings)
+    {
+        return $http.post('/admin/api/v1/settings/batch', {settings: settings}).success(function(data)
+        {
+           setting.getAll();
         });
     }
 

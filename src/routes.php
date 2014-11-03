@@ -14,10 +14,14 @@ Route::group(['namespace' => 'Conductor\\Core\\Http\\Controllers'], function()
     Route::group(['prefix' => 'admin/api/v1/', 'before' => setPermissions(['admin'])], function()
     {
         Route::get('settings', 'SettingController@getAll');
+        Route::post('settings/batch', 'SettingController@storeBatch');
+
         Route::get('modules', 'ApiController@modules');
         Route::get('module/{id}/install', 'ApiController@installModule');
         Route::get('module/{id}/uninstall', 'ApiController@uninstallModule');
+
         Route::get('routes', 'ApiController@routes');
+
 		Route::get('widgets', 'WidgetController@all');
         Route::get('widget/{id}/options', 'WidgetController@getOptions');
 

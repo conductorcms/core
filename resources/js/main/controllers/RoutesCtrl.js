@@ -1,7 +1,6 @@
-angular.module('admin').controller('RoutesCtrl', function($scope, $http)
+angular.module('admin').controller('RoutesCtrl', function($scope, routes)
 {
-    $http.get('/admin/api/v1/routes').success(function(data)
-    {
-        $scope.routes = data;
-    });
+
+    $scope.routes = routes.data;
+
 });

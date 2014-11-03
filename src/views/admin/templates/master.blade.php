@@ -75,8 +75,8 @@
 	             <!-- sidebar: style can be found in sidebar.less -->
 	             <section class="sidebar">
 
-	                <accordion close-others="false">
-                        <accordion-group ng-repeat="section in nav.menu" heading="<% section.title %>">
+	                <accordion close-others="false" >
+                        <accordion-group ng-repeat="section in nav.menu" is-open="true" heading="<% section.title %>">
                             <ul>
                                 <li ng-repeat="item in section.items"><a href="<% item.uri %>"><% item.title %></a></li>
                             </ul>

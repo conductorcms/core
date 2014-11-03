@@ -5,7 +5,7 @@ angular.module('admin').factory('Widget', function ($http) {
 
 	widget.getAll = function()
 	{
-		$http.get('/admin/api/v1/widgets').success(function(data)
+		return $http.get('/admin/api/v1/widgets').success(function(data)
 		{
 			angular.copy(data.widgets, widget.widgets);
 		});

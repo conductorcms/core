@@ -23,6 +23,11 @@ class EloquentSettingRepository implements SettingRepository {
         return $this->setting->all();
     }
 
+    public function findById($id)
+    {
+        return $this->setting->find($id);
+    }
+
     public function create($options)
     {
         $setting = [
@@ -36,9 +41,13 @@ class EloquentSettingRepository implements SettingRepository {
         return $this->setting->create($setting);
     }
 
-    public function update($setting, $settingId)
+    public function update($setting)
     {
+        $settingModel = $this->findById($setting['id']);
 
+        $settingModel->value = $setting['value'];
+
+        return $settingModel->save();
     }
 
     // if the setting exists, return it
@@ -47,5 +56,13 @@ class EloquentSettingRepository implements SettingRepository {
     {
         $setting = $this->setting->whereKey($key)->get();
         return ($setting->count() > 0 ? $setting->first() : false);
+    }
+
+    public function updateFromArray(array $settings)
+    {
+        foreach($settings as $setting)
+        {
+            $this->update($setting);
+        }
     }
 }

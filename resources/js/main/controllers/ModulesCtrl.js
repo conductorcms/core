@@ -2,8 +2,6 @@ angular.module('admin').controller('ModulesCtrl', function ($scope, Module, toas
 
     $scope.modules = Module.modules;
 
-    Module.getAll();
-
     $scope.install = function(module)
     {
         module.installing = true;

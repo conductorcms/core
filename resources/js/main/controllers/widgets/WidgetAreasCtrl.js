@@ -2,10 +2,6 @@ angular.module('admin').controller('WidgetAreasCtrl', function ($scope, WidgetAr
 
 	$scope.areas = WidgetArea.areas;
     $scope.instances = WidgetInstance.instances;
-    $scope.showTrash = false;
-
-	WidgetArea.getAll();
-    WidgetInstance.getAll();
 
     $scope.addArea = function()
     {

@@ -5,7 +5,7 @@ angular.module('admin').factory('WidgetArea', function ($http) {
 
 	area.getAll = function()
 	{
-		$http.get('/admin/api/v1/widget/areas').success(function(data)
+		return $http.get('/admin/api/v1/widget/areas').success(function(data)
 		{
 			angular.copy(data.areas, area.areas);
 		});
@@ -13,13 +13,9 @@ angular.module('admin').factory('WidgetArea', function ($http) {
 
     area.save = function(properties)
     {
-        $http({
-            method: 'POST',
-            url: '/admin/api/v1/widget/areas',
-            data: properties
-        }).success(function(data)
+        $http.post('/admin/api/v1/widget/areas', properties).success(function()
         {
-            area.refresh();
+           area.refresh();
         });
     }
 
