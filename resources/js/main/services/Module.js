@@ -5,7 +5,7 @@ angular.module('admin').factory('Module', function ($http, $rootScope) {
 
     module.getAll = function()
     {
-        $http.get('/admin/api/v1/modules').success(function(data)
+        return $http.get('/admin/api/v1/modules').success(function(data)
         {
             angular.copy(data.modules, module.modules);
         });
