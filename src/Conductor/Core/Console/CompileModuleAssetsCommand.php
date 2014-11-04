@@ -112,7 +112,7 @@ class CompileModuleAssetsCommand extends Command {
         {
             if($module != '')
             {
-                $assets[] = $base . $asset;
+                $assets[$module][] = $base . $asset;
             }
             else
             {

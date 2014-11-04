@@ -14,23 +14,23 @@ setCoreAssets();
 gulp.task('list:assets', function()
 {
     console.log('js assets:');
-    listAssets('js');
+    listAssets('admin', 'js');
     console.log('sass assets:');
-    listAssets('sass');
+    listAssets('admin', 'sass');
     console.log('views:');
-    listAssets('views');
+    listAssets('admin', 'views');
 });
 
-gulp.task('build:js', ['build:views'], function()
+gulp.task('build:admin:js', ['build:admin:views'], function()
 {
-    gulp.src(assets.js)
+    gulp.src(assets.admin.js)
         .pipe(annotate())
         .pipe(concat('conductor.js'))
         .pipe(uglify())
         .pipe(gulp.dest('../../../public/conductor/admin/js/'))
 });
 
-gulp.task('build:dependencies:js', function()
+gulp.task('build:admin:dependencies:js', function()
 {
     var dependencies = getJsDependencies();
 
@@ -41,7 +41,7 @@ gulp.task('build:dependencies:js', function()
         .pipe(gulp.dest('../../../public/conductor/admin/js'))
 });
 
-gulp.task('build:dependencies:styles', function()
+gulp.task('build:admin:dependencies:styles', function()
 {
 	var dependencies = getStyleDependencies();
 
@@ -51,18 +51,18 @@ gulp.task('build:dependencies:styles', function()
 });
 
 
-gulp.task('build:sass', function()
+gulp.task('build:admin:sass', function()
 {
-    return gulp.src(assets.sass)
+    return gulp.src(assets.admin.sass)
         .pipe(sass({sourcemaps: false}))
 		.on('error', function (err) { console.log(err.message); })
         .pipe(concat('admin.css'))
 		.pipe(gulp.dest('../../../public/conductor/admin/css'));
 });
 
-gulp.task('build:views', function()
+gulp.task('build:admin:views', function()
 {
-    for(var module in assets.views)
+    for(var module in assets.admin.views)
     {
         var options = {
             filename: module + '.js',
@@ -71,67 +71,67 @@ gulp.task('build:views', function()
             standalone: true
         }
 
-        gulp.src(assets.views[module])
+        gulp.src(assets.admin.views[module])
             .pipe(templateCache(options))
             .pipe(gulp.dest('./resources/js/templates'))
     }
 });
 
-gulp.task('watch', function () {
+gulp.task('watch:admin', function () {
 	var views = [];
-	for(var ii in assets.views)
+	for(var ii in assets.admin.views)
 	{
-		views = views.concat(assets.views[ii]);
+		views = views.concat(assets.admin.views[ii]);
 	}
-	var watch = assets.js.concat(assets.sass, views);
-	gulp.watch(watch, ['build:js']);
+	var watch = assets.admin.js.concat(assets.admin.sass, views);
+	gulp.watch(watch, ['build:admin:js']);
 });
 
-gulp.task('build:dependencies', ['build:dependencies:js', 'build:dependencies:styles']);
-gulp.task('build', ['build:js', 'build:sass']);
-gulp.task('build:all', ['build:dependencies', 'build']);
+gulp.task('build:admin:dependencies', ['build:admin:dependencies:js', 'build:admin:dependencies:styles']);
+gulp.task('build:admin', ['build:admin:js', 'build:admin:sass']);
+gulp.task('build:all', ['build:admin:dependencies', 'build:admin']);
 
 //helper functions
 
 function setCoreAssets()
 {
-    setCoreAssetType('js');
-    setCoreAssetType('sass');
-    setCoreAssetType('views');
+    setCoreAssetType('admin', 'js');
+    setCoreAssetType('admin', 'sass');
+    setCoreAssetType('admin', 'views');
 }
 
-function setCoreAssetType(type)
+function setCoreAssetType(group, type)
 {
-    if(assets[type] === undefined)
+    if(assets[group][type] === undefined)
     {
-        assets[type] = [];
+        assets[group][type] = [];
     }
 
-    addCoreAssets(type);
+    addCoreAssets(group, type);
 }
 
-function addCoreAssets(type)
+function addCoreAssets(group, type)
 {
     switch(type)
     {
         case 'js':
-            assets.js.unshift('./resources/js/**/*.js');
+            assets[group]['js'].unshift('./resources/js/**/*.js');
             break;
         case 'sass':
-            assets.sass.unshift('./resources/sass/**/*.scss');
+            assets[group]['sass'].unshift('./resources/sass/**/*.scss');
             break;
         case 'views':
-            assets.views.core = [];
-            assets.views.core.unshift('./resources/views/**/*.html');
+            assets[group].views.core = [];
+            assets[group].views.core.unshift('./resources/views/**/*.html');
             break;
     }
 }
 
-function listAssets(type)
+function listAssets(group, type)
 {
-    for(var ii in assets[type])
+    for(var ii in assets[group][type])
     {
-        console.log(assets[type][ii]);
+        console.log(assets[group][type][ii]);
     }
 }
 
