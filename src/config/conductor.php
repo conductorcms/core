@@ -28,6 +28,8 @@ return [
 
 	],
 
-    'site_name' => 'Conductor'
+    'site_name' => 'Conductor',
+
+    'google_analytics' => ''
 
 ];

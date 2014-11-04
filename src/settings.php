@@ -8,6 +8,14 @@ Setting::register([
 ]);
 
 Setting::register([
+    'key' => 'core::conductor.google_analytics',
+    'group' => 'General',
+    'name' => 'Google Analytics',
+    'type' => 'input'
+]);
+
+
+Setting::register([
     'key' => 'core::conductor.site_name',
     'group' => 'General',
     'name' => 'Site Name',
