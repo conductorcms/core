@@ -26,14 +26,18 @@ gulp.task('list:assets', function()
 
 gulp.task('build:admin:js', ['build:admin:views'], function()
 {
-    gulp.src(assets.admin.js)
-        .pipe(gulpif(!argv.production, sourcemaps.init()))
-            .pipe(annotate())
-            .pipe(concat('conductor.min.js'))
-            .pipe(uglify())
-        .pipe(gulpif(!argv.production, sourcemaps.write('./maps')))
-        .pipe(gulp.dest('../../../public/conductor/admin/js/'))
+    var path = '../../../public/conductor/admin/js/';
+
+    return buildJs(assets.admin.js, path, 'conductor.min.js');
 });
+
+gulp.task('build:frontend:js', function()
+{
+    var path = '../../../public/conductor/frontend/js/';
+
+    return buildJs(assets.frontend.js, path, 'conductor.min.js');
+});
+
 
 gulp.task('build:admin:dependencies:js', function()
 {
@@ -67,6 +71,15 @@ gulp.task('build:admin:sass', function()
 		.pipe(gulp.dest('../../../public/conductor/admin/css'));
 });
 
+gulp.task('build:frontend:sass', function()
+{
+    return gulp.src(assets.frontend.sass)
+        .pipe(sass({sourcemaps: false}))
+        .on('error', function (err) { console.log(err.message); })
+        .pipe(concat('main.css'))
+        .pipe(gulp.dest('../../../public/conductor/frontend/css'));
+});
+
 gulp.task('build:admin:views', function()
 {
     for(var module in assets.admin.views)
@@ -96,7 +109,11 @@ gulp.task('watch:admin', function () {
 
 gulp.task('build:admin:dependencies', ['build:admin:dependencies:js', 'build:admin:dependencies:styles']);
 gulp.task('build:admin', ['build:admin:js', 'build:admin:sass']);
-gulp.task('build:all', ['build:admin:dependencies', 'build:admin']);
+
+gulp.task('build:frontend:dependencies', ['build:frontend:dependencies:js', 'build:frontend:dependencies:styles']);
+gulp.task('build:frontend', ['build:frontend:js', 'build:frontend:sass'])
+
+gulp.task('build:all', ['build:admin:dependencies', 'build:admin', 'build:frontend:dependencies', 'build:frontend']);
 
 //helper functions
 
@@ -181,4 +198,15 @@ function prefixDependencies(prefix, dependencies)
 	}
 
 	return dependencies;
+}
+
+function buildJs(assets, sourcePath, sourceName)
+{
+    return gulp.src(assets)
+        .pipe(gulpif(!argv.production, sourcemaps.init()))
+            .pipe(annotate())
+            .pipe(concat(sourceName))
+            .pipe(uglify())
+        .pipe(gulpif(!argv.production, sourcemaps.write('./maps')))
+        .pipe(gulp.dest(sourcePath))
 }
