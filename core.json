@@ -1,0 +1,39 @@
+{
+    "assets": {
+        "admin": {
+            "js": [
+                "./resources/js/**/*.js"
+            ],
+            "sass": [
+                "./resources/sass/**/*.scss"
+            ],
+            "views": {
+                "core": ["./resources/views/**/*.html"]
+            },
+            "dependencies": {
+                "js": [
+                    "./resources/vendor/angular/angular.js",
+                    "./resources/vendor/angular-animate/angular-animate.js",
+                    "./resources/vendor/angular-bootstrap/ui-bootstrap.js",
+                    "./resources/vendor/angular-bootstrap/ui-bootstrap-tpls.js",
+                    "./resources/vendor/angular-route/angular-route.js",
+                    "./resources/vendor/AngularJS-Toaster/toaster.js",
+                    "./resources/vendor/textAngular/src/textAngular-rangy.min.js",
+                    "./resources/vendor/textAngular/src/textAngularSetup.js",
+                    "./resources/vendor/textAngular/src/textAngular.js",
+                    "./resources/vendor/textAngular/src/textAngular-sanitize.js",
+                    "./resources/vendor/angular-slugify/angular-slugify.js",
+                    "./resources/vendor/angular-native-dragdrop/draganddrop.js"
+                ],
+                "css": [
+                    "./resources/vendor/admin-lte/css/AdminLTE.css",
+                    "./resources/vendor/AngularJS-Toaster/toaster.css",
+                    "./resources/vendor/textAngular/src/textAngular.css"
+                ]
+            }
+        },
+        "frontend": {
+
+        }
+    }
+}
