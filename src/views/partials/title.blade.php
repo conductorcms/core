@@ -1,0 +1,1 @@
+<title>{{ $title or Config::get('core::conductor.site_name') }}</title>

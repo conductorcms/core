@@ -2,6 +2,25 @@
 
 return [
 
+    'site_name' => 'Conductor',
+
+    'google_analytics' => '',
+
+    /*
+    /--------------------------------------------------------------------------
+    / Metatag defaults
+    /--------------------------------------------------------------------------
+    /
+    / These will probably be overwritten by
+    / a setting, but you can set fallbacks
+    / here
+    */
+    'metatags' => [
+        'description' => 'Meta descriptions!',
+        'keywords' => 'very, fun, wow, such, keywords'
+    ],
+
+
 	/*
 	/--------------------------------------------------------------------------
 	/ Theme configuration
@@ -28,13 +47,16 @@ return [
 
 	],
 
-    'metatags' => [
-        'description' => 'Meta descriptions!',
-        'keywords' => 'very, fun, wow, such, keywords'
+    /*
+    /--------------------------------------------------------------------------
+    / Widgetmanifest
+    /--------------------------------------------------------------------------
+    /
+    / Here you can manage which widgets registered
+    / are by adding widget paths
+    */
+    'widgets' => [
+        'Conductor\Core\Widgets\Html\Html'
     ],
-
-    'site_name' => 'Conductor',
-
-    'google_analytics' => ''
 
 ];

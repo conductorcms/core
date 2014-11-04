@@ -112,9 +112,9 @@ class CompileModuleAssetsCommand extends Command {
     {
         $theme = $this->app->make('Conductor\Core\Theme\Theme');
 
-        $themes = $theme->getThemes($this->config->get('core::themes.dir'));
+        $themes = $theme->getThemes($this->config->get('core::conductor.themes.dir'));
 
-        $active = $themes[$this->config->get('core::themes.active')];
+        $active = $themes[$this->config->get('core::conductor.themes.active')];
 
         array_walk_recursive($active, function(&$value, $key) use ($active)
         {

@@ -23,7 +23,7 @@ Setting::register([
 ]);
 
 Setting::register([
-    'key' => 'core::themes.active',
+    'key' => 'core::conductor.themes.active',
     'group' => 'Themes',
     'name' => 'Active Theme',
     'type' => 'input'

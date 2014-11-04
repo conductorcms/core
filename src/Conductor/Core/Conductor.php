@@ -63,7 +63,7 @@ class Conductor {
     public function registerModules()
     {
         //get module providers from config
-        $moduleProviders = $this->config->get('core::modules');
+        $moduleProviders = $this->config->get('core::conductor.modules');
 
         //register modules in tagged container
         foreach ($moduleProviders as $module)
@@ -75,7 +75,7 @@ class Conductor {
 
 	private function registerWidgets()
 	{
-		$widgets = $this->config->get('core::widgets');
+		$widgets = $this->config->get('core::conductor.widgets');
 
 		foreach($widgets as $widget)
 		{
@@ -116,8 +116,8 @@ class Conductor {
 
 	public function registerTheme()
     {
-        $theme = $this->config->get('core::themes.active');
-        $path = base_path() . '/' . $this->config->get('core::themes.dir') . '/' . $theme;
+        $theme = $this->config->get('core::conductor.themes.active');
+        $path = base_path() . '/' . $this->config->get('core::conductor.themes.dir') . '/' . $theme;
 
         $this->view->addLocation($path);
         $this->view->addNamespace($theme, $path);
