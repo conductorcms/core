@@ -1,5 +1,6 @@
 <?php namespace Conductor\Core\Console;
 
+use Illuminate\Config\Repository;
 use Illuminate\Foundation\Application as App;
 use Illuminate\Console\Application;
 use Illuminate\Console\Command;
@@ -11,6 +12,8 @@ use Conductor\Core\Module\ModuleRepository;
 class CompileModuleAssetsCommand extends Command {
 
     protected $app;
+
+    protected $config;
 
     /**
      * The console command name.
@@ -31,11 +34,13 @@ class CompileModuleAssetsCommand extends Command {
      *
      * @param ModuleRepository $module
      */
-    public function __construct(App $app, ModuleRepository $module)
+    public function __construct(App $app, ModuleRepository $module, Repository $config)
     {
         $this->app = $app;
 
         $this->module = $module;
+
+        $this->config = $config;
 
         parent::__construct();
     }
@@ -80,6 +85,7 @@ class CompileModuleAssetsCommand extends Command {
 
             $adminAssets = $this->getAssets('admin', $json, $base, $module->name);
             $frontendAssets = $this->getAssets('frontend', $json, $base, $module->name);
+            $frontendAssets = array_merge($frontendAssets, $this->getThemeAssets());
 
             $assetManifest['admin'] = array_merge($assetManifest['admin'], $adminAssets);
             $assetManifest['frontend'] = array_merge($assetManifest['frontend'], $frontendAssets);
@@ -100,6 +106,22 @@ class CompileModuleAssetsCommand extends Command {
         $assetManifest['views'] = $this->getAssetType($type, 'views', $base, $json, $module);
 
         return $assetManifest;
+    }
+
+    private function getThemeAssets()
+    {
+        $theme = $this->app->make('Conductor\Core\Theme\Theme');
+
+        $themes = $theme->getThemes($this->config->get('core::themes.dir'));
+
+        $active = $themes[$this->config->get('core::themes.active')];
+
+        array_walk_recursive($active, function(&$value, $key) use ($active)
+        {
+            $value = $active['path'] . $value;
+        });
+
+        return $active['assets'];
     }
 
     private function getAssetType($assetGroup, $type, $base, $json, $module = '')

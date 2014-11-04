@@ -7,6 +7,11 @@ angular.module('admin').config(function(NavigationProvider) {
         },
         {
             section: 'General',
+            title: 'Navigation',
+            uri: '/admin/navigation'
+        },
+        {
+            section: 'General',
             title: 'Modules',
             uri: '/admin/modules'
         },

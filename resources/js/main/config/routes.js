@@ -18,6 +18,12 @@ angular.module('admin').config(function($routeProvider) {
         permissions: ['admin']
     });
 
+    $routeProvider.when('/admin/navigation', {
+        templateUrl: 'core/navigation/list.html',
+        controller: 'NavigationCtrl',
+        permissions: ['admin']
+    });
+
 
     $routeProvider.when('/admin/modules', {
 		templateUrl: 'core/modules.html',
