@@ -53,7 +53,7 @@ class CompileModuleAssetsCommand extends Command {
 
 		$basePath = $this->option('basePath');
 
-        $assetManifest = [];
+        $assetManifest = [ 'admin' => [], 'frontend' => []];
 
         foreach ($modules as $module)
         {
@@ -78,26 +78,48 @@ class CompileModuleAssetsCommand extends Command {
 			$base = $moduleRoot;
 			if(isset($basePath)) $base = $basePath . $module->name . '/';
 
-            foreach ($json->assets->js as $asset)
-            {
-                $assetManifest['js'][] = $base . $asset;
-            }
+            $adminAssets = $this->getAssets('admin', $json, $base, $module->name);
+            $frontendAssets = $this->getAssets('frontend', $json, $base, $module->name);
 
-            foreach ($json->assets->sass as $asset)
-            {
-                $assetManifest['sass'][] = $base . $asset;
-            }
-
-            $module = explode('/', $module->name);
-            $module = $module[1];
-
-            foreach($json->assets->views as $asset)
-            {
-                $assetManifest['views'][$module][] = $base . $asset;
-            }
+            $assetManifest['admin'] = array_merge($assetManifest['admin'], $adminAssets);
+            $assetManifest['frontend'] = array_merge($assetManifest['frontend'], $frontendAssets);
         }
 
         file_put_contents(__DIR__ . '../../../../../asset_manifest.json', json_encode($assetManifest, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+    }
+
+    private function getAssets($type, $json, $base, $moduleName)
+    {
+        $assetManifest = [];
+
+        $module = explode('/', $moduleName);
+        $module = $module[1];
+
+        $assetManifest['js'] = $this->getAssetType($type, 'js', $base, $json);
+        $assetManifest['sass'] = $this->getAssetType($type, 'sass', $base, $json);
+        $assetManifest['views'] = $this->getAssetType($type, 'views', $base, $json, $module);
+
+        return $assetManifest;
+    }
+
+    private function getAssetType($assetGroup, $type, $base, $json, $module = '')
+    {
+        $assets = [];
+
+        if(!isset($json->assets->{$assetGroup}->{$type})) return [];
+
+        foreach($json->assets->{$assetGroup}->{$type} as $asset)
+        {
+            if($module != '')
+            {
+                $assets[] = $base . $asset;
+            }
+            else
+            {
+                $assets[] = $base . $asset;
+            }
+        }
+        return $assets;
     }
 
     /**
