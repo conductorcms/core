@@ -3,7 +3,7 @@
     <head>
 		<base href="/">
         <meta charset="UTF-8">
-        <title>Fortify Admin</title>
+        <title>Conductor Admin</title>
         <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
         <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
         <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
@@ -35,7 +35,7 @@
 
 	     <header class="header">
 	         <a href="index.html" class="logo">
-	             Fortify
+	             Conductor
 	         </a>
 	         <nav class="navbar navbar-static-top" role="navigation">
 	             <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
