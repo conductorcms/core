@@ -135,7 +135,7 @@ class Conductor {
         $registeredModules = $this->getRegisteredModules();
 
         //get module provider names from config
-        $moduleProviders = $this->config->get('core::modules');
+        $moduleProviders = $this->config->get('core::conductor.modules');
 
         //sync the providers in the config with the registered modules
         $this->syncModules($moduleProviders, $registeredModules);
