@@ -34,7 +34,11 @@
          <toaster-container toaster-options="{'position-class': 'toast-bottom-right'}"></toaster-container>
 
 	     <header class="header">
-	         <a href="index.html" class="logo">
+	         <div class="pull-left" ng-controller="RouteLoadingCtrl" style="background-color: #367fa9; padding: 9px">
+	              <div ng-hide="loading" style="padding: 16px"></div>
+                  <img ng-show="loading" height="32" width="32" src="/conductor/admin/img/admin-loader.GIF" />
+	         </div>
+	         <a href="index.html" class="logo" style="width: 171px !important; padding-left: 22px; text-align: left;">
 	             Conductor
 	         </a>
 	         <nav class="navbar navbar-static-top" role="navigation">

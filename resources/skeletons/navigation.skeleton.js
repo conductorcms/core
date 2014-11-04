@@ -3,15 +3,13 @@
 // routes for your nav items.
 
 angular.module('admin.##module_name##', ['ngRoute', 'admin.core', 'admin.##module_name##.templates']).config(function(NavigationProvider) {
-	NavigationProvider.addSection({
-		'title': '##module_display_name##',
-		'items': [
-			{
-				'title': 'Overview',
-				'link': '/admin/##module_name##'
-			}
-		]
-	});
+    NavigationProvider.addItemsFromArray([
+        {
+            section: '##module_display_name##',
+            title: 'Overview',
+            uri: '/admin/##module_name##'
+        }
+    ]);
 });
 
 
