@@ -28,6 +28,11 @@ return [
 
 	],
 
+    'metatags' => [
+        'description' => 'Meta descriptions!',
+        'keywords' => 'very, fun, wow, such, keywords'
+    ],
+
     'site_name' => 'Conductor',
 
     'google_analytics' => ''
