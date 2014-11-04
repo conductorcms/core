@@ -66,13 +66,12 @@
 	     </header>
 	     <div ng-controller="NavCtrl as nav" class="wrapper row-offcanvas row-offcanvas-left">
 	         <aside class="left-side sidebar-offcanvas">
-
 	              <section class="sidebar">
 	                <accordion close-others="false" >
 
-                        <accordion-group ng-repeat="section in nav.menu" is-open="true" heading="<% section.title %>">
+                        <accordion-group ng-repeat="(key, value) in nav.menu" is-open="true" heading="<% key %>">
                             <ul>
-                                <li ng-repeat="item in section.items"><a href="<% item.uri %>"><% item.title %></a></li>
+                                <li ng-repeat="item in value"><a href="<% item.uri %>"><% item.title %></a></li>
                             </ul>
                         </accordion-group>
 

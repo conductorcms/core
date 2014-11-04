@@ -23,7 +23,7 @@ function getCoreAdminDependencies()
 		'ui.bootstrap',
 		'toaster',
 		'textAngular',
-        'ngDragDrop'
+        'ang-drag-drop'
 	];
 
 	//get dependencies from constant defined by back-end

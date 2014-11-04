@@ -1,5 +1,5 @@
 angular.module('admin.core').provider('Navigation', function() {
-    var _navigation = [];
+    var _navigation = {};
 
     this.$get = function() {
         return {
@@ -9,7 +9,17 @@ angular.module('admin.core').provider('Navigation', function() {
         }
     }
 
-    this.addSection = function(section) {
-        _navigation.push(section);
+    this.addItem = function(section, title, uri) {
+        if(!_navigation[section])
+        {
+            _navigation[section] = [];
+        }
+        _navigation[section].push({ title: title, uri: uri });
+    }
+
+    this.addItemsFromArray = function(items) {
+        for(var ii in items) {
+            this.addItem(items[ii].section, items[ii].title, items[ii].uri);
+        }
     }
 });

@@ -1,33 +1,29 @@
 angular.module('admin').config(function(NavigationProvider) {
-	NavigationProvider.addSection({
-		title: 'Core',
-		items: [
-			{
-				title: 'Settings',
-				uri: '/admin/settings'
-			},
-			{
-				title: 'Modules',
-				uri: '/admin/modules'
-			},
-			{
-				title: 'Routes',
-				uri: '/admin/routes'
-			}
-		]
-	});
-
-	NavigationProvider.addSection({
-		title: 'Widgets',
-		items: [
-			{
-				title: 'Widgets',
-				uri: '/admin/widgets'
-			},
-			{
-				title: 'Areas',
-				uri: '/admin/widgets/areas'
-			}
-		]
-	});
+    NavigationProvider.addItemsFromArray([
+        {
+            section: 'General',
+            title: 'Settings',
+            uri: '/admin/settings'
+        },
+        {
+            section: 'General',
+            title: 'Modules',
+            uri: '/admin/modules'
+        },
+        {
+            section: 'General',
+            title: 'Routes',
+            uri: '/admin/modules'
+        },
+        {
+            section: 'Widgets',
+            title: 'Widgets',
+            uri: '/admin/widgets'
+        },
+        {
+            section: 'Widgets',
+            title: 'Areas',
+            uri: '/admin/areas'
+        }
+    ]);
 });
