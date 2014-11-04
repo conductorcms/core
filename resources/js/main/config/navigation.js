@@ -23,7 +23,7 @@ angular.module('admin').config(function(NavigationProvider) {
         {
             section: 'Widgets',
             title: 'Areas',
-            uri: '/admin/areas'
+            uri: '/admin/widgets/areas'
         }
     ]);
 });

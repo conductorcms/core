@@ -92,10 +92,10 @@
          <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
 
          <!-- Dependencies -->
-         <script src="/conductor/admin/js/dependencies.js"></script>
+         <script src="/conductor/admin/js/dependencies.min.js"></script>
 
          <!-- Main app -->
-         <script src="/conductor/admin/js/conductor.js"></script>
+         <script src="/conductor/admin/js/conductor.min.js"></script>
 
          <!-- Bootstrap -->
          <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>

@@ -5,6 +5,9 @@ var gulp = require('gulp')
     watch          = require('gulp-watch')
     templateCache  = require('gulp-angular-templatecache')
     annotate       = require('gulp-ng-annotate')
+    argv           = require('yargs').argv
+    gulpif         = require('gulp-if')
+    sourcemaps     = require('gulp-sourcemaps');
 
 var assets = require('./asset_manifest.json');
 
@@ -24,9 +27,11 @@ gulp.task('list:assets', function()
 gulp.task('build:admin:js', ['build:admin:views'], function()
 {
     gulp.src(assets.admin.js)
-        .pipe(annotate())
-        .pipe(concat('conductor.js'))
-        .pipe(uglify())
+        .pipe(gulpif(!argv.production, sourcemaps.init()))
+            .pipe(annotate())
+            .pipe(concat('conductor.min.js'))
+            .pipe(uglify())
+        .pipe(gulpif(!argv.production, sourcemaps.write('./maps')))
         .pipe(gulp.dest('../../../public/conductor/admin/js/'))
 });
 
@@ -35,9 +40,11 @@ gulp.task('build:admin:dependencies:js', function()
     var dependencies = getJsDependencies();
 
     gulp.src(dependencies)
-        .pipe(annotate())
-        .pipe(concat('dependencies.js'))
-        .pipe(uglify())
+        .pipe(gulpif(!argv.production, sourcemaps.init()))
+            .pipe(annotate())
+            .pipe(concat('dependencies.min.js'))
+            .pipe(uglify())
+        .pipe(gulpif(!argv.production, sourcemaps.write('./maps')))
         .pipe(gulp.dest('../../../public/conductor/admin/js'))
 });
 

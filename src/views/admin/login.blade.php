@@ -40,9 +40,9 @@
         </div>
 
         <!-- Angular, son! -->
-        <script src="/conductor/admin/js/dependencies.js"></script>
+        <script src="/conductor/admin/js/dependencies.min.js"></script>
          <!-- Mah app -->
-         <script src="/conductor/admin/js/conductor.js"></script>
+         <script src="/conductor/admin/js/conductor.min.js"></script>
          <!-- jQuery 2.0.2 -->
          <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
          <!-- Bootstrap -->
