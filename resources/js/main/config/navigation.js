@@ -18,7 +18,7 @@ angular.module('admin').config(function(NavigationProvider) {
         {
             section: 'General',
             title: 'Routes',
-            uri: '/admin/modules'
+            uri: '/admin/routes'
         },
         {
             section: 'Widgets',
