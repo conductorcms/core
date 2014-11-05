@@ -51,3 +51,5 @@ Route::group(['namespace' => 'Conductor\\Core\\Http\\Controllers'], function()
 
 // catch-all for pages module
 Route::get('{slug}', 'Conductor\Pages\Http\Controllers\PageController@buildPage');
+Route::get('/', 'Conductor\Pages\Http\Controllers\PageController@buildHome');
+
