@@ -281,8 +281,8 @@ class Fabricator {
         $this->generateSkeletonsFromArray($files, $data);
 
         //add empty routes and settings file
-        $this->files->put($this->basePath . '/src/routes.php', '<?php');
-        $this->files->put($this->basePath . '/src/settings.php', '<?php');
+        $this->files->put($this->basePath . '/src/routes.php', '<?php' . PHP_EOL);
+        $this->files->put($this->basePath . '/src/settings.php', '<?php' . PHP_EOL);
 
         //add empty scss file
         $this->files->put($this->basePath . '/resources/admin/sass/main.scss', '');
