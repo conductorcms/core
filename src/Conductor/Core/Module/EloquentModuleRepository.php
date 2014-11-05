@@ -45,13 +45,7 @@ class EloquentModuleRepository implements ModuleRepository {
 
         $info->author->module_id = $module->id;
 
-        $authors = [];
-
-        $authors[] = $this->author->create((array)$info->author);
-
-        $module->save();
-
-        $module->authors()->saveMany($authors);
+        $author = $this->author->create((array)$info->author);
 
         return true;
     }
