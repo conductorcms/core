@@ -82,7 +82,7 @@ class CreateModuleCommand extends Command {
         $module['assets'] = $this->getModuleAssets();
 
         //get author
-        $module['authors'] = [
+        $module['author'] = [
             'name' => Config::get('workbench.name'),
             'email' => Config::get('workbench.email')
         ];
@@ -187,7 +187,7 @@ class CreateModuleCommand extends Command {
      */
     public function refreshModules($newModule)
     {
-        $this->call('publish:assets', ['--bench' => $newModule]);
+        //$this->call('publish:assets', ['--bench' => $newModule]);
         $this->call('dump-autoload');
 
         $this->call('module:scan');

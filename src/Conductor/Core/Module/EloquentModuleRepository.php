@@ -43,12 +43,11 @@ class EloquentModuleRepository implements ModuleRepository {
 
         $module = $this->module->create((array)$info);
 
+        $info->author->module_id = $module->id;
+
         $authors = [];
-        foreach ($info->authors as $author)
-        {
-            $author = $this->author->create((array)$author);
-            $authors[] = $author;
-        }
+
+        $authors[] = $this->author->create((array)$info->author);
 
         $module->save();
 
