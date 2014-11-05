@@ -48,7 +48,7 @@ class CreateAdminCommand extends Command {
 
         $user = $this->sentinel->registerAndActivate($credentials);
 
-        $role = $this->sentinel->findRoleByName('Administrators');
+        $role = $this->sentinel->findRoleByName('Super Administrators');
         $role->users()->attach($user);
     }
 

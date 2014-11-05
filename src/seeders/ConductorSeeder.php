@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use Cartalyst\Sentinel\Sentinel;
 
-class UserSeeder extends Seeder {
+class ConductorSeeder extends Seeder {
 
     private $sentinel;
 
@@ -15,12 +15,24 @@ class UserSeeder extends Seeder {
     public function run()
     {
         $role = $this->sentinel->getRoleRepository()->createModel()->create([
+            'name' => 'Super Administrators',
+            'slug' => 'super-administrators'
+        ]);
+
+        $role->permissions = [
+            '*' => true
+        ];
+
+        $role->save();
+
+        $role = $this->sentinel->getRoleRepository()->createModel()->create([
             'name' => 'Administrators',
             'slug' => 'administrators'
         ]);
 
         $role->permissions = [
-            'admin' => true
+            'admin' => true,
+            'admin.*' => true,
         ];
 
         $role->save();

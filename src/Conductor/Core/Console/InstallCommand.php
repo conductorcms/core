@@ -42,7 +42,7 @@ class InstallCommand extends Command {
 
         $this->call('migrate', ['--package' => 'conductor/core']);
         $this->call('migrate', ['--package' => 'cartalyst/sentinel']);
-        $this->call('db:seed', ['--class' => 'Conductor\Core\Seeders\UserSeeder']);
+        $this->call('db:seed', ['--class' => 'Conductor\Core\Seeders\ConductorSeeder']);
         $this->call('conductor:create-admin', ['--email' => $email, '--password' => $password]);
     }
 
