@@ -33,7 +33,8 @@ class ##module_class_name##ModuleProvider extends ModuleProvider {
 
 	public function registerModule()
 	{
-		include __DIR__ . '/Http/routes.php';
+		include __DIR__ . '../../..routes.php';
+		include __DIR__ . '../../../settings.php';
 
 		parent::registerModule();
 	}

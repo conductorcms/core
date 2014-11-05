@@ -197,7 +197,7 @@ class Fabricator {
      */
     private function addModuleToConfig()
     {
-        $this->addModuleToConfigFile();
+        //$this->addModuleToConfigFile();
         $this->addModuleToLoadedConfig();
     }
 
@@ -280,8 +280,9 @@ class Fabricator {
 
         $this->generateSkeletonsFromArray($files, $data);
 
-        //add empty routes file
-        $this->files->put($this->basePath . '/src/'. $data['packageName'] .'/Http/routes.php', '');
+        //add empty routes and settings file
+        $this->files->put($this->basePath . '/src/routes.php', '<?php');
+        $this->files->put($this->basePath . '/src/settings.php', '<?php');
 
         //add empty scss file
         $this->files->put($this->basePath . '/resources/admin/sass/main.scss', '');

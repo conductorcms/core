@@ -151,10 +151,31 @@ class CreateModuleCommand extends Command {
                 ],
                 'views' => [
                     'resources/admin/views/**/*.html'
+                ],
+                'dependencies' => [
+                    'css' => [
+
+                    ],
+                    'js' => [
+
+                    ]
                 ]
             ],
             'frontend' => [
+                'js' => [
 
+                ],
+                'sass' => [
+
+                ],
+                'dendencies' => [
+                    'css' => [
+
+                    ],
+                    'js' => [
+
+                    ]
+                ]
             ]
         ];
     }
