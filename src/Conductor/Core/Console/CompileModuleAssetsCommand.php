@@ -56,9 +56,9 @@ class CompileModuleAssetsCommand extends Command {
 
         $this->info('Modules found: ' . $modules->count());
 
-		$basePath = $this->option('basePath');
+        $basePath = $this->option('basePath');
 
-        $assetManifest = [ 'admin' => [], 'frontend' => []];
+        $assetManifest = ['admin' => [], 'frontend' => []];
 
         foreach ($modules as $module)
         {
@@ -72,7 +72,7 @@ class CompileModuleAssetsCommand extends Command {
 
             $moduleRoot = $assets . $module->name . '/';
 
-			$this->info($moduleRoot);
+            $this->info($moduleRoot);
 
             $assets = $moduleRoot . 'module.json';
 
@@ -80,8 +80,8 @@ class CompileModuleAssetsCommand extends Command {
 
             $json = json_decode(file_get_contents($assets));
 
-			$base = $moduleRoot;
-			if(isset($basePath)) $base = $basePath . $module->name . '/';
+            $base = $moduleRoot;
+            if(isset($basePath)) $base = $basePath . $module->name . '/';
 
             $adminAssets = $this->getAssets('admin', $json, $base, $module->name);
             $frontendAssets = $this->getAssets('frontend', $json, $base, $module->name);
@@ -116,7 +116,7 @@ class CompileModuleAssetsCommand extends Command {
 
         $active = $themes[$this->config->get('core::conductor.themes.active')];
 
-        array_walk_recursive($active, function(&$value, $key) use ($active)
+        array_walk_recursive($active, function (&$value, $key) use ($active)
         {
             $value = $active['path'] . $value;
         });
@@ -130,7 +130,7 @@ class CompileModuleAssetsCommand extends Command {
 
         if(!isset($json->assets->{$assetGroup}->{$type})) return [];
 
-        foreach($json->assets->{$assetGroup}->{$type} as $asset)
+        foreach ($json->assets->{$assetGroup}->{$type} as $asset)
         {
             if($module != '')
             {
@@ -162,8 +162,8 @@ class CompileModuleAssetsCommand extends Command {
     protected function getOptions()
     {
         return [
-			['basePath', 'base', InputOption::VALUE_OPTIONAL, 'Register a base path manually (useful for setting host paths instead of VMs', null]
-		];
+            ['basePath', 'base', InputOption::VALUE_OPTIONAL, 'Register a base path manually (useful for setting host paths instead of VMs', null]
+        ];
     }
 
 }

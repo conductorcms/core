@@ -91,7 +91,7 @@ class BaseEloquentRepository implements BaseRepository {
      */
     public function destroyFromArray(array $ids)
     {
-        foreach($ids as $id)
+        foreach ($ids as $id)
         {
             $this->model->destroy($id);
         }
@@ -111,7 +111,7 @@ class BaseEloquentRepository implements BaseRepository {
      */
     private function updateEloquent($model, $data)
     {
-        foreach($data as $key => $value)
+        foreach ($data as $key => $value)
         {
             if(isset($model->{$key})) $model->{$key} = $value;
         }

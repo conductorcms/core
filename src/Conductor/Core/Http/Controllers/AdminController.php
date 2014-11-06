@@ -4,7 +4,7 @@ use Conductor\Core\Module\ModuleRepository;
 use Illuminate\Routing\Controller;
 use View;
 
-class AdminController extends Controller{
+class AdminController extends Controller {
 
     private $module;
 

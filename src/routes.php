@@ -2,7 +2,7 @@
 
 Route::filter('permissions', 'Conductor\Core\Http\Filters\Permissions');
 
-Route::group(['namespace' => 'Conductor\\Core\\Http\\Controllers'], function()
+Route::group(['namespace' => 'Conductor\\Core\\Http\\Controllers'], function ()
 {
     Route::get('login', 'AdminController@login');
 
@@ -11,7 +11,7 @@ Route::group(['namespace' => 'Conductor\\Core\\Http\\Controllers'], function()
     Route::get('session/destroy', 'SessionController@destroy');
 
     //Admin panel API endpoints
-    Route::group(['prefix' => 'admin/api/v1/', 'before' => setPermissions(['admin'])], function()
+    Route::group(['prefix' => 'admin/api/v1/', 'before' => setPermissions(['admin'])], function ()
     {
         Route::get('settings', 'SettingController@getAll');
         Route::post('settings/batch', 'SettingController@storeBatch');
@@ -22,7 +22,7 @@ Route::group(['namespace' => 'Conductor\\Core\\Http\\Controllers'], function()
 
         Route::get('routes', 'ApiController@routes');
 
-		Route::get('widgets', 'WidgetController@all');
+        Route::get('widgets', 'WidgetController@all');
         Route::get('widget/{id}/options', 'WidgetController@getOptions');
 
         Route::post('widget/areas', 'WidgetAreaController@store');
@@ -38,15 +38,15 @@ Route::group(['namespace' => 'Conductor\\Core\\Http\\Controllers'], function()
     });
 
     //Admin panel routes
-	Route::group(['before' => setPermissions(['admin'])], function()
-	{
-		Route::get('admin', 'AdminController@index');
-		Route::get('admin/{slug}', 'AdminController@index');
-		Route::get('admin/{slug}/{slugTwo}', 'AdminController@index');
-		Route::get('admin/{slug}/{slugTwo}/{slugThree}', 'AdminController@index');
-		Route::get('admin/{slug}/{slugTwo}/{slugThree/slugFour}', 'AdminController@index');
-	});
-	
+    Route::group(['before' => setPermissions(['admin'])], function ()
+    {
+        Route::get('admin', 'AdminController@index');
+        Route::get('admin/{slug}', 'AdminController@index');
+        Route::get('admin/{slug}/{slugTwo}', 'AdminController@index');
+        Route::get('admin/{slug}/{slugTwo}/{slugThree}', 'AdminController@index');
+        Route::get('admin/{slug}/{slugTwo}/{slugThree/slugFour}', 'AdminController@index');
+    });
+
 });
 
 // catch-all for pages module

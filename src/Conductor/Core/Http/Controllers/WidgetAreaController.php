@@ -48,5 +48,4 @@ class WidgetAreaController extends Controller {
     }
 
 
-
 }

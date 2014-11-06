@@ -14,10 +14,10 @@ class Conductor {
      */
     private $app;
 
-	/**
-	 * @var BladeCompiler
-	 */
-	private $blade;
+    /**
+     * @var BladeCompiler
+     */
+    private $blade;
 
     /**
      * @var Cache
@@ -42,7 +42,7 @@ class Conductor {
     function __construct(Application $app, BladeCompiler $blade, Cache $cache, Config $config, ModuleRepository $module, Factory $view)
     {
         $this->app = $app;
-		$this->blade = $blade;
+        $this->blade = $blade;
         $this->cache = $cache;
         $this->config = $config;
         $this->module = $module;
@@ -55,8 +55,8 @@ class Conductor {
     public function boot()
     {
         $this->registerModules();
-		$this->registerWidgets();
-		$this->registerWidgetBladeExtensions();
+        $this->registerWidgets();
+        $this->registerWidgetBladeExtensions();
         $this->registerTheme();
     }
 
@@ -73,27 +73,27 @@ class Conductor {
         }
     }
 
-	private function registerWidgets()
-	{
-		$widgets = $this->config->get('core::conductor.widgets');
+    private function registerWidgets()
+    {
+        $widgets = $this->config->get('core::conductor.widgets');
 
-		foreach($widgets as $widget)
-		{
-			$widget = $this->app->make($widget);
+        foreach ($widgets as $widget)
+        {
+            $widget = $this->app->make($widget);
 
-			$this->app->bind('conductor:widget:'. $widget->slug, function() use ($widget)
-			{
-				return $widget;
-			});
+            $this->app->bind('conductor:widget:' . $widget->slug, function () use ($widget)
+            {
+                return $widget;
+            });
 
-			$widget->register();
+            $widget->register();
             $viewPath = $this->getWidgetViewPath($widget);
             $this->view->addNamespace('widget.' . $widget->slug, $viewPath);
 
-		}
+        }
 
-		$this->registerWidgetBladeExtensions();
-	}
+        $this->registerWidgetBladeExtensions();
+    }
 
     private function getWidgetViewPath($widget)
     {
@@ -107,14 +107,14 @@ class Conductor {
         return implode('/', $pieces);
     }
 
-	public function registerWidgetBladeExtensions()
-	{
-		$handler = $this->app->make('Conductor\Core\Widget\CustomBladeTags');
+    public function registerWidgetBladeExtensions()
+    {
+        $handler = $this->app->make('Conductor\Core\Widget\CustomBladeTags');
 
-		$handler->registerAll();
+        $handler->registerAll();
     }
 
-	public function registerTheme()
+    public function registerTheme()
     {
         $theme = $this->config->get('core::conductor.themes.active');
         $path = base_path() . '/' . $this->config->get('core::conductor.themes.dir') . '/' . $theme;

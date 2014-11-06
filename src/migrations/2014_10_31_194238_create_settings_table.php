@@ -5,14 +5,14 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateSettingsTable extends Migration {
 
-	/**
-	 * Run the migrations.
-	 *
-	 * @return void
-	 */
-	public function up()
-	{
-		Schema::create('settings', function($table)
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('settings', function ($table)
         {
             $table->increments('id');
             $table->string('name');
@@ -21,16 +21,16 @@ class CreateSettingsTable extends Migration {
             $table->text('value');
             $table->string('type');
         });
-	}
+    }
 
-	/**
-	 * Reverse the migrations.
-	 *
-	 * @return void
-	 */
-	public function down()
-	{
-		Schema::drop('settings');
-	}
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::drop('settings');
+    }
 
 }

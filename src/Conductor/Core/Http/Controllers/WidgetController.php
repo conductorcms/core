@@ -10,21 +10,21 @@ class WidgetController extends Controller {
 
     private $app;
 
-	private $repository;
+    private $repository;
 
     private $request;
 
-	function __construct(Application $app, Widget $repository, Request $request)
-	{
+    function __construct(Application $app, Widget $repository, Request $request)
+    {
         $this->app = $app;
-		$this->repository = $repository;
+        $this->repository = $repository;
         $this->request = $request;
-	}
+    }
 
-	public function all()
-	{
-		return Response::json(['widgets' => $this->repository->getAll()], 200);
-	}
+    public function all()
+    {
+        return Response::json(['widgets' => $this->repository->getAll()], 200);
+    }
 
     public function getOptions($id)
     {

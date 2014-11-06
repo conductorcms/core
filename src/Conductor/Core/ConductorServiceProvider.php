@@ -26,13 +26,13 @@ class ConductorServiceProvider extends ServiceProvider {
 
         // bind interfaces
         $this->app->bind('Conductor\Core\Module\ModuleRepository', 'Conductor\Core\Module\EloquentModuleRepository');
-		$this->app->bind('Conductor\Core\Widget\WidgetRepository', 'Conductor\Core\Widget\EloquentWidgetRepository');
+        $this->app->bind('Conductor\Core\Widget\WidgetRepository', 'Conductor\Core\Widget\EloquentWidgetRepository');
         $this->app->bind('Conductor\Core\Setting\SettingRepository', 'Conductor\Core\Setting\EloquentSettingRepository');
 
         // register facades
-        $this->app->bind('setting', function()
+        $this->app->bind('setting', function ()
         {
-           return $this->app->make('Conductor\Core\Setting\Setting');
+            return $this->app->make('Conductor\Core\Setting\Setting');
         });
 
         $this->registerMigratorBindings();
@@ -41,8 +41,8 @@ class ConductorServiceProvider extends ServiceProvider {
 
         $conductor->boot();
 
-		include __DIR__ . '/../../helpers.php';
-		include __DIR__ . '/../../routes.php';
+        include __DIR__ . '/../../helpers.php';
+        include __DIR__ . '/../../routes.php';
         include __DIR__ . '/../../settings.php';
     }
 
@@ -85,14 +85,14 @@ class ConductorServiceProvider extends ServiceProvider {
         }
     }
 
-	private function registerMigratorBindings()
-	{
-		$this->app->bind('Illuminate\Database\Migrations\MigrationRepositoryInterface', function()
-		{
-			return new DatabaseMigrationRepository($this->app->make('db'), 'migrations');
-		});
-		$this->app->bind('Illuminate\Database\ConnectionResolverInterface', 'Illuminate\Database\ConnectionResolver');
-	}
+    private function registerMigratorBindings()
+    {
+        $this->app->bind('Illuminate\Database\Migrations\MigrationRepositoryInterface', function ()
+        {
+            return new DatabaseMigrationRepository($this->app->make('db'), 'migrations');
+        });
+        $this->app->bind('Illuminate\Database\ConnectionResolverInterface', 'Illuminate\Database\ConnectionResolver');
+    }
 
     /**
      * Get the services provided by the provider.

@@ -9,7 +9,7 @@ class CustomMigrator extends Migrator {
     {
         $migrations = $this->getMigrationFiles($path);
 
-        foreach($migrations as $file)
+        foreach ($migrations as $file)
         {
             DB::table('migrations')->where('migration', $file)->delete();
             $migration = $this->resolve($file);

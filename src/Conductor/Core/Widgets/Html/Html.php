@@ -4,15 +4,15 @@ use Conductor\Core\Widget\Widget;
 
 class Html extends Widget {
 
-	public $name = 'HTML';
-	public $description = 'The HTML Widget';
+    public $name = 'HTML';
+    public $description = 'The HTML Widget';
 
-	public $options = [
-		[
+    public $options = [
+        [
             'name' => 'Body',
             'slug' => 'body',
             'type' => 'wysiwyg'
         ]
-	];
+    ];
 
 }

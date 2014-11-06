@@ -3,13 +3,13 @@
 //prepare filter for permissions
 function setPermissions(array $permissions)
 {
-	$filter = 'permissions:';
-	foreach($permissions as $permission)
-	{
-		$filter = $filter . $permission . ';';
-	}
+    $filter = 'permissions:';
+    foreach ($permissions as $permission)
+    {
+        $filter = $filter . $permission . ';';
+    }
     $filter = rtrim($filter, ';');
-	return $filter;
+    return $filter;
 }
 
 function loadWidgetInstance($slug)
@@ -21,9 +21,9 @@ function loadWidgetInstance($slug)
 
 function loadWidgetArea($slug)
 {
-	$widget = App::make('Conductor\Core\Widget\Widget');
+    $widget = App::make('Conductor\Core\Widget\Widget');
 
-	return $widget->loadWidgetArea($slug);
+    return $widget->loadWidgetArea($slug);
 }
 
 

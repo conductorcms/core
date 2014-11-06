@@ -4,7 +4,7 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
 
 class Widget extends Eloquent {
 
-	public $fillable = ['name', 'description', 'slug'];
+    public $fillable = ['name', 'description', 'slug'];
 
     public function instances()
     {

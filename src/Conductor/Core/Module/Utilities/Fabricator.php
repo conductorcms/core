@@ -78,8 +78,8 @@ class Fabricator {
         //create directory structure
         $this->createDirectories();
 
-		//delete obsolete directories
-		$this->cleanDirectories();
+        //delete obsolete directories
+        $this->cleanDirectories();
 
         //generate skeleton files
         $this->generateSkeletonFiles();
@@ -98,7 +98,7 @@ class Fabricator {
      */
     private function generateModuleJson(array $module)
     {
-        $this->files->put($this->basePath. 'module.json', json_encode($module, JSON_PRETTY_PRINT));
+        $this->files->put($this->basePath . 'module.json', json_encode($module, JSON_PRETTY_PRINT));
     }
 
     /**
@@ -107,7 +107,7 @@ class Fabricator {
      */
     private function createDirectories()
     {
-		$info = $this->getModuleInfo();
+        $info = $this->getModuleInfo();
 
         $directories = $this->getDirectories($info);
 
@@ -117,14 +117,14 @@ class Fabricator {
     /**
      * Get directory structure
      *
-	 * @param array $module
+     * @param array $module
      * @return array
      */
     private function getDirectories($module)
     {
-		//get "package prefix"
-		$package = explode('/', $module['packageName']);
-		$module['packagePrefix'] = ucfirst($package[0]);
+        //get "package prefix"
+        $package = explode('/', $module['packageName']);
+        $module['packagePrefix'] = ucfirst($package[0]);
 
         return [
             'resources' => [
@@ -142,16 +142,16 @@ class Fabricator {
                 'frontend' => [
                 ]
             ],
-			'src' => [
-				$module['packagePrefix'] => [
-					$module['className'] => [
-						'Console',
-						'Http' => [
-							'Controllers'
-						]
-					]
-				]
-			]
+            'src' => [
+                $module['packagePrefix'] => [
+                    $module['className'] => [
+                        'Console',
+                        'Http' => [
+                            'Controllers'
+                        ]
+                    ]
+                ]
+            ]
         ];
     }
 
@@ -178,17 +178,17 @@ class Fabricator {
         }
     }
 
-	/**
-	 * Clean out directories that won't be
-	 * used in default structure
-	 */
-	private function cleanDirectories()
-	{
-		$info = $this->getModuleInfo();
-		$basePath = base_path() . '/workbench/' . $info['packageName'] . '/';
+    /**
+     * Clean out directories that won't be
+     * used in default structure
+     */
+    private function cleanDirectories()
+    {
+        $info = $this->getModuleInfo();
+        $basePath = base_path() . '/workbench/' . $info['packageName'] . '/';
 
-		$this->files->deleteDirectory($basePath . 'src/controllers');
-	}
+        $this->files->deleteDirectory($basePath . 'src/controllers');
+    }
 
     /**
      * Call methods to include module in the config
@@ -211,10 +211,10 @@ class Fabricator {
         $moduleRoot = $this->basePath;
         $data = $this->getModuleInfo();
 
-        $path = $moduleRoot . '/src/' .  $data['packageName'] . '/';
+        $path = $moduleRoot . '/src/' . $data['packageName'] . '/';
 
-        require $path . $data['className'] .  'ModuleProvider.php';
-        require $path . $data['className'] .  '.php';
+        require $path . $data['className'] . 'ModuleProvider.php';
+        require $path . $data['className'] . '.php';
 
         $provider = $data['namespace'] . '\\' . $data['className'] . 'ModuleProvider';
         $provider = new $provider($this->app->make('app'));
@@ -263,19 +263,19 @@ class Fabricator {
      */
     private function generateSkeletonFiles()
     {
-		$data = $this->getModuleInfo();
+        $data = $this->getModuleInfo();
 
         $providerPath = $this->getProviderPath($data);
 
         $this->files->delete($providerPath . 'ServiceProvider.php');
 
         $files = [
-            'resources/admin/js/' . $data['name'] . '.js'                       => $this->getSkeletonPath('app.skeleton.js'),
-            'resources/admin/js/controllers/' . $data['className'] . 'Ctrl.js'  => $this->getSkeletonPath('controller.skeleton.js'),
-			'resources/admin/js/config/routes.js'							    => $this->getSkeletonPath('routes.skeleton.js'),
-		    'resources/admin/js/config/navigation.js'						    => $this->getSkeletonPath('navigation.skeleton.js'),
-            $providerPath . 'ModuleProvider.php'                         => $this->getSkeletonPath('provider.skeleton'),
-            $providerPath . '.php'                                       => $this->getSkeletonPath('module.skeleton')
+            'resources/admin/js/' . $data['name'] . '.js' => $this->getSkeletonPath('app.skeleton.js'),
+            'resources/admin/js/controllers/' . $data['className'] . 'Ctrl.js' => $this->getSkeletonPath('controller.skeleton.js'),
+            'resources/admin/js/config/routes.js' => $this->getSkeletonPath('routes.skeleton.js'),
+            'resources/admin/js/config/navigation.js' => $this->getSkeletonPath('navigation.skeleton.js'),
+            $providerPath . 'ModuleProvider.php' => $this->getSkeletonPath('provider.skeleton'),
+            $providerPath . '.php' => $this->getSkeletonPath('module.skeleton')
         ];
 
         $this->generateSkeletonsFromArray($files, $data);
@@ -324,7 +324,7 @@ class Fabricator {
      */
     private function generateSkeletonsFromArray(array $files, $data)
     {
-        foreach($files as $path => $skeleton)
+        foreach ($files as $path => $skeleton)
         {
             $skeleton = $this->getSkeleton($skeleton, $data);
             $this->files->put($path, $skeleton);
@@ -357,11 +357,11 @@ class Fabricator {
     private function getSkeletonTags($data)
     {
         return [
-            '##module_name##'         => $data['name'],
-            '##module_package##'      => $data['packageName'],
+            '##module_name##' => $data['name'],
+            '##module_package##' => $data['packageName'],
             '##module_display_name##' => $data['displayName'],
-            '##module_class_name##'   => $data['className'],
-            '##module_namespace##'    => $data['namespace']
+            '##module_class_name##' => $data['className'],
+            '##module_namespace##' => $data['namespace']
         ];
     }
 
@@ -374,7 +374,7 @@ class Fabricator {
      */
     private function replaceTags(array $tags, $skeleton)
     {
-        foreach($tags as $tag => $replacement)
+        foreach ($tags as $tag => $replacement)
         {
             $skeleton = str_replace($tag, $replacement, $skeleton);
         }
@@ -411,16 +411,16 @@ class Fabricator {
         ];
     }
 
-	/**
-	 * Return the absolute root path
-	 * of the Conductor core
-	 *
-	 * @return mixed
-	 */
-	private function getCoreRoot()
-	{
-		$reflection = new ReflectionClass($this);
-		$path = dirname($reflection->getFileName());
-		return explode('src/', $path)[0];
-	}
+    /**
+     * Return the absolute root path
+     * of the Conductor core
+     *
+     * @return mixed
+     */
+    private function getCoreRoot()
+    {
+        $reflection = new ReflectionClass($this);
+        $path = dirname($reflection->getFileName());
+        return explode('src/', $path)[0];
+    }
 }

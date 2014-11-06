@@ -18,7 +18,7 @@ class Video extends Widget {
                     'value' => 'YouTube'
                 ],
                 [
-                    'key' => 'vimeo' ,
+                    'key' => 'vimeo',
                     'value' => 'Vimeo'
                 ]
             ]

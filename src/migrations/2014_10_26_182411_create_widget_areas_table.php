@@ -5,30 +5,30 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateWidgetAreasTable extends Migration {
 
-	/**
-	 * Run the migrations.
-	 *
-	 * @return void
-	 */
-	public function up()
-	{
-		Schema::create('widget_areas', function($table)
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('widget_areas', function ($table)
         {
             $table->increments('id');
             $table->string('name');
             $table->string('slug');
-			$table->timestamps();
+            $table->timestamps();
         });
-	}
+    }
 
-	/**
-	 * Reverse the migrations.
-	 *
-	 * @return void
-	 */
-	public function down()
-	{
-		Schema::drop('widget_areas');
-	}
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::drop('widget_areas');
+    }
 
 }

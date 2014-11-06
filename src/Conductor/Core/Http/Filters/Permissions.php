@@ -8,19 +8,19 @@ class Permissions {
 
     private $auth;
 
-	private $redirect;
+    private $redirect;
 
-	private $response;
+    private $response;
 
     function __construct(Sentinel $auth, Redirector $redirect, Response $response)
     {
         $this->auth = $auth;
-		$this->redirect = $redirect;
-		$this->response = $response;
+        $this->redirect = $redirect;
+        $this->response = $response;
     }
 
-	public function filter($route, $request, $permissions, $options = [])
-	{
+    public function filter($route, $request, $permissions, $options = [])
+    {
         if(!$user = $this->auth->check())
         {
             if($request->ajax()) return $this->response->make('Unauthorized', 401);
@@ -34,6 +34,6 @@ class Permissions {
             if($request->ajax()) return $this->response->make('Unauthorized', 401);
             return $this->redirect->to('/');
         }
-	}
+    }
 
 }

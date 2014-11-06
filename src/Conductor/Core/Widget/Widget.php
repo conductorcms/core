@@ -10,11 +10,11 @@ use Conductor\Core\Widget\Repository\EloquentWidgetInstanceRepository as Instanc
 
 class Widget {
 
-	private $repository;
+    private $repository;
 
-	private $db;
+    private $db;
 
-	private $config;
+    private $config;
 
     private $view;
 
@@ -22,25 +22,25 @@ class Widget {
     {
         $this->area = $area;
         $this->instance = $instance;
-		$this->repository = $repository;
-		$this->db = $db;
-		$this->config = $config;
+        $this->repository = $repository;
+        $this->db = $db;
+        $this->config = $config;
         $this->view = $view;
 
-		if(isset($this->name))
-		{
-			$this->slug = $str->slug($this->name);
-		}
+        if(isset($this->name))
+        {
+            $this->slug = $str->slug($this->name);
+        }
     }
 
     public function register()
     {
-		if(!$this->tableExists('widgets')) return false;
+        if(!$this->tableExists('widgets')) return false;
 
         if(!$this->repository->isInDb('slug', $this->slug))
-		{
-			return $this->repository->create((array) $this);
-		}
+        {
+            return $this->repository->create((array)$this);
+        }
     }
 
     public function getName()
@@ -54,49 +54,49 @@ class Widget {
     }
 
 
-	public function loadWidgetInstance($slug)
-	{
+    public function loadWidgetInstance($slug)
+    {
         $instance = $this->instance->findBy('slug', $slug);
 
         $widget = $instance->widget;
 
         $data = json_decode($instance->options, true);
 
-        $html = '<div class="widget '. $widget->slug . ' ' . $instance->slug .'">' . PHP_EOL;
+        $html = '<div class="widget ' . $widget->slug . ' ' . $instance->slug . '">' . PHP_EOL;
         $html .= $this->view->make('widget.' . $widget->slug . '::index', $data) . PHP_EOL;
         $html .= '</div>' . PHP_EOL;
 
         return $html;
-	}
+    }
 
-	public function loadWidgetArea($slug)
-	{
-		$area = $this->area->findBy('slug', $slug);
+    public function loadWidgetArea($slug)
+    {
+        $area = $this->area->findBy('slug', $slug);
         $html = '';
-		foreach($area->instances as $instance)
-		{
-			$html .= $this->loadWidgetInstance($instance->slug) . PHP_EOL;
-		}
+        foreach ($area->instances as $instance)
+        {
+            $html .= $this->loadWidgetInstance($instance->slug) . PHP_EOL;
+        }
         return $html;
-	}
+    }
 
     public function getOptions()
     {
         return $this->options;
     }
 
-	public function tableExists($table)
-	{
-		$database = $this->config->get('database.connections.mysql.database');
-		$prefix = $this->config->get('database.connections.mysql.prefix');
+    public function tableExists($table)
+    {
+        $database = $this->config->get('database.connections.mysql.database');
+        $prefix = $this->config->get('database.connections.mysql.prefix');
 
-		if(count($this->db->select( "SELECT table_name FROM information_schema.tables WHERE table_schema = '" . $database . "' AND table_name = '" . $prefix . $table . "';" ) ) == 0 )
-		{
-			return false;
-		}
-		else
-		{
-			return true;
-		}
-	}
+        if(count($this->db->select("SELECT table_name FROM information_schema.tables WHERE table_schema = '" . $database . "' AND table_name = '" . $prefix . $table . "';")) == 0)
+        {
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
 }

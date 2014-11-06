@@ -21,7 +21,7 @@ class Theme {
 
         $themes = [];
 
-        foreach($jsonArray as $json)
+        foreach ($jsonArray as $json)
         {
             $path = str_replace('theme.json', '', $json);
             $theme = $this->getThemeJson($json);

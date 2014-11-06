@@ -4,40 +4,38 @@ use Illuminate\View\Compilers\BladeCompiler;
 
 class CustomBladeTags {
 
-	private $blade;
+    private $blade;
 
-	function __construct(BladeCompiler $blade)
-	{
-		$this->blade = $blade;
-	}
+    function __construct(BladeCompiler $blade)
+    {
+        $this->blade = $blade;
+    }
 
-	public function registerAll()
-	{
-		$this->registerWidgetArea();
-		$this->registerWidgetInstance();
-	}
+    public function registerAll()
+    {
+        $this->registerWidgetArea();
+        $this->registerWidgetInstance();
+    }
 
-	private function registerWidgetArea()
-	{
-		$this->blade->extend(function($view, $compiler)
-		{
-			$pattern = $compiler->createMatcher('widgetInstance');
+    private function registerWidgetArea()
+    {
+        $this->blade->extend(function ($view, $compiler)
+        {
+            $pattern = $compiler->createMatcher('widgetInstance');
 
-			return preg_replace($pattern, '$1<?php echo loadWidgetInstance($2); ?>', $view);
-		});
-	}
+            return preg_replace($pattern, '$1<?php echo loadWidgetInstance($2); ?>', $view);
+        });
+    }
 
-	private function registerWidgetInstance()
-	{
-		$this->blade->extend(function($view, $compiler)
-		{
-			$pattern = $compiler->createMatcher('widgetArea');
+    private function registerWidgetInstance()
+    {
+        $this->blade->extend(function ($view, $compiler)
+        {
+            $pattern = $compiler->createMatcher('widgetArea');
 
-			return preg_replace($pattern, '$1<?php echo loadWidgetArea($2); ?>', $view);
-		});
-	}
-
-
+            return preg_replace($pattern, '$1<?php echo loadWidgetArea($2); ?>', $view);
+        });
+    }
 
 
 }

@@ -45,9 +45,9 @@ class BaseEloquentCachedRepository implements BaseRepository {
      */
     public function getAll()
     {
-        return $this->cache->rememberForever($this->cachePrefix . ' :all', function()
+        return $this->cache->rememberForever($this->cachePrefix . ' :all', function ()
         {
-           return $this->repository->getAll();
+            return $this->repository->getAll();
         });
     }
 
@@ -59,7 +59,7 @@ class BaseEloquentCachedRepository implements BaseRepository {
      */
     public function find($id)
     {
-        return $this->cache->rememberForever($this->cachePrefix . ' :' . $id, function() use ($id)
+        return $this->cache->rememberForever($this->cachePrefix . ' :' . $id, function () use ($id)
         {
             return $this->repository->find($id);
         });
@@ -77,7 +77,7 @@ class BaseEloquentCachedRepository implements BaseRepository {
     {
         $cacheKey = $this->makeCacheKey($id, $relationships);
 
-        return $this->cache->rememberForever($cacheKey, function() use ($id, $relationships)
+        return $this->cache->rememberForever($cacheKey, function () use ($id, $relationships)
         {
             return $this->repository->findWithRelationship($id, $relationships);
         });
@@ -149,7 +149,7 @@ class BaseEloquentCachedRepository implements BaseRepository {
     {
         $cacheKey = $this->cachePrefix . ':' . $id . ':with:';
 
-        foreach($relationships as $relationship)
+        foreach ($relationships as $relationship)
         {
             $cacheKey .= $relationship . ',';
         }
@@ -186,7 +186,7 @@ class BaseEloquentCachedRepository implements BaseRepository {
      */
     private function clearCacheIdArray($ids)
     {
-        foreach($ids as $id)
+        foreach ($ids as $id)
         {
             $this->cache->forget($this->cachePrefix . ' :' . $id);
         }

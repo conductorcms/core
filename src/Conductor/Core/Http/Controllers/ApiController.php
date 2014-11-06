@@ -66,7 +66,7 @@ class ApiController extends Controller {
 
         $friendlyRoutes = [];
 
-        foreach($routes as $route)
+        foreach ($routes as $route)
         {
             $new['http'] = $route->getMethods()[0];
             $new['route'] = $route->getPath();

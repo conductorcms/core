@@ -60,7 +60,7 @@ class EloquentSettingRepository implements SettingRepository {
 
     public function updateFromArray(array $settings)
     {
-        foreach($settings as $setting)
+        foreach ($settings as $setting)
         {
             $this->update($setting);
         }
