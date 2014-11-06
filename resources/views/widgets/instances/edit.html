@@ -22,7 +22,11 @@
             <label><% option.name %></label>
             <span ng-switch on="option.type">
                 <textarea ng-model="option.value" class="form-control" ng-switch-when="text"></textarea>
+                <input ng-model="option.value" class="form-control" ng-switch-when="input" />
                 <div text-angular ng-model="option.value" ng-switch-when="wysiwyg"></div>
+                <select class="form-control" ng-model="option.value" ng-options="o.key as o.value for o in option.options" ng-switch-when="select">
+
+                </select>
             </span>
         </div>
     </div>

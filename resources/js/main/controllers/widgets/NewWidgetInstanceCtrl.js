@@ -13,7 +13,7 @@ angular.module('admin').controller('NewWidgetInstanceCtrl', function ($scope, $m
 
         for(var key in $scope.options)
         {
-            options[key] = $scope.options[key].value;
+            options[$scope.options[key].slug] = $scope.options[key].value;
         }
 
         var data = {
