@@ -2,9 +2,9 @@
 
 use Illuminate\Foundation\Application;
 use Illuminate\Routing\Controller;
-use Conductor\Core\Widget\WidgetRepository;
-use Response;
 use Illuminate\Http\Request;
+use Conductor\Core\Widget\Repository\EloquentWidgetRepository as Widget;
+use Response;
 
 class WidgetController extends Controller {
 
@@ -14,7 +14,7 @@ class WidgetController extends Controller {
 
     private $request;
 
-	function __construct(Application $app, WidgetRepository $repository, Request $request)
+	function __construct(Application $app, Widget $repository, Request $request)
 	{
         $this->app = $app;
 		$this->repository = $repository;
@@ -28,7 +28,7 @@ class WidgetController extends Controller {
 
     public function getOptions($id)
     {
-        $widget = $this->repository->findById($id);
+        $widget = $this->repository->find($id);
 
         $widget = $this->app->make('conductor:widget:' . $widget->slug);
 

@@ -41,12 +41,12 @@ angular.module('admin').controller('WidgetAreasCtrl', function ($scope, WidgetAr
     {
         var areaIndex = $scope.areas.indexOf(area);
 
-        $scope.areas[areaIndex].widget_instances.push(data);
+        $scope.areas[areaIndex].instances.push(data);
 
         var currentIds = [];
-        for(var ii in $scope.areas[areaIndex].widget_instances)
+        for(var ii in $scope.areas[areaIndex].instances)
         {
-            currentIds.push($scope.areas[areaIndex].widget_instances[ii].id)
+            currentIds.push($scope.areas[areaIndex].instances[ii].id)
         }
 
         WidgetArea.syncInstances(area.id, currentIds);
@@ -54,14 +54,14 @@ angular.module('admin').controller('WidgetAreasCtrl', function ($scope, WidgetAr
 
     $scope.removeInstance = function(instance, area) {
         var areaIndex = $scope.areas.indexOf(area);
-        var instanceIndex = $scope.areas[areaIndex].widget_instances.indexOf(instance);
+        var instanceIndex = $scope.areas[areaIndex].instances.indexOf(instance);
 
-        $scope.areas[areaIndex].widget_instances.splice(instanceIndex, 1);
+        $scope.areas[areaIndex].instances.splice(instanceIndex, 1);
 
         var currentIds = [];
-        for(var ii in $scope.areas[areaIndex].widget_instances)
+        for(var ii in $scope.areas[areaIndex].instances)
         {
-            currentIds.push($scope.areas[areaIndex].widget_instances[ii].id)
+            currentIds.push($scope.areas[areaIndex].instances[ii].id)
         }
 
         WidgetArea.syncInstances(area.id, currentIds);

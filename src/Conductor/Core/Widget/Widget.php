@@ -4,10 +4,11 @@ use Illuminate\Support\Str;
 use Illuminate\Database\DatabaseManager as DB;
 use Illuminate\Config\Repository as Config;
 use Illuminate\View\Factory;
+use Conductor\Core\Widget\Repository\EloquentWidgetRepository as WidgetRepository;
+use Conductor\Core\Widget\Repository\EloquentWidgetAreaRepository as Area;
+use Conductor\Core\Widget\Repository\EloquentWidgetInstanceRepository as Instance;
 
 class Widget {
-
-    private $optionsHandler;
 
 	private $repository;
 
@@ -17,9 +18,10 @@ class Widget {
 
     private $view;
 
-    function __construct(Options $options, WidgetRepository $repository, Str $str, DB $db, Config $config, Factory $view)
+    function __construct(Area $area, Instance $instance, WidgetRepository $repository, Str $str, DB $db, Config $config, Factory $view)
     {
-        $this->optionsHandler =  $options;
+        $this->area = $area;
+        $this->instance = $instance;
 		$this->repository = $repository;
 		$this->db = $db;
 		$this->config = $config;
@@ -29,20 +31,15 @@ class Widget {
 		{
 			$this->slug = $str->slug($this->name);
 		}
-
-		if(isset($this->options))
-		{
-			$this->optionsHandler->setOptions($this->options);
-		}
     }
 
     public function register()
     {
 		if(!$this->tableExists('widgets')) return false;
 
-        if(!$this->repository->isInDb($this))
+        if(!$this->repository->isInDb('slug', $this->slug))
 		{
-			$this->repository->create($this);
+			return $this->repository->create((array) $this);
 		}
     }
 
@@ -56,16 +53,13 @@ class Widget {
         return static::$registered;
     }
 
-    public function getView()
-    {
-
-    }
 
 	public function loadWidgetInstance($slug)
 	{
-        $instance = $this->repository->findInstanceBySlug($slug);
+        $instance = $this->instance->findBy('slug', $slug);
 
         $widget = $instance->widget;
+
         $data = json_decode($instance->options, true);
 
         $html = '<div class="widget '. $widget->slug . ' ' . $instance->slug .'">' . PHP_EOL;
@@ -77,9 +71,9 @@ class Widget {
 
 	public function loadWidgetArea($slug)
 	{
-		$area = $this->repository->findAreaBySlug($slug);
+		$area = $this->area->findBy('slug', $slug);
         $html = '';
-		foreach($area->widgetInstances as $instance)
+		foreach($area->instances as $instance)
 		{
 			$html .= $this->loadWidgetInstance($instance->slug) . PHP_EOL;
 		}
@@ -88,7 +82,7 @@ class Widget {
 
     public function getOptions()
     {
-        return $this->options->getOptions();
+        return $this->options;
     }
 
 	public function tableExists($table)

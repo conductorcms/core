@@ -1,9 +1,9 @@
 <?php namespace Conductor\Core\Http\Controllers;
 
 use Illuminate\Routing\Controller;
-use Conductor\Core\Widget\WidgetRepository;
-use Response;
 use Illuminate\Http\Request;
+use Conductor\Core\Widget\Repository\EloquentWidgetAreaRepository as Area;
+use Response;
 
 class WidgetAreaController extends Controller {
 
@@ -11,7 +11,7 @@ class WidgetAreaController extends Controller {
 
     private $request;
 
-    function __construct(WidgetRepository $repository, Request $request)
+    function __construct(Area $repository, Request $request)
     {
         $this->repository = $repository;
         $this->request = $request;
@@ -19,26 +19,26 @@ class WidgetAreaController extends Controller {
 
     public function all()
     {
-        return Response::json(['areas' => $this->repository->getAreasWithInstances()], 200);
+        return Response::json(['areas' => $this->repository->getAllWithRelationships(['instances'])], 200);
     }
 
     public function store()
     {
         $area = $this->request->only(['name', 'slug']);
 
-        $this->repository->createArea($area);
+        $this->repository->create($area);
 
         return Response::json(['message' => 'Area created successfully'], 201);
     }
 
     public function destroy($id)
     {
-        $this->repository->destroyArea($id);
+        $this->repository->destroy($id);
     }
 
     public function syncInstances($id)
     {
-        $area = $this->repository->findAreaById($id);
+        $area = $this->repository->find($id);
 
         $instances = $this->request->only(['instances']);
 

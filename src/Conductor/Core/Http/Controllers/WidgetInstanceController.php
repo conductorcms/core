@@ -1,30 +1,34 @@
 <?php namespace Conductor\Core\Http\Controllers;
 
 use Illuminate\Routing\Controller;
-use Conductor\Core\Widget\WidgetRepository;
-use Response;
 use Illuminate\Http\Request;
+use Conductor\Core\Widget\Repository\EloquentWidgetInstanceRepository as Instance;
+use Conductor\Core\Widget\Repository\EloquentWidgetRepository as Widget;
+use Response;
 
 class WidgetInstanceController extends Controller {
 
-    private $repository;
+    private $instance;
 
     private $request;
 
-    function __construct(WidgetRepository $repository, Request $request)
+    private $widget;
+
+    function __construct(Instance $instance, Request $request, Widget $widget)
     {
-        $this->repository = $repository;
+        $this->instance = $instance;
         $this->request = $request;
+        $this->widget = $widget;
     }
 
     public function all()
     {
-        return Response::json(['instances' => $this->repository->getInstances()], 200);
+        return Response::json(['instances' => $this->instance->getAllWithRelationships(['widget'])], 200);
     }
 
     public function get($id)
     {
-        return Response::json(['instance' => $this->repository->getInstance($id)], 200);
+        return Response::json(['instance' => $this->instance->findWithRelationships($id, ['widget'])], 200);
     }
 
     public function store($id)
@@ -32,14 +36,16 @@ class WidgetInstanceController extends Controller {
         $data = $this->request->only(['options', 'name', 'slug']);
         $data['options'] = json_encode($data['options']);
 
-        $widget = $this->repository->findById($id);
+        $widget = $this->widget->find($id);
 
-        $instance = $this->repository->createInstance($widget, $data);
+        $data['widget_id'] = $widget->id;
+
+        $instance = $this->instance->create($data);
     }
 
     public function destroy($id)
     {
-        $this->repository->destroyInstance($id);
+        $this->instance->destroy($id);
 
         return Response::json(['message' => 'Instance deleted successfully'], 200);
     }
