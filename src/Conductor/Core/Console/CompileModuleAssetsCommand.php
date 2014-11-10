@@ -84,11 +84,13 @@ class CompileModuleAssetsCommand extends Command {
             if(isset($basePath)) $base = $basePath . $module->name . '/';
 
             $adminAssets = $this->getAssets('admin', $json, $base, $module->name);
+
             $frontendAssets = $this->getAssets('frontend', $json, $base, $module->name);
             $frontendAssets = array_merge($frontendAssets, $this->getThemeAssets());
 
-            $assetManifest['admin'] = array_merge($assetManifest['admin'], $adminAssets);
-            $assetManifest['frontend'] = array_merge($assetManifest['frontend'], $frontendAssets);
+            $assetManifest['admin'] = array_merge_recursive($adminAssets, $assetManifest['admin']);
+            $assetManifest['frontend'] = array_merge($frontendAssets, $assetManifest['frontend']);
+
         }
 
         file_put_contents(__DIR__ . '../../../../../asset_manifest.json', json_encode($assetManifest, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
@@ -141,6 +143,7 @@ class CompileModuleAssetsCommand extends Command {
                 $assets[] = $base . $asset;
             }
         }
+
         return $assets;
     }
 
