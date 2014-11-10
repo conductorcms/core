@@ -1,0 +1,1 @@
+angular.module("admin.foo.templates", []).run(["$templateCache", function($templateCache) {$templateCache.put("foo/index.html","<% title %>");}]);

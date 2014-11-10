@@ -10,6 +10,7 @@ angular.module('admin.core').provider('Navigation', function() {
     }
 
     this.addItem = function(section, title, uri) {
+        console.log('Adding: ' + section + ', ' + title);
         if(!_navigation[section])
         {
             _navigation[section] = [];

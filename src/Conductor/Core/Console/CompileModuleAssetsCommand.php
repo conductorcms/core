@@ -86,10 +86,10 @@ class CompileModuleAssetsCommand extends Command {
             $adminAssets = $this->getAssets('admin', $json, $base, $module->name);
 
             $frontendAssets = $this->getAssets('frontend', $json, $base, $module->name);
-            $frontendAssets = array_merge($frontendAssets, $this->getThemeAssets());
+            $frontendAssets = array_merge_recursive($frontendAssets, $this->getThemeAssets());
 
             $assetManifest['admin'] = array_merge_recursive($adminAssets, $assetManifest['admin']);
-            $assetManifest['frontend'] = array_merge($frontendAssets, $assetManifest['frontend']);
+            $assetManifest['frontend'] = array_merge_recursive($frontendAssets, $assetManifest['frontend']);
 
         }
 
