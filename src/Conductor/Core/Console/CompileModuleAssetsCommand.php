@@ -70,18 +70,22 @@ class CompileModuleAssetsCommand extends Command {
 
             $assets = substr($path, 0, strpos($path, $module->name . '/'));
 
-            $moduleRoot = $assets . $module->name . '/';
+            $moduleRoot = $assets . $module->name;
 
             $this->info($moduleRoot);
 
-            $assets = $moduleRoot . 'module.json';
+            $assets = $moduleRoot . '/module.json';
 
             $this->info($assets);
 
             $json = json_decode(file_get_contents($assets));
 
             $base = $moduleRoot;
-            if(isset($basePath)) $base = $basePath . $module->name . '/';
+
+            if(isset($basePath))
+            {
+                $base = str_replace(base_path(), $basePath, $base);
+            }
 
             $backendAssets = $this->getAssets('backend', $json, $base, $module->name);
 
@@ -140,11 +144,16 @@ class CompileModuleAssetsCommand extends Command {
 
 		$source = '';
 
+        $basePath = base_path();
+        $option = $this->option('basePath');
+
+        if(isset($option)) $basePath = $option;
+
         if(!isset($active['dependencies']['files'])) return [];
 
 		foreach($active['dependencies']['files'] as $key => $group)
 		{
-			if($key == 'source')
+			if($key == 'source' && $source == '')
 			{
 				$source = $group;
 			}
@@ -153,7 +162,7 @@ class CompileModuleAssetsCommand extends Command {
 				$dependencies[$key] = [];
 				foreach($group as $asset)
 				{
-					$dependencies[$key][] = $source . '/' . $asset;
+					$dependencies[$key][] = $basePath . '/' . $source . '/' . $asset;
 				}
 			}
 		}
@@ -178,6 +187,11 @@ class CompileModuleAssetsCommand extends Command {
 		$dependencies = [];
 		$source = '';
 
+        $basePath = base_path();
+        $option = $this->option('basePath');
+
+        if(isset($option)) $basePath = $option;
+
 		if(!isset($json->dependencies->files->{$group})) return [];
 
 		// filter through css / js types
@@ -194,7 +208,7 @@ class CompileModuleAssetsCommand extends Command {
 				// filter through each asset and prefix if source is set
 				foreach($type as $asset)
 				{
-					$dependencies[$key][] = $source . '/' . $asset;
+					$dependencies[$key][] = $basePath . '/' . $source . '/' . $asset;
 				}
 
 			}
@@ -214,11 +228,11 @@ class CompileModuleAssetsCommand extends Command {
         {
             if($module != '')
             {
-                $assets[$module][] = $base . $asset;
+                $assets[$module][] = $base . '/' . $asset;
             }
             else
             {
-                $assets[] = $base . $asset;
+                $assets[] = $base . '/' . $asset;
             }
         }
 
@@ -227,6 +241,12 @@ class CompileModuleAssetsCommand extends Command {
 
     private function getCoreAssets()
     {
+        $basePath = base_path();
+
+        $option = $this->option('basePath');
+
+        if(isset($option)) $basePath = $option;
+
         $json = file_get_contents(__DIR__ . '/../../../../core.json');
 
         $core = json_decode($json, true);
@@ -247,7 +267,7 @@ class CompileModuleAssetsCommand extends Command {
                 $dependencies[$key] = [];
                 foreach($group as $file)
                 {
-                    $dependencies[$key][] = __DIR__ . '/../../../../../../../' . $source . '/' . $file;
+                    $dependencies[$key][] =  $basePath . '/' . $source . '/' . $file;
                 }
 
             }
