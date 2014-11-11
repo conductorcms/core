@@ -127,9 +127,21 @@ function buildDependencies(group, type, filename, path) {
 
     var dependencies = getDependencies(group, type);
 
+	dependencies = prefixDependencies(dependencies, '../../../');
+
     if(type == 'js')  return buildJs(dependencies, filename, path);
 
     if(type == 'css') return buildCss(dependencies, filename, path);
+}
+
+function prefixDependencies(dependencies, prefix)
+{
+	for(var ii in dependencies)
+	{
+		dependencies[ii] = prefix + dependencies[ii];
+	}
+
+	return dependencies;
 }
 
 function getDependencies(group, type) {
