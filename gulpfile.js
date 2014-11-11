@@ -11,11 +11,11 @@ var gulp           = require('gulp')
 
 var assets = require('./asset_manifest.json');
 
-gulp.task('build:admin:js', ['build:admin:views'], function() {
+gulp.task('build:backend:js', ['build:backend:views'], function() {
 
-    var path = '../../../public/conductor/admin/js/';
+    var path = '../../../public/conductor/backend/js/';
 
-    return buildJs(assets.admin.js, 'conductor.min.js', path);
+    return buildJs(assets.backend.js, 'conductor.min.js', path);
 });
 
 gulp.task('build:frontend:js', function() {
@@ -26,25 +26,25 @@ gulp.task('build:frontend:js', function() {
 });
 
 
-gulp.task('build:admin:dependencies:js', function() {
+gulp.task('build:backend:dependencies:js', function() {
 
-    var path = '../../../public/conductor/admin/js';
+    var path = '../../../public/conductor/backend/js';
 
     return buildDependencies('backend', 'js', 'dependencies.min.js', path)
 });
 
-gulp.task('build:admin:dependencies:styles', function() {
+gulp.task('build:backend:dependencies:styles', function() {
 
-    var path = '../../../public/conductor/admin/css';
+    var path = '../../../public/conductor/backend/css';
 
     return buildDependencies('backend', 'css', 'dependencies.css', path);
 });
 
-gulp.task('build:admin:sass', function() {
+gulp.task('build:backend:sass', function() {
 
-    var path = '../../../public/conductor/admin/css';
+    var path = '../../../public/conductor/backend/css';
 
-    return buildSass(assets.admin.sass, 'admin.css', path);
+    return buildSass(assets.backend.sass, 'backend.css', path);
 });
 
 gulp.task('build:frontend:sass', function() {
@@ -54,9 +54,9 @@ gulp.task('build:frontend:sass', function() {
     return buildSass(assets.frontend.sass, 'main.css', path);
 });
 
-gulp.task('build:admin:views', function() {
+gulp.task('build:backend:views', function() {
 
-    for(var module in assets.admin.views) {
+    for(var module in assets.backend.views) {
         var options = {
             filename: module + '.js',
             module: 'admin.' + module + '.templates',
@@ -64,22 +64,22 @@ gulp.task('build:admin:views', function() {
             standalone: true
         }
 
-        gulp.src(assets.admin.views[module])
+        gulp.src(assets.backend.views[module])
             .pipe(templateCache(options))
             .pipe(gulp.dest('./resources/js/templates'))
     }
 });
 
-gulp.task('watch:admin', function () {
+gulp.task('watch:backend', function () {
 
     var views = [];
 
-	for(var ii in assets.admin.views) {
-		views = views.concat(assets.admin.views[ii]);
+	for(var ii in assets.backend.views) {
+		views = views.concat(assets.backend.views[ii]);
 	}
-	var watch = assets.backend.js.concat(assets.admin.sass, views);
+	var watch = assets.backend.js.concat(assets.backend.sass, views);
 
-	gulp.watch(watch, ['build:admin']);
+	gulp.watch(watch, ['build:backend']);
 
 });
 
@@ -141,10 +141,10 @@ function getDependencies(group, type) {
 }
 
 // grouped tasks
-gulp.task('build:admin:dependencies', ['build:admin:dependencies:js', 'build:admin:dependencies:styles']);
-gulp.task('build:admin', ['build:admin:js', 'build:admin:sass']);
+gulp.task('build:backend:dependencies', ['build:backend:dependencies:js', 'build:backend:dependencies:styles']);
+gulp.task('build:backend', ['build:backend:js', 'build:backend:sass']);
 
 gulp.task('build:frontend:dependencies', ['build:frontend:dependencies:js', 'build:frontend:dependencies:styles']);
 gulp.task('build:frontend', ['build:frontend:js', 'build:frontend:sass'])
 
-gulp.task('build:all', ['build:admin:dependencies', 'build:admin']);
+gulp.task('build:all', ['build:backend:dependencies', 'build:backend']);

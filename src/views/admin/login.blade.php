@@ -7,7 +7,8 @@
        <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
        <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
        <link href="//code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css" rel="stylesheet" type="text/css" />
-       <link href="/conductor/admin/css/dependencies.css" rel="stylesheet" type="text/css" />
+
+       <link href="/conductor/backend/css/dependencies.css" rel="stylesheet" type="text/css" />
 
     </head>
     <body ng-app="admin" class="bg-black">
@@ -40,9 +41,9 @@
         </div>
 
         <!-- Angular, son! -->
-        <script src="/conductor/admin/js/dependencies.min.js"></script>
+        <script src="/conductor/backend/js/dependencies.min.js"></script>
          <!-- Mah app -->
-         <script src="/conductor/admin/js/conductor.min.js"></script>
+         <script src="/conductor/backend/js/conductor.min.js"></script>
          <!-- jQuery 2.0.2 -->
          <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
          <!-- Bootstrap -->

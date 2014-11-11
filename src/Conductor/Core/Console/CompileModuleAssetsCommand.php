@@ -58,9 +58,7 @@ class CompileModuleAssetsCommand extends Command {
 
         $basePath = $this->option('basePath');
 
-        $assetManifest = array_merge_recursive($this->getCoreAssets());
-
-        $assetManifest['frontend'] = [];
+        $assetManifest = ['backend' => [], 'frontend' => []];
 
         foreach ($modules as $module)
         {
@@ -102,7 +100,9 @@ class CompileModuleAssetsCommand extends Command {
 
 		$assetManifest['frontend'] = array_merge_recursive($themeAssets, $assetManifest['frontend']);
 
-		file_put_contents(__DIR__ . '../../../../../asset_manifest.json', json_encode($assetManifest, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+        $assetManifest = array_merge_recursive($this->getCoreAssets(), $assetManifest);
+
+        file_put_contents(__DIR__ . '../../../../../asset_manifest.json', json_encode($assetManifest, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
     }
 
     private function getAssets($type, $json, $base, $moduleName)

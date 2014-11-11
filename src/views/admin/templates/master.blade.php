@@ -10,8 +10,8 @@
         <!-- Ionicons -->
         <link href="//code.ionicframework.com/ionicons/1.5.2/css/ionicons.min.css" rel="stylesheet" type="text/css" />
         <!-- Theme style -->
-        <link href="/conductor/admin/css/dependencies.css" rel="stylesheet" type="text/css" />
-        <link href="/conductor/admin/css/admin.css" rel="stylesheet" type="text/css" />
+        <link href="/conductor/backend/css/dependencies.css" rel="stylesheet" type="text/css" />
+        <link href="/conductor/backend/css/backend.css" rel="stylesheet" type="text/css" />
 
         <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
         <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -92,10 +92,10 @@
          <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js"></script>
 
          <!-- Dependencies -->
-         <script src="/conductor/admin/js/dependencies.min.js"></script>
+         <script src="/conductor/backend/js/dependencies.min.js"></script>
 
          <!-- Main app -->
-         <script src="/conductor/admin/js/conductor.min.js"></script>
+         <script src="/conductor/backend/js/conductor.min.js"></script>
 
          <!-- Bootstrap -->
          <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
