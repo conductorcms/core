@@ -140,7 +140,7 @@ class CompileModuleAssetsCommand extends Command {
 
 		$source = '';
 
-        if(!isset($active['depdendencies']['files'])) return [];
+        if(!isset($active['dependencies']['files'])) return [];
 
 		foreach($active['dependencies']['files'] as $key => $group)
 		{

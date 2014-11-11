@@ -40,6 +40,20 @@ gulp.task('build:backend:dependencies:styles', function() {
     return buildDependencies('backend', 'css', 'dependencies.css', path);
 });
 
+gulp.task('build:frontend:dependencies:js', function() {
+
+    var path = '../../../public/conductor/frontend/js';
+
+    return buildDependencies('frontend', 'js', 'dependencies.min.js', path);
+});
+
+gulp.task('build:frontend:dependencies:styles', function() {
+
+    var path = '../../../public/conductor/frontend/css';
+
+    return buildDependencies('frontend', 'css', 'dependencies.css', path);
+});
+
 gulp.task('build:backend:sass', function() {
 
     var path = '../../../public/conductor/backend/css';
