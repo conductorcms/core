@@ -58,7 +58,9 @@ class CompileModuleAssetsCommand extends Command {
 
         $basePath = $this->option('basePath');
 
-        $assetManifest = ['backend' => [], 'frontend' => []];
+        $assetManifest = array_merge_recursive($this->getCoreAssets());
+
+        $assetManifest['frontend'] = [];
 
         foreach ($modules as $module)
         {
@@ -87,14 +89,16 @@ class CompileModuleAssetsCommand extends Command {
 
             $frontendAssets = $this->getAssets('frontend', $json, $base, $module->name);
 
-			$assetManifest['backend'] = array_merge_recursive($backendAssets, $assetManifest['backend']);
+            $assetManifest['backend'] = array_merge_recursive($backendAssets, $assetManifest['backend']);
+
             $assetManifest['frontend'] = array_merge_recursive($frontendAssets, $assetManifest['frontend']);
 		}
 
 		$themeAssets = $this->getThemeAssets();
-		$themeDependencies = $this->getThemeDependencies();
 
-		$assetManifest['frontend']['dependencies'] = array_merge_recursive($themeDependencies, $assetManifest['frontend']['dependencies']);
+        $themeDependencies = $this->getThemeDependencies();
+
+        $assetManifest['frontend']['dependencies'] = array_merge_recursive($themeDependencies, $assetManifest['frontend']['dependencies']);
 
 		$assetManifest['frontend'] = array_merge_recursive($themeAssets, $assetManifest['frontend']);
 
@@ -135,6 +139,8 @@ class CompileModuleAssetsCommand extends Command {
 		$active = $this->getActiveTheme();
 
 		$source = '';
+
+        if(!isset($active['depdendencies']['files'])) return [];
 
 		foreach($active['dependencies']['files'] as $key => $group)
 		{
@@ -217,6 +223,41 @@ class CompileModuleAssetsCommand extends Command {
         }
 
         return $assets;
+    }
+
+    private function getCoreAssets()
+    {
+        $json = file_get_contents(__DIR__ . '/../../../../core.json');
+
+        $core = json_decode($json, true);
+
+        $dependencies = [];
+
+        $source = '';
+        if(isset($core['dependencies']['files']['backend']['source'])) $source = $core['dependencies']['files']['backend']['source'];
+
+        foreach($core['dependencies']['files']['backend'] as $key => $group)
+        {
+            if($key == 'source')
+            {
+                $source = $group;
+            }
+            else
+            {
+                $dependencies[$key] = [];
+                foreach($group as $file)
+                {
+                    $dependencies[$key][] = __DIR__ . '/../../../../../../../' . $source . '/' . $file;
+                }
+
+            }
+
+        }
+
+        $manifest['backend'] = $core['assets']['backend'];
+        $manifest['backend']['dependencies'] = $dependencies;
+
+        return $manifest;
     }
 
     /**

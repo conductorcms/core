@@ -67,6 +67,7 @@ class ConductorServiceProvider extends ServiceProvider {
             'ScanModulesCommand',
             'CreateModuleCommand',
             'ListModulesCommand',
+            'CompileBowerCommand',
             'CompileModuleAssetsCommand',
             'CreateAdminCommand',
             'InstallCommand'

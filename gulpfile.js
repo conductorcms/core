@@ -10,18 +10,6 @@ var gulp           = require('gulp')
     sourcemaps     = require('gulp-sourcemaps');
 
 var assets = require('./asset_manifest.json');
-var coreAssets = require('./core.json').assets;
-
-// get core assets
-assets.admin.js = coreAssets.admin.js.concat(assets.admin.js);
-assets.admin.sass = coreAssets.admin.sass.concat(assets.admin.sass);
-
-// get views
-for(var ii in coreAssets.admin.views) {
-
-    assets.admin.views[ii] = coreAssets.admin.views[ii];
-
-}
 
 gulp.task('build:admin:js', ['build:admin:views'], function() {
 
@@ -42,14 +30,14 @@ gulp.task('build:admin:dependencies:js', function() {
 
     var path = '../../../public/conductor/admin/js';
 
-    return buildDependencies('admin', 'js', 'dependencies.min.js', path)
+    return buildDependencies('backend', 'js', 'dependencies.min.js', path)
 });
 
 gulp.task('build:admin:dependencies:styles', function() {
 
     var path = '../../../public/conductor/admin/css';
 
-    return buildDependencies('admin', 'css', 'dependencies.css', path);
+    return buildDependencies('backend', 'css', 'dependencies.css', path);
 });
 
 gulp.task('build:admin:sass', function() {
@@ -89,7 +77,7 @@ gulp.task('watch:admin', function () {
 	for(var ii in assets.admin.views) {
 		views = views.concat(assets.admin.views[ii]);
 	}
-	var watch = assets.admin.js.concat(assets.admin.sass, views);
+	var watch = assets.backend.js.concat(assets.admin.sass, views);
 
 	gulp.watch(watch, ['build:admin']);
 
@@ -127,8 +115,6 @@ function buildDependencies(group, type, filename, path) {
 
     var dependencies = getDependencies(group, type);
 
-	dependencies = prefixDependencies(dependencies, '../../../');
-
     if(type == 'js')  return buildJs(dependencies, filename, path);
 
     if(type == 'css') return buildCss(dependencies, filename, path);
@@ -145,11 +131,10 @@ function prefixDependencies(dependencies, prefix)
 }
 
 function getDependencies(group, type) {
-
-    var dependencies = coreAssets[group].dependencies[type];
+    var dependencies = [];
 
     if(assets[group].dependencies && assets[group].dependencies[type]) {
-        dependencies = dependencies.concat(assets[group].dependencies[type]);
+        dependencies = assets[group].dependencies[type];
     }
 
     return dependencies;

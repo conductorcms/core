@@ -26,7 +26,7 @@
 		},
 		"files": {
 			"backend": {
-				"source": "../../../resources/vendor",
+				"source": "./resources/vendor",
 				"js": [
 					"angular/angular.js",
 					"angular-animate/angular-animate.js",
