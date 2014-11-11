@@ -58,7 +58,7 @@ class CompileModuleAssetsCommand extends Command {
 
         $basePath = $this->option('basePath');
 
-        $assetManifest = ['admin' => [], 'frontend' => []];
+        $assetManifest = ['backend' => [], 'frontend' => []];
 
         foreach ($modules as $module)
         {
@@ -83,17 +83,22 @@ class CompileModuleAssetsCommand extends Command {
             $base = $moduleRoot;
             if(isset($basePath)) $base = $basePath . $module->name . '/';
 
-            $adminAssets = $this->getAssets('admin', $json, $base, $module->name);
+            $backendAssets = $this->getAssets('backend', $json, $base, $module->name);
 
             $frontendAssets = $this->getAssets('frontend', $json, $base, $module->name);
-            $frontendAssets = array_merge_recursive($frontendAssets, $this->getThemeAssets());
 
-            $assetManifest['admin'] = array_merge_recursive($adminAssets, $assetManifest['admin']);
+			$assetManifest['backend'] = array_merge_recursive($backendAssets, $assetManifest['backend']);
             $assetManifest['frontend'] = array_merge_recursive($frontendAssets, $assetManifest['frontend']);
+		}
 
-        }
+		$themeAssets = $this->getThemeAssets();
+		$themeDependencies = $this->getThemeDependencies();
 
-        file_put_contents(__DIR__ . '../../../../../asset_manifest.json', json_encode($assetManifest, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+		$assetManifest['frontend']['dependencies'] = array_merge_recursive($themeDependencies, $assetManifest['frontend']['dependencies']);
+
+		$assetManifest['frontend'] = array_merge_recursive($themeAssets, $assetManifest['frontend']);
+
+		file_put_contents(__DIR__ . '../../../../../asset_manifest.json', json_encode($assetManifest, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
     }
 
     private function getAssets($type, $json, $base, $moduleName)
@@ -106,17 +111,14 @@ class CompileModuleAssetsCommand extends Command {
         $assetManifest['js'] = $this->getAssetType($type, 'js', $base, $json);
         $assetManifest['sass'] = $this->getAssetType($type, 'sass', $base, $json);
         $assetManifest['views'] = $this->getAssetType($type, 'views', $base, $json, $module);
+		$assetManifest['dependencies'] = $this->getDependencies($type, $json);
 
         return $assetManifest;
     }
 
     private function getThemeAssets()
     {
-        $theme = $this->app->make('Conductor\Core\Theme\Theme');
-
-        $themes = $theme->getThemes($this->config->get('core::conductor.themes.dir'));
-
-        $active = $themes[$this->config->get('core::conductor.themes.active')];
+		$active = $this->getActiveTheme();
 
         array_walk_recursive($active, function (&$value, $key) use ($active)
         {
@@ -125,6 +127,76 @@ class CompileModuleAssetsCommand extends Command {
 
         return $active['assets'];
     }
+
+
+	private function getThemeDependencies()
+	{
+		$dependencies = [];
+		$active = $this->getActiveTheme();
+
+		$source = '';
+
+		foreach($active['dependencies']['files'] as $key => $group)
+		{
+			if($key == 'source')
+			{
+				$source = $group;
+			}
+			else
+			{
+				$dependencies[$key] = [];
+				foreach($group as $asset)
+				{
+					$dependencies[$key][] = $source . '/' . $asset;
+				}
+			}
+		}
+
+		return $dependencies;
+	}
+
+	private function getActiveTheme()
+	{
+		$theme = $this->app->make('Conductor\Core\Theme\Theme');
+
+		$themes = $theme->getThemes($this->config->get('core::conductor.themes.dir'));
+
+		$activeTheme = $this->config->get('core::conductor.themes.active');
+
+		return $themes[$activeTheme];
+	}
+
+
+	private function getDependencies($group, $json)
+	{
+		$dependencies = [];
+		$source = '';
+
+		if(!isset($json->dependencies->files->{$group})) return [];
+
+		// filter through css / js types
+		foreach($json->dependencies->files->{$group} as $key => $type)
+		{
+			if($key == 'source')
+			{
+				$source = $type;
+			}
+			else
+			{
+				$dependencies[$key] = [];
+
+				// filter through each asset and prefix if source is set
+				foreach($type as $asset)
+				{
+					$dependencies[$key][] = $source . '/' . $asset;
+				}
+
+			}
+
+		}
+
+		return $dependencies;
+	}
 
     private function getAssetType($assetGroup, $type, $base, $json, $module = '')
     {

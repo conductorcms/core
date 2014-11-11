@@ -1,6 +1,6 @@
 {
     "assets": {
-        "admin": {
+        "backend": {
             "js": [
                 "./resources/js/**/*.js"
             ],
@@ -9,31 +9,44 @@
             ],
             "views": {
                 "core": ["./resources/views/**/*.html"]
-            },
-            "dependencies": {
-                "js": [
-                    "./resources/vendor/angular/angular.js",
-                    "./resources/vendor/angular-animate/angular-animate.js",
-                    "./resources/vendor/angular-bootstrap/ui-bootstrap.js",
-                    "./resources/vendor/angular-bootstrap/ui-bootstrap-tpls.js",
-                    "./resources/vendor/angular-route/angular-route.js",
-                    "./resources/vendor/AngularJS-Toaster/toaster.js",
-                    "./resources/vendor/textAngular/src/textAngular-rangy.min.js",
-                    "./resources/vendor/textAngular/src/textAngularSetup.js",
-                    "./resources/vendor/textAngular/src/textAngular.js",
-                    "./resources/vendor/textAngular/src/textAngular-sanitize.js",
-                    "./resources/vendor/angular-slugify/angular-slugify.js",
-                    "./resources/vendor/angular-native-dragdrop/draganddrop.js"
-                ],
-                "css": [
-                    "./resources/vendor/admin-lte/css/AdminLTE.css",
-                    "./resources/vendor/AngularJS-Toaster/toaster.css",
-                    "./resources/vendor/textAngular/src/textAngular.css"
-                ]
             }
-        },
-        "frontend": {
-
         }
-    }
+    },
+	"dependencies": {
+		"bower": {
+			"angular": "~1.2.26",
+			"angular-bootstrap": "~0.11.2",
+			"angular-route": "~1.2.26",
+			"angular-bootstrap": "~0.11.2",
+			"admin-lte": "~1.2.1",
+			"AngularJS-Toaster": "~0.4.8",
+			"textAngular": "~1.2.2",
+			"angular-slugify": "~1.0.0",
+			"angular-native-dragdrop": "~1.0.4"
+		},
+		"files": {
+			"backend": {
+				"source": "../../../resources/vendor",
+				"js": [
+					"angular/angular.js",
+					"angular-animate/angular-animate.js",
+					"angular-bootstrap/ui-bootstrap.js",
+					"angular-bootstrap/ui-bootstrap-tpls.js",
+					"angular-route/angular-route.js",
+					"AngularJS-Toaster/toaster.js",
+					"textAngular/src/textAngular-rangy.min.js",
+					"textAngular/src/textAngularSetup.js",
+					"textAngular/src/textAngular.js",
+					"textAngular/src/textAngular-sanitize.js",
+					"angular-slugify/angular-slugify.js",
+					"angular-native-dragdrop/draganddrop.js"
+				],
+				"css": [
+					"AngularJS-Toaster/toaster.css",
+					"admin-lte/css/AdminLTE.css",
+					"textAngular/src/textAngular.css"
+				]
+			}
+		}
+	}
 }
