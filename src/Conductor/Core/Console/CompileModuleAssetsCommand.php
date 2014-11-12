@@ -128,9 +128,14 @@ class CompileModuleAssetsCommand extends Command {
     {
 		$active = $this->getActiveTheme();
 
-        array_walk_recursive($active, function (&$value, $key) use ($active)
+        $basePath = $active['path'];
+
+        $option = $this->option('basePath');
+        if(isset($option)) $basePath = str_replace(base_path(), $option, $basePath);
+
+        array_walk_recursive($active, function (&$value, $key) use ($basePath)
         {
-            $value = $active['path'] . $value;
+            $value = $basePath . '/' . $value;
         });
 
         return $active['assets'];
