@@ -246,38 +246,11 @@ class CompileModuleAssetsCommand extends Command {
 
     private function getCoreAssets()
     {
-        $basePath = base_path();
-
-        $option = $this->option('basePath');
-
-        if(isset($option)) $basePath = $option;
-
         $json = file_get_contents(__DIR__ . '/../../../../core.json');
 
         $core = json_decode($json, true);
 
-        $dependencies = [];
-
-        $source = '';
-        if(isset($core['dependencies']['files']['backend']['source'])) $source = $core['dependencies']['files']['backend']['source'];
-
-        foreach($core['dependencies']['files']['backend'] as $key => $group)
-        {
-            if($key == 'source')
-            {
-                $source = $group;
-            }
-            else
-            {
-                $dependencies[$key] = [];
-                foreach($group as $file)
-                {
-                    $dependencies[$key][] =  $basePath . '/' . $source . '/' . $file;
-                }
-
-            }
-
-        }
+        $dependencies = $this->getDependencies('backend', $core);
 
         $manifest['backend'] = $core['assets']['backend'];
         $manifest['backend']['dependencies'] = $dependencies;
