@@ -93,7 +93,18 @@ gulp.task('watch:backend', function () {
 	}
 	var watch = assets.backend.js.concat(assets.backend.sass, views);
 
+    console.log(watch);
 	gulp.watch(watch, ['build:backend']);
+
+});
+
+gulp.task('watch:frontend', function () {
+
+    var views = [];
+
+    var watch = assets.frontend.js.concat(assets.frontend.sass);
+
+    gulp.watch(watch, ['build:frontend']);
 
 });
 
@@ -161,4 +172,4 @@ gulp.task('build:backend', ['build:backend:js', 'build:backend:sass']);
 gulp.task('build:frontend:dependencies', ['build:frontend:dependencies:js', 'build:frontend:dependencies:styles']);
 gulp.task('build:frontend', ['build:frontend:js', 'build:frontend:sass'])
 
-gulp.task('build:all', ['build:backend:dependencies', 'build:backend']);
+gulp.task('build:all', ['build:backend:dependencies', 'build:backend', 'build:frontend:dependencies', 'build:frontend']);
