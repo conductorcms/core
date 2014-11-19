@@ -2,7 +2,7 @@
 // menu here. Don't forget to define
 // routes for your nav items.
 
-angular.module('admin.##module_name##', ['ngRoute', 'admin.core', 'admin.##module_name##.templates']).config(function(NavigationProvider) {
+angular.module('admin.##module_name##').config(function(NavigationProvider) {
     NavigationProvider.addItemsFromArray([
         {
             section: '##module_display_name##',

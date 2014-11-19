@@ -142,7 +142,7 @@ class CreateModuleCommand extends Command {
     private function getModuleAssets()
     {
         return [
-            'admin' => [
+            'backend' => [
                 'js' => [
                     'resources/admin/js/**/*.js'
                 ],
@@ -151,14 +151,6 @@ class CreateModuleCommand extends Command {
                 ],
                 'views' => [
                     'resources/admin/views/**/*.html'
-                ],
-                'dependencies' => [
-                    'css' => [
-
-                    ],
-                    'js' => [
-
-                    ]
                 ]
             ],
             'frontend' => [
@@ -167,14 +159,6 @@ class CreateModuleCommand extends Command {
                 ],
                 'sass' => [
 
-                ],
-                'dendencies' => [
-                    'css' => [
-
-                    ],
-                    'js' => [
-
-                    ]
                 ]
             ]
         ];
