@@ -22,7 +22,9 @@
 			"AngularJS-Toaster": "~0.4.8",
 			"textAngular": "~1.2.2",
 			"angular-slugify": "~1.0.0",
-			"angular-native-dragdrop": "~1.0.4"
+			"angular-native-dragdrop": "~1.0.4",
+            "lodash": "~3.0.0",
+            "restangular": "~1.4.0"
 		},
 		"files": {
 			"backend": {
@@ -30,6 +32,8 @@
 				"js": [
 					"angular/angular.js",
 					"angular-animate/angular-animate.js",
+                    "lodash/dist/lodash.js",
+                    "restangular/dist/restangular.js",
 					"angular-bootstrap/ui-bootstrap.js",
 					"angular-bootstrap/ui-bootstrap-tpls.js",
 					"angular-route/angular-route.js",

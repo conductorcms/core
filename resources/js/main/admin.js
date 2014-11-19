@@ -18,6 +18,7 @@ function getCoreAdminDependencies()
 	var dependencies = [
 		'admin.core',
 		'admin.login',
+        'restangular',
 		'ngRoute',
         'ngAnimate',
 		'ui.bootstrap',

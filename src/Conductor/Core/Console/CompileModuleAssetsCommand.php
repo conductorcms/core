@@ -248,11 +248,11 @@ class CompileModuleAssetsCommand extends Command {
     {
         $json = file_get_contents(__DIR__ . '/../../../../core.json');
 
-        $core = json_decode($json, true);
+        $core = json_decode($json);
 
         $dependencies = $this->getDependencies('backend', $core);
 
-        $manifest['backend'] = $core['assets']['backend'];
+        $manifest['backend'] = (array) $core->assets->backend;
         $manifest['backend']['dependencies'] = $dependencies;
 
         return $manifest;
