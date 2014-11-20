@@ -21,7 +21,6 @@ class SessionController extends Controller {
             $user->permissions = $user->roles[0]->permissions;
             return Response::json(['session' => true, 'user' => $user], 200);
         }
-
         return Response::json(['session' => false], 200);
     }
 

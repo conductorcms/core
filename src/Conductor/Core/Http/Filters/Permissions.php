@@ -32,6 +32,7 @@ class Permissions {
         if(!$user->hasAccess($permissions))
         {
             if($request->ajax()) return $this->response->make('Unauthorized', 401);
+
             return $this->redirect->to('/');
         }
     }
